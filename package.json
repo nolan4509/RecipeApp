@@ -2,8 +2,13 @@
   "name": "recipeapp",
   "version": "1.0.0",
   "description": "An app for cataloging and sharing recipes.",
+  "engines": {
+    "node": "6.11.3"
+  },
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "heroku-postbuild": "cd react && cd client && npm install --only=dev && npm install && npm run build",
     "test": "test"
   },
   "repository": {
@@ -17,6 +22,12 @@
   },
   "homepage": "https://github.com/nolan4509/RecipeApp#readme",
   "dependencies": {
+    "ejs": "2.5.6",
     "express": "^4.16.2"
-  }
+  },
+  "keywords": [
+    "node",
+    "express",
+    "heroku"
+  ]
 }
