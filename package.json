@@ -1,0 +1,22 @@
+{
+  "name": "recipeapp",
+  "version": "1.0.0",
+  "description": "An app for cataloging and sharing recipes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nolan4509/RecipeApp.git"
+  },
+  "author": "Nolan Meeks & Luke Burneson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nolan4509/RecipeApp/issues"
+  },
+  "homepage": "https://github.com/nolan4509/RecipeApp#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
