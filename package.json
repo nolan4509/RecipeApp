@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "An app for cataloging and sharing recipes.",
   "engines": {
-    "node": "6.11.3"
+    "node": "8.9.4"
   },
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,8 @@
   "homepage": "https://github.com/nolan4509/RecipeApp#readme",
   "dependencies": {
     "ejs": "2.5.6",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "password-generator": "^2.1.0"
   },
   "keywords": [
     "node",

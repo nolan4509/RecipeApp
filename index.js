@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 let fetch = require('node-fetch');
 
+const generatePassword = require('password-generator');
+
 app.set('port', (process.env.PORT || 5000));
 
 // views is directory for all template files
@@ -10,7 +12,20 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 
+// Put all API endpoints under '/api'
+app.get('/api/passwords', (req, res) => {
+  const count = 5;
 
+  // Generate some passwords
+  const passwords = Array.from(Array(count).keys()).map(i =>
+    generatePassword(12, false)
+  )
+
+  // Return them as json
+  res.json(passwords);
+
+  console.log(`Sent ${count} passwords`);
+});
 
 
 
