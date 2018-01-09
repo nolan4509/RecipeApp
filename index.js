@@ -13,11 +13,20 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 // Primary recipe object
 class Recipe {
-	constructor(name, difficulty ) {
-		this.name = name;             // String
-		this.difficulty = difficulty; // String
-		
-		
+	constructor(id, name, category, ethnicity, difficulty, ingredients, instructions, cookTime, rating, vegetarian, vegan, glutenFree, picture) {
+		this.id = id;                       //integer
+		this.name = name;		            //string
+		this.category = category;           //string
+		this.ethnicity = ethnicity;         //string
+		this.difficulty = difficulty;  		//string
+		this.ingredients = ingredients;     //separate object
+		this.instructions = instructions;   //string (maybe array?)
+		this.cookTime = cookTime;           //integer
+		this.rating = rating;				//object with ratings and comments
+		this.vegetarian = vegetarian;       //boolean
+		this.vegan = vegan;                 //boolean
+		this.glutenFree = glutenFree;       //boolean
+		this.picture = picture;             //image
 	}
 }
 
