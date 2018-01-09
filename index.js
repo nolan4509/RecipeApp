@@ -11,6 +11,15 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 
 
+// Primary recipe object
+class Recipe {
+	constructor(name, difficulty ) {
+		this.name = name;             // String
+		this.difficulty = difficulty; // String
+		
+		
+	}
+}
 
 // Put all API endpoints under '/api' 		//tutorial
 app.get('/api/passwords', (req, res) => {	//tutorial
