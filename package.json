@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "cd react && cd client && npm install --only=dev && npm install && npm run build",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "test": "node test.js"
   },
   "dependencies": {
