@@ -33,7 +33,7 @@ class Recipe {
 // Put all API endpoints under '/api' 		//tutorial
 app.get('/api/passwords', (req, res) => {	//tutorial
   const count = 5;							//tutorial
-  // Generate some passwords				//tutorial
+  // Generate passwords						//tutorial
   const passwords = Array.from(Array(count).keys()).map(i =>	
     generatePassword(12, false)				//tutorial
   )											//tutorial
