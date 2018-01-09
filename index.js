@@ -6,7 +6,10 @@ let fetch = require('node-fetch');
 const generatePassword = require('password-generator'); //tutorial
 
 app.set('port', (process.env.PORT || 5000));
-app.use(express.static(path.join(__dirname, 'react/client/build')));
+app.use(express.static(path.join(__dirname, '/client/build')));
+
+
+
 
 // Primary recipe object
 class Recipe {
@@ -46,7 +49,7 @@ app.get('/api/passwords', (req, res) => {	//tutorial
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/react/client/public/index.html'));
+  res.sendFile(path.join(__dirname + '/client/public/index.html'));
 });
 
 app.listen(app.get('port'), function() {
