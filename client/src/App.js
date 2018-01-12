@@ -1,64 +1,104 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import './App.css';
 
-class App extends Component {
-  // Initialize state
-  state = { passwords: [] }
 
-  // Fetch passwords after first mount
-  componentDidMount() {
-    this.getPasswords();
-  }
+class Login extends Component {
+    constructor(props) {
+        super(props)
+        this.handleChangeEmail = this.handleChangeEmail.bind(this)
+        this.handleChangeName = this.handleChangeName.bind(this)
+        this.wipeFields = this.wipeFields.bind(this)
+        this.state = {
+            userID: '',
+            userName: '',
+            email: '',
+            submissionStatus: ''
+        }
+    }
 
-  getPasswords = () => {
-    // Get the passwords and store them in state
-    fetch('/api/passwords')
-      .then(res => res.json())
-      .then(passwords => this.setState({ passwords }));
-  }
+    homeClick = () => {
+        this.props.history.push("/home")
+    }
 
-  render() {
-    const { passwords } = this.state;
+    login = () => {
 
-    return (
-      <div className="App">
-        {/* Render the passwords if we have them */}
-        {passwords.length ? (
-          <div>
-            <h1>5 Passwords.</h1>
-            <ul className="passwords">
-              {/*
-                Generally it's bad to use "index" as a key.
-                It's ok for this example because there will always
-                be the same number of passwords, and they never
-                change positions in the array.
-              */}
-              {passwords.map((password, index) =>
-                <li key={index}>
-                  {password}
-                </li>
-              )}
-            </ul>
-            <button
-              className="more"
-              onClick={this.getPasswords}>
-              Get More
-            </button>
-          </div>
-        ) : (
-          // Render a helpful message otherwise
-          <div>
-            <h1>No passwords :(</h1>
-            <button
-              className="more"
-              onClick={this.getPasswords}>
-              Try Again?
-            </button>
-          </div>
-        )}
-      </div>
-    );
-  }
+        fetch(`/add/user/${this.state.userName}/${this.state.userID}/${this.state.email}`, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }
+        }).then(
+            this.setState({
+                submissionStatus: `Welcome`
+            }))
+            .catch((ex) => {
+                console.log('parsing failed', ex)
+            })
+
+        this.props.history.push("/home")
+    }
+
+    handleChangeEmail(event) {
+        this.setState({
+            email : event.target.value,
+            userID : event.target.value.substr(0, event.target.value.indexOf('@'))
+        })
+    }
+
+    handleChangeName(event) {
+        this.setState({
+            userName : event.target.value
+        })
+    }
+    componentDidMount() {
+        
+    }
+    wipeFields(){
+        this.setState({
+            userName: '',
+            email: '',
+            userID: '',
+            submissionStatus: ''
+        })
+    }
+
+    render() {
+        return (
+            <div>
+                {/* Login */}
+                <meta charSet="utf-8"/>
+                <title>Login</title>
+                <header>
+                    <h1>Sign In</h1>
+                </header>
+                <br></br>
+                <div id="loginForm">
+                    <form onSubmit={this.login}>
+                        <div>
+                            <label htmlFor="userName">First Name: </label>
+                            <input id="userName" type="text" placeholder="Ex. 'John'" required
+                                value={this.state.userName} onChange={this.handleChangeName}/>
+                        </div>
+                        <div>
+                            <label htmlFor="email">Email: </label>
+                            <input id="email" type="email" placeholder="Enter your Email" required
+                                value={this.state.email} onChange={this.handleChangeEmail}/>
+                        </div>
+                        <br/>
+                        <div>
+                            <label htmlFor="password">Password: </label>
+                            <input id="password" type="password" placeholder="Enter your password"/>
+                        </div>
+                        <br/>
+                        <button id="loginButton" className="loginButtons">Sign Up/Login</button>
+                    </form>
+                    <h3>{this.state.submissionStatus}</h3>
+                </div>
+            </div>
+        );
+    }
 }
 
-export default App;
+export default Login;
