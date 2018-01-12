@@ -16,9 +16,9 @@ Scenarios:
 		- Create and post a Recipe
 			POST /recipes/user/:userID/newRecipe/
 		- Update an existing recipe
-			PUT /recipes/user/:userID/newRecipe/update/:postID
+			PUT /recipes/user/:userID/update/:postID
 		- Remove an existing recipe
-			DELETE /recipes/user/:userID/:recipeID/remove
+			DELETE /recipes/user/:userID/:postID/remove
 	(Consumers)
 		- View a recipe 
 			GET /recipes/:postID
@@ -27,7 +27,7 @@ Scenarios:
 		- Create a review
 			POST /recipes/:postID/reviews/user/:userName/newReview
 		- Update an existing review
-			PUT /recipes/:postID/reviews/user/:userName/newReview/update/:reviewID
+			PUT /recipes/:postID/reviews/user/:userName/update/:reviewID
 		- Remove an existing review
 			DELETE /recipes/:postID/reviews/:reviewID
 	(Both)
@@ -52,6 +52,17 @@ class Recipe {
 	}
 }
 
+//post object that contains Recipe
+class RecipePost {
+	constructor(id, recipe, author, rating, picture) {
+		this.id = id;						//integer
+		this.recipe = recipe;				//recipe object
+		this.author = author;				//string (or possibly User.id)
+		this.rating = rating;				//object with ratings and comments
+		this.picture = picture;             //image
+	}
+}
+
 //contains information on one ingredient and the quantity required in the recipe
 class Ingredient {
 	constructor(ingredient, quantity, unit) {
@@ -71,17 +82,6 @@ class Review {
 	}
 }
 
-//post object that contains Recipe
-class RecipePost {
-	constructor(id, recipe, author, rating, picture) {
-		this.id = id;						//integer
-		this.recipe = recipe;				//recipe object
-		this.author = author;				//string (or possibly User.id)
-		this.rating = rating;				//object with ratings and comments
-		this.picture = picture;             //image
-	}
-}
-
 class User {
 	constructor(id, name, email, recipes) {
 		this.id = id;					    //integer
@@ -91,30 +91,11 @@ class User {
 	}
 }
 
-// Put all API endpoints under '/api' 		//tutorial
-app.get('/api/passwords', (req, res) => {	//tutorial
-  const count = 5;							//tutorial
-  // Generate passwords						//tutorial
-  const passwords = Array.from(Array(count).keys()).map(i =>	
-    generatePassword(12, false)				//tutorial
-  )											//tutorial
-  // Return them as json					//tutorial
-  res.json(passwords);						//tutorial
-  console.log(`Sent ${count} passwords`);	//tutorial
+// Creator - view a user's recipes
+app.get('/recipes/user/:userID', function(req, res){
+	let userID = Number(req.params.courseLevel);
 });
 
-
-
-
-
-
-
-
-
-//?
-//app.get('/', function(request, response) {
-//  response.render('pages/index')
-//});
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
