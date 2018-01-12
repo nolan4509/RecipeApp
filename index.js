@@ -10,7 +10,29 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 /*
 Scenarios:
-	
+	(Creators)
+		- View a users recipes
+			GET /recipes/user/:userID
+		- Create and post a Recipe
+			POST /recipes/user/:userID/newRecipe/
+		- Update an existing recipe
+			PUT /recipes/user/:userID/newRecipe/update/:postID
+		- Remove an existing recipe
+			DELETE /recipes/user/:userID/:recipeID/remove
+	(Consumers)
+		- View a recipe 
+			GET /recipes/:postID
+		- View all reviews for a recipe
+			GET /recipes/:postID/reviews
+		- Create a review
+			POST /recipes/:postID/reviews/user/:userName/newReview
+		- Update an existing review
+			PUT /recipes/:postID/reviews/user/:userName/newReview/update/:reviewID
+		- Remove an existing review
+			DELETE /recipes/:postID/reviews/:reviewID
+	(Both)
+		- Create a new User account
+			POST /add/user/:userName/
 */
 
 
