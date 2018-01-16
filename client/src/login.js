@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import firebase, { auth, provider } from './firebase.js';
 import './Login.css';
 
 
@@ -9,35 +10,35 @@ class Login extends Component {
         super(props)
         this.handleChangeEmail = this.handleChangeEmail.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
         this.state = {
             userID: '',
             userName: '',
-            email: '',
+            userEmail: '',
+            userRecipes: [],
+            user: null,
             submissionStatus: ''
         }
     }
 
-    homeClick = () => {
-        this.props.history.push("/home")
+    logout() {
+        auth.signOut()
+            .then(() => {
+                this.setState({
+                    user: null
+                });
+            });
     }
 
-    login = () => {
-
-        fetch(`/add/user/${this.state.userName}/${this.state.userID}/${this.state.email}`, {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json',
-                'Content-type': 'application/json'
-            }
-        }).then(
-            this.setState({
-                submissionStatus: `Welcome`
-            }))
-            .catch((ex) => {
-                console.log('parsing failed', ex)
-            })
-
-        this.props.history.push("/home")
+    login() {
+        auth.signInWithPopup(provider)
+            .then((result) => {
+                const user = result.user;
+                this.setState({
+                    user
+                });
+            });
     }
 
     handleChangeEmail(event) {
@@ -53,6 +54,13 @@ class Login extends Component {
         })
     }
 
+    componentDidMount() {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({ user });
+            }
+        });
+    }
 
     render() {
         return (
@@ -60,20 +68,45 @@ class Login extends Component {
                 {/* Login */}
                 <meta charSet="utf-8"/>
                 <title>Login</title>
+                <header>
+                    <div className="wrapper">
+                        <h1>Recipe App</h1>
+                        {this.state.user ? 
+                            <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
+                            :
+                            <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
+                        }
+                    </div>
+                </header>
                 <body>
+                    {this.state.user ? 
+                        <div>
+                            <div className="user-profile">
+                                <img src={this.state.user.photoURL} />
+                            </div>
+                        </div>
+                        :
+                        <div className="wrapper">
+                            <p>You must be logged in to see your recipes.</p>
+                        </div>
+                    }
                     <div class="container">
                         <form class="form-signin">
                             <h2 class="form-signin-heading">Please sign in</h2>
-                            <label for="inputEmail" class="sr-only">Email address</label>
+                            <label for="inputEmail" className="sr-only">Email address</label>
                             <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus/>
-                            <label for="inputPassword" class="sr-only">Password</label>
+                            <label for="inputPassword" className="sr-only">Password</label>
                             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required/>
-                            <div class="checkbox">
+                            <div className="checkbox">
                                 <label>
                                     <input type="checkbox" value="remember-me"/> Remember me
                                 </label>
                             </div>
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                            {this.state.user ? 
+                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
+                                :
+                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
+                            }
                         </form>
 
                     </div>
