@@ -90,6 +90,18 @@ class User {
 		this.recipes = [];				//array of RecipePost objects
 	}
 }
+const firebase = require("firebase");
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyDdiRz7i8b8ERm2kNPq59X1aTnyesRjr64",
+    authDomain: "recipe-app-4509.firebaseapp.com",
+    databaseURL: "https://recipe-app-4509.firebaseio.com",
+    projectId: "recipe-app-4509",
+    storageBucket: "recipe-app-4509.appspot.com",
+    messagingSenderId: "491235211599"
+};
+firebase.initializeApp(config);
+
 
 //test data
 let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net');
