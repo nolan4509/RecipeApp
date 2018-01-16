@@ -93,6 +93,7 @@ class User {
 
 //test data
 let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net');
+let testUserArray = [testUser];
 let testSpaghetti = new Ingredient('Spaghetti', 200, 'g');
 let testBeef = new Ingredient('Beef', 100, 'g');
 let testSauce = new Ingredient('Tomato Sauce', 10, 'fl oz')
@@ -100,11 +101,27 @@ let testIngredientArray = [testSpaghetti, testBeef, testSauce];
 let testRecipe = new Recipe('Spaghetti and Meatballs', 'Dinner', 'Italian', 'Beginner', testIngredientArray, '(1) Form meat into balls\n(2) Cook spaghetti\n(3) Slap it all together', 30, false, false, false);
 let testReview = new Review(123456, testUser, 5, 'Very spice meatball.  Dont worry about why Im reviewing my own food');
 let testRecipePost = new RecipePost(696969, testRecipe, testUser, [testReview]);
+let standInDB = [testRecipePost];
 
 // Creator - view a user's recipes
 app.get('/recipes/user/:userID', function(req, res){
-	let userID = Number(req.params.userID);
+	let searchID = Number(req.params.userID);
+	let itemFound = false;
+	retRecipes = [];
 	
+	//Search the recipe database for matching user ids
+	standInDB.map(RP => {
+		if (RP.author.id == searchID){
+			retRecipes.push(RP);
+			itemFound = true;
+		}
+	});
+	
+	if(itemFound) {
+		res.send(JSON.stringify(retRecipes));
+		return;
+	}
+	res.send('No recipes found for requested user id');
 });
 
 
