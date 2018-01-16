@@ -16,9 +16,9 @@ Scenarios:
 		- Create and post a Recipe
 			POST /recipes/user/:userID/newRecipe/
 		- Update an existing recipe
-			PUT /recipes/user/:userID/newRecipe/update/:postID
+			PUT /recipes/user/:userID/update/:postID
 		- Remove an existing recipe
-			DELETE /recipes/user/:userID/:recipeID/remove
+			DELETE /recipes/user/:userID/:postID/remove
 	(Consumers)
 		- View a recipe 
 			GET /recipes/:postID
@@ -27,7 +27,7 @@ Scenarios:
 		- Create a review
 			POST /recipes/:postID/reviews/user/:userName/newReview
 		- Update an existing review
-			PUT /recipes/:postID/reviews/user/:userName/newReview/update/:reviewID
+			PUT /recipes/:postID/reviews/user/:userName/update/:reviewID
 		- Remove an existing review
 			DELETE /recipes/:postID/reviews/:reviewID
 	(Both)
@@ -38,7 +38,7 @@ Scenarios:
 
 //Primary recipe object
 class Recipe {
-	constructor(name, category, ethnicity, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree) {
+	constructor(name, category, ethnicity, difficulty, ingredientArray, instructions, cookTime, vegetarian, vegan, glutenFree) {
 		this.name = name;		           	    	//string
 		this.category = category;         	    	//string
 		this.ethnicity = ethnicity;       	    	//string
@@ -49,6 +49,17 @@ class Recipe {
 		this.vegetarian = vegetarian;       		//boolean
 		this.vegan = vegan;                 		//boolean
 		this.glutenFree = glutenFree;       		//boolean
+	}
+}
+
+//post object that contains Recipe
+class RecipePost {
+	constructor(id, recipe, author, rating) {
+		this.id = id;						//integer
+		this.recipe = recipe;				//recipe object
+		this.author = author;				//User object
+		this.rating = rating;				//object with ratings and comments
+	//	this.picture = picture;             //image will be added later
 	}
 }
 
@@ -65,56 +76,54 @@ class Ingredient {
 class Review {
 	constructor(id, author, rating, comment) {
 		this.id = id;					    //integer 
-		this.author = author;				//string (possibly User.id)
+		this.author = author;				//User object
 		this.rating = rating;				//integer (rating between 1 and 5 inclusive)
 		this.comment = comment;				//string
 	}
 }
 
-//post object that contains Recipe
-class RecipePost {
-	constructor(id, recipe, author, rating, picture) {
-		this.id = id;						//integer
-		this.recipe = recipe;				//recipe object
-		this.author = author;				//string (or possibly User.id)
-		this.rating = rating;				//object with ratings and comments
-		this.picture = picture;             //image
-	}
-}
-
 class User {
-	constructor(id, name, email, recipes) {
+	constructor(id, name, email) {
 		this.id = id;					    //integer
 		this.name = name;					//string
 		this.email = email;					//string
-		this.recipes = recipes;				//array of RecipePost objects
+		this.recipes = [];				//array of RecipePost objects
 	}
 }
 
-// Put all API endpoints under '/api' 		//tutorial
-app.get('/api/passwords', (req, res) => {	//tutorial
-  const count = 5;							//tutorial
-  // Generate passwords						//tutorial
-  const passwords = Array.from(Array(count).keys()).map(i =>	
-    generatePassword(12, false)				//tutorial
-  )											//tutorial
-  // Return them as json					//tutorial
-  res.json(passwords);						//tutorial
-  console.log(`Sent ${count} passwords`);	//tutorial
+//test data
+let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net');
+let testUserArray = [testUser];
+let testSpaghetti = new Ingredient('Spaghetti', 200, 'g');
+let testBeef = new Ingredient('Beef', 100, 'g');
+let testSauce = new Ingredient('Tomato Sauce', 10, 'fl oz')
+let testIngredientArray = [testSpaghetti, testBeef, testSauce];
+let testRecipe = new Recipe('Spaghetti and Meatballs', 'Dinner', 'Italian', 'Beginner', testIngredientArray, '(1) Form meat into balls\n(2) Cook spaghetti\n(3) Slap it all together', 30, false, false, false);
+let testReview = new Review(123456, testUser, 5, 'Very spice meatball.  Dont worry about why Im reviewing my own food');
+let testRecipePost = new RecipePost(696969, testRecipe, testUser, [testReview]);
+let standInDB = [testRecipePost];
+
+// Creator - view a user's recipes
+app.get('/recipes/user/:userID', function(req, res){
+	let searchID = Number(req.params.userID);
+	let itemFound = false;
+	retRecipes = [];
+	
+	//Search the recipe database for matching user ids
+	standInDB.map(RP => {
+		if (RP.author.id == searchID){
+			retRecipes.push(RP);
+			itemFound = true;
+		}
+	});
+	
+	if(itemFound) {
+		res.send(JSON.stringify(retRecipes));
+		return;
+	}
+	res.send('No recipes found for requested user id');
 });
 
-
-
-
-
-
-
-
-
-//?
-//app.get('/', function(request, response) {
-//  response.render('pages/index')
-//});
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
