@@ -14,9 +14,9 @@
   "dependencies": {
     "ejs": "2.5.6",
     "express": "^4.16.2",
-    "password-generator": "^2.1.0",
-    "firebase": "^4.5.0",
-    "node-fetch": "1.7.3"
+    "firebase": "^4.8.2",
+    "node-fetch": "1.7.3",
+    "password-generator": "^2.1.0"
   },
   "devDependencies": {
     "request": "^2.81.0",
