@@ -38,7 +38,7 @@ Scenarios:
 
 //Primary recipe object
 class Recipe {
-	constructor(name, category, ethnicity, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree) {
+	constructor(name, category, ethnicity, difficulty, ingredientArray, instructions, cookTime, vegetarian, vegan, glutenFree) {
 		this.name = name;		           	    	//string
 		this.category = category;         	    	//string
 		this.ethnicity = ethnicity;       	    	//string
@@ -54,12 +54,12 @@ class Recipe {
 
 //post object that contains Recipe
 class RecipePost {
-	constructor(id, recipe, author, rating, picture) {
+	constructor(id, recipe, author, rating) {
 		this.id = id;						//integer
 		this.recipe = recipe;				//recipe object
-		this.author = author;				//string (or possibly User.id)
+		this.author = author;				//User object
 		this.rating = rating;				//object with ratings and comments
-		this.picture = picture;             //image
+	//	this.picture = picture;             //image will be added later
 	}
 }
 
@@ -76,24 +76,35 @@ class Ingredient {
 class Review {
 	constructor(id, author, rating, comment) {
 		this.id = id;					    //integer 
-		this.author = author;				//string (possibly User.id)
+		this.author = author;				//User object
 		this.rating = rating;				//integer (rating between 1 and 5 inclusive)
 		this.comment = comment;				//string
 	}
 }
 
 class User {
-	constructor(id, name, email, recipes) {
+	constructor(id, name, email) {
 		this.id = id;					    //integer
 		this.name = name;					//string
 		this.email = email;					//string
-		this.recipes = recipes;				//array of RecipePost objects
+		this.recipes = [];				//array of RecipePost objects
 	}
 }
 
+//test data
+let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net');
+let testSpaghetti = new Ingredient('Spaghetti', 200, 'g');
+let testBeef = new Ingredient('Beef', 100, 'g');
+let testSauce = new Ingredient('Tomato Sauce', 10, 'fl oz')
+let testIngredientArray = [testSpaghetti, testBeef, testSauce];
+let testRecipe = new Recipe('Spaghetti and Meatballs', 'Dinner', 'Italian', 'Beginner', testIngredientArray, '(1) Form meat into balls\n(2) Cook spaghetti\n(3) Slap it all together', 30, false, false, false);
+let testReview = new Review(123456, testUser, 5, 'Very spice meatball.  Dont worry about why Im reviewing my own food');
+let testRecipePost = new RecipePost(696969, testRecipe, testUser, [testReview]);
+
 // Creator - view a user's recipes
 app.get('/recipes/user/:userID', function(req, res){
-	let userID = Number(req.params.courseLevel);
+	let userID = Number(req.params.userID);
+	
 });
 
 
