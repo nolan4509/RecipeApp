@@ -39,6 +39,7 @@ class Login extends Component {
                     user
                 });
             });
+        this.props.history.push('/home')
     }
 
     handleChangeEmail(event) {
