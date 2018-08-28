@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "hoek": "^5.0.4",
+    "lodash": "^4.17.10",
     "react": "latest",
     "react-bootstrap": "^0.32.0",
     "react-dom": "^16.2.0",
@@ -13,7 +14,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
     "react-tooltip": "^3.4.0",
-    "sshpk": "^1.14.2"
+    "sshpk": "^1.14.2",
+    "url-parse": "^1.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
