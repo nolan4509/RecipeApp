@@ -21,7 +21,11 @@ class Login extends Component {
             submissionStatus: ''
         }
     }
-
+    /*
+    call the 'signOut' method on auth, and then using the Promise API
+    we remove the user from our application's state. With 'this.state.user'
+    now equal to null, the user will see the Log In button instead of the Log Out button.
+    */
     logout() {
         auth.signOut()
             .then(() => {
@@ -31,6 +35,17 @@ class Login extends Component {
             });
     }
 
+    /*
+    Here call the 'signInWithPopup' method from the auth module,
+    and pass in our 'provider' Now when you click the 'login'
+    button, it will trigger a popup that gives up the option to
+    sign in with a google account
+
+    'signInWithPopup' has a promise API that allows us to call '.then' on it and pass in a callback.
+    This callback will be provided with a 'result' object that contains, among other things, a
+    property called '.user' that has all the information about the user who just signed in, we then
+    store this inside of the state using 'setState'
+    */
     login() {
         auth.signInWithPopup(provider)
             .then((result) => {
@@ -39,7 +54,7 @@ class Login extends Component {
                     user
                 });
             });
-        this.props.history.push('/home')
+        //this.props.history.push('/home')
     }
 
     handleChangeEmail(event) {
@@ -58,7 +73,8 @@ class Login extends Component {
     componentDidMount() {
         auth.onAuthStateChanged((user) => {
             if (user) {
-                this.setState({ user });
+                this.setState({ user }); // When user signs in, checks the firebase database to see
+                                        // if they were already previously authenticated, if so, restore
             }
         });
     }
@@ -72,7 +88,7 @@ class Login extends Component {
                 <header>
                     <div className="wrapper">
                         <h1>Recipe App</h1>
-                        {this.state.user ? 
+                        {this.state.user ?
                             <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             :
                             <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
@@ -80,7 +96,7 @@ class Login extends Component {
                     </div>
                 </header>
                 <body>
-                    {this.state.user ? 
+                    {this.state.user ?
                         <div>
                             <div className="user-profile">
                                 <img src={this.state.user.photoURL} />
@@ -100,10 +116,10 @@ class Login extends Component {
                             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required/>
                             <div className="checkbox">
                                 <label>
-                                    <input type="checkbox" value="remember-me"/> Remember me
+                                    <input type="checkbox" value="remember-me"/> Remember me (Todo)
                                 </label>
                             </div>
-                            {this.state.user ? 
+                            {this.state.user ?
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                                 :
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
