@@ -102,10 +102,6 @@ var config = {
 };
 firebase.initializeApp(config);
 
-let database = firebase.app().database().ref();
-let userDatabase = database.child('Users');
-let recipePostDatabase = database.child('Recipes');
-
 
 //test data
 let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net');
@@ -119,52 +115,74 @@ let testReview = new Review(123456, testUser, 5, 'Very spice meatball.  Dont wor
 let testRecipePost = new RecipePost(696969, testRecipe, testUser, [testReview]);
 let standInDB = [testRecipePost];
 
+
 // Creator - view a user's recipes
 app.get('/recipes/user/:userID', function(req, res){
-	let searchID = Number(req.params.userID);
+	let userSearchID = Number(req.params.userID);
 	let itemFound = false;
 	retRecipes = [];
 	
 	//Search the recipe database for matching user ids
 	standInDB.map(RP => {
-		if (RP.author.id == searchID){
+		if (RP.author.id == userSearchID){
 			retRecipes.push(RP);
 			itemFound = true;
 		}
 	});
 	
-	if(itemFound) {
+	if (itemFound){
 		res.send(JSON.stringify(retRecipes));
 		return;
 	}
 	res.send('No recipes found for requested user id');
 });
+/*.post('/recipes/user/:userID/newRecipe/', function(req, res){
+	let id = Number(req.params.userID);
+	
+});
+*/
 
-// Creator - Create and post a Recipe
-app.post('recipes/user/:userID/newRecipe/:recId/:recipeName/:category/:ethnicity/:difficulty/:ingArray/:instructions/:cookTime/:vegetarian/:vegan/:glutenFree', function(req, res){
-	let userID = Number(req.params.userID);
-	let recipeID = Number(req.params.recId);
-	let recipeName = String(req.params.recipeName);
-	let category = String(req.params.category);
-	let ethnicity = String(req.params.ethnicity);
-	let difficulty = String(req.params.difficulty);
-	let ingArray = Array(req.params.ingArray);
-	let instructions = String(req.params.instructions);
-	let cookTime = Number(req.params.cookTime);
-	let vegetarian = (req.params.vegetarian);
-	let vegan = (req.params.vegan);
-	let glutenFree = (req.params.glutenFree);
+// Function for searching by post id
+app.get('/recipes/:postID', function(req, res){
+	let recipeSearchID = Number(req.params.postID);
+	let itemFound = false;
+	retRecipes = [];
 	
-	// Add function to find user object from ID
+	// Search the database for a post with matching ID
+	standInDB.map(RP => {
+		if (RP.id == recipeSearchID){
+			retRecipes.push(RP);
+			itemFound = true;
+		}
+	});
 	
-	let newRecipe = new Recipe(recipeName, category, ethnicity, difficulty, ingArray, instructions, cookTime, vegetarian, vegan, glutenFree);
-	let newPost = new RecipePost(recipeID, userID/*tempVariable*/, newRecipe, []);
-	standInDB.push(newPost);
-	return;
+	if (itemFound){
+		res.send(JSON.stringify(retRecipes));
+		return;
+	}
+	res.send('No recipes found with requested id');
 });
 
-
-
+// Return reviews of a recipe using the recipe ID as a search term
+app.get('/recipes/:postID/reviews', function(req, res){
+	let recipeSearchID = Number(req.params.postID);
+	let itemFound = false;
+	retReviews = [];
+	
+	// Search the database for a post with matching ID
+	standInDB.map(RP => {
+		if (RP.id == recipeSearchID){
+			retReviews = RP.rating;
+			itemFound = true;
+		}
+	});
+	
+	if (itemFound){
+		res.send(JSON.stringify(retReviews));
+		return;
+	}
+	res.send('No recipes found with requested id');
+});
 
 
 // The "catchall" handler: for any request that doesn't
