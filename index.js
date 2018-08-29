@@ -136,11 +136,33 @@ app.get('/recipes/user/:userID', function(req, res){
 	}
 	res.send('No recipes found for requested user id');
 });
-/*.post('/recipes/user/:userID/newRecipe/', function(req, res){
-	let id = Number(req.params.userID);
-	
-});
+
+/*
+http://localhost:5000/recipes/user/8675309/newRecipe/666/Da Beast/Unholy/Demon/Demonic/[{"ingredient":"Goat Blood","quantity":666,"unit":"g"}]/eat my butt buttnutt/666/false/false/false
 */
+
+// Creator - Create and post a Recipe
+app.post('recipes/user/:userID/newRecipe/:recId/:recipeName/:category/:ethnicity/:difficulty/:ingArray/:instructions/:cookTime/:vegetarian/:vegan/:glutenFree', function(req, res){
+	let userID = Number(req.params.userID);
+	let recipeID = Number(req.params.recId);
+	let recipeName = String(req.params.recipeName);
+	let category = String(req.params.category);
+	let ethnicity = String(req.params.ethnicity);
+	let difficulty = String(req.params.difficulty);
+	let ingArray = Array(req.params.ingArray);
+	let instructions = String(req.params.instructions);
+	let cookTime = Number(req.params.cookTime);
+	let vegetarian = (req.params.vegetarian);
+	let vegan = (req.params.vegan);
+	let glutenFree = (req.params.glutenFree);
+	
+	// Add function to find user object from ID
+	
+	let newRecipe = new Recipe(recipeName, category, ethnicity, difficulty, ingArray, instructions, cookTime, vegetarian, vegan, glutenFree);
+	let newPost = new RecipePost(recipeID, userID/*tempVariable*/, newRecipe, []);
+	standInDB.push(newPost);
+	return;
+});
 
 // Function for searching by post id
 app.get('/recipes/:postID', function(req, res){
