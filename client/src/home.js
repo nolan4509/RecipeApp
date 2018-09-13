@@ -172,9 +172,72 @@ class Home extends Component {
               <body>
               {this.state.user ?
                 <div>
-                    <div className="user-profile">
-                        <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
-                    </div>
+                  <div className="container">
+                		<div className="row" style="margin-bottom: 15px;">
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffd38b;">
+                	  			<h1>Chicken Salad</h1>
+                				<img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                				<h4>serves: 4 | cook time: 20 minutes</h4>
+                			</div>
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffc57e;">
+                				<div className="homepage-recipe-tile">
+                		  			<h1>Instant Pot Honey Garlic Chicken</h1>
+                					<img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                					<h4>serves: 4 | cook time: 30 minutes</h4>
+                				</div>
+                			</div>
+                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffd38b;">
+                		    	<div className="homepage-recipe-tile">
+                		      		<h1>General Tso’s Chicken</h1>
+                					<img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                					<h4>serves: 8 | cook time: 40 minutes</h4>
+                				</div>
+                		    </div>
+                		</div>
+                		<div className="row" style="margin-bottom: 15px;">
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffc57e;">
+                	  			<h1>Chicken Salad</h1>
+                				<img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                				<h4>serves: 4 | cook time: 20 minutes</h4>
+                			</div>
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffd38b;">
+                				<div className="homepage-recipe-tile">
+                		  			<h1>Instant Pot Honey Garlic Chicken</h1>
+                					<img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                					<h4>serves: 4 | cook time: 30 minutes</h4>
+                				</div>
+                			</div>
+                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffc57e;">
+                		    	<div className="homepage-recipe-tile">
+                		      		<h1>General Tso’s Chicken</h1>
+                					<img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                					<h4>serves: 8 | cook time: 40 minutes</h4>
+                				</div>
+                		    </div>
+                		</div>
+                		<div className="row" style="margin-bottom: 15px;">
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffd38b;">
+                	  			<h1>Chicken Salad</h1>
+                				<img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                				<h4>serves: 4 | cook time: 20 minutes</h4>
+                			</div>
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffc57e 	;">
+                				<div className="homepage-recipe-tile">
+                		  			<h1>Instant Pot Honey Garlic Chicken</h1>
+                					<img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                					<h4>serves: 4 | cook time: 30 minutes</h4>
+                				</div>
+                			</div>
+                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffd38b;">
+                		    	<div className="homepage-recipe-tile">
+                		      		<h1>General Tso’s Chicken</h1>
+                					<img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                					<h4>serves: 8 | cook time: 40 minutes</h4>
+                				</div>
+                		    </div>
+                		</div>
+                    <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
+                  </div>
                 </div>
                 :
                 <div className="container">
