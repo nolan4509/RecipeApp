@@ -35,6 +35,7 @@ class Login extends Component {
                     user: null
                 });
             });
+        this.props.history.push('/')
     }
 
     /*
@@ -49,19 +50,26 @@ class Login extends Component {
     store this inside of the state using 'setState'
     */
     login() {
-        auth.signInWithPopup(provider)
+      /*
+      auth.doSignInWithEmailAndPassword(userEmail, userPassword)
+      .then(() => {
+        this.setState({ ...INITIAL_STATE });
+        history.push(routes.HOME);
+      })
+      */
+      auth.signInWithPopup(provider)
             .then((result) => {
                 const user = result.user;
                 this.setState({
                     user
                 });
+                this.props.history.push('/home')
             });
-        this.props.history.push('/home')
     }
 
     handleChangeEmail(event) {
         this.setState({
-            email : event.target.value,
+            userEmail : event.target.value,
             userID : event.target.value.substr(0, event.target.value.indexOf('@'))
         })
     }
@@ -82,99 +90,85 @@ class Login extends Component {
     }
 
     render() {
-      return (
-        <div>
-          {/* Required meta tags */}
-          <meta charSet="utf-8" />
-          {/*<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> */}
-          {/* Bootstrap CSS */}
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
-          <link rel="stylesheet" href="styles.css" />
-          <title>Login Page</title>
-          {/* Home Page to be infinite scrolling, subcategories will have pagination */}
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a className="navbar-brand" href="Home.html">Fuck the Microwave</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon" />
-            </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                  <a className="nav-link" href="Home.html">Home <span className="sr-only">(current)</span></a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="NewRecipe.html">New Recipe</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="RecipeInfo.html">Favorites</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Quick Fix</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Breakfast</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Lunch</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Dinner</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Desserts</a>
-                </li>
-                <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                  </a>
-                  <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a className="dropdown-item" href="#">Action</a>
-                    <a className="dropdown-item" href="#">Another action</a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">Something else here</a>
-                  </div>
-                </li>
-              </ul>
-              <form className="form-inline my-2 my-lg-0">
-                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
-            </div>
-          </nav>
-          <body>
-            {this.state.user ?
+        return (
+            <div>
+              {/* Login */}
+
+              {/* Required meta tags */}
+              <meta charSet="utf-8" />
+              {/*<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> */}
+              {/* Bootstrap CSS */}
+              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
+              <link rel="stylesheet" href="styles.css" />
+              <title>Login Page</title>
+              {/* <header>
+                <h1 className="big">Home</h1>
+                <div>
+                    <button id="myBooksButton" onClick={this.sellerHubClick}
+                            data-tip data-for='myBooksTip'>
+                        My Books
+                    </button>
+                    <ReactTooltip id='myBooksTip' aria-haspopup='true' border={true} effect='solid' place='bottom'>
+                        <font size='3'> This will bring you to your page where you can see all of the current books
+                            you are trying to sell.</font><br/><br/>
+                        <font size='3'> From here, you can update, remove, or add a new book post to sell.</font>
+                    </ReactTooltip>
+                    <button id="searchCoursesButton" onClick={this.courseHubClick}
+                    data-tip data-for='searchCoursesTip'>
+                        Search Courses
+                    </button>
+                    <ReactTooltip id='searchCoursesTip' aria-haspopup='true' border={true} effect='solid' place='right'>
+                        <font size='3'> This will bring you to the course hub page, where you can search for whatever course
+                            you need books for.</font><br/><br/>
+                        <font size='3'> Once you click search, you will see all available books for that course. Then just find the
+                            book you need and click on the email seller button next to it.</font>
+                    </ReactTooltip>
+                </div>
+              </header> */}
+              <body>
+              {this.state.user ?
                 <div>
                     <div className="user-profile">
                         <img src={this.state.user.photoURL} />
+                        <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                     </div>
                 </div>
                 :
-                <div className="wrapper">
-                    <p>You must be logged in to see your recipes.</p>
+                <div className="container">
+                  <form className="form-signin">
+                      <h2 className="big">Please Login :)</h2>
+                      <label for="inputEmail" className="sr-only">Email address</label>
+                      {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
+                      {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
+                      <input
+                          type="email"
+                          id="inputEmail"
+                          className="form-control"
+                          placeholder="Email address"
+                          required
+                          autofocus
+                      />
+                      <label for="inputPassword" className="sr-only">Password</label>
+                      {/* FOR BELOW value={userPassword} */}
+                      {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
+                      <input
+                          type="password"
+                          id="inputPassword"
+                          className="form-control"
+                          placeholder="Password"
+                          required
+                      />
+                      <div className="checkbox">
+                          <label>
+                              <input type="checkbox" value="remember-me"/> Remember me (Todo)
+                          </label>
+                      </div>
+                      <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
+                  </form>
                 </div>
-            }
-            <div className="container">
-                <form className="form-signin">
-                    <h2 className="form-signin-heading">Please sign in</h2>
-                    <label for="inputEmail" className="sr-only">Email address</label>
-                    <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus/>
-                    <label for="inputPassword" className="sr-only">Password</label>
-                    <input type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
-                    <div className="checkbox">
-                        <label>
-                            <input type="checkbox" value="remember-me"/> Remember me (Todo)
-                        </label>
-                    </div>
-                    {this.state.user ?
-                        <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
-                        :
-                        <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
-                    }
-                </form>
+              }</body>
             </div>
-          </body>
-        </div>
-      );
+        );
     }
 }
 
