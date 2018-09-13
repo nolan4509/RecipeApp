@@ -3,6 +3,8 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import firebase, { auth, provider } from './firebase.js';
 import './Login.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import styles from './Login.css';
 
 
 class Login extends Component {
@@ -33,6 +35,7 @@ class Login extends Component {
                     user: null
                 });
             });
+        this.props.history.push('/')
     }
 
     /*
@@ -47,19 +50,26 @@ class Login extends Component {
     store this inside of the state using 'setState'
     */
     login() {
-        auth.signInWithPopup(provider)
+      /*
+      auth.doSignInWithEmailAndPassword(userEmail, userPassword)
+      .then(() => {
+        this.setState({ ...INITIAL_STATE });
+        history.push(routes.HOME);
+      })
+      */
+      auth.signInWithPopup(provider)
             .then((result) => {
                 const user = result.user;
                 this.setState({
                     user
                 });
+                this.props.history.push('/home')
             });
-        //this.props.history.push('/home')
     }
 
     handleChangeEmail(event) {
         this.setState({
-            email : event.target.value,
+            userEmail : event.target.value,
             userID : event.target.value.substr(0, event.target.value.indexOf('@'))
         })
     }
@@ -82,52 +92,81 @@ class Login extends Component {
     render() {
         return (
             <div>
-                {/* Login */}
-                <meta charSet="utf-8"/>
-                <title>Login</title>
-                <header>
-                    <div className="wrapper">
-                        <h1>Recipe App</h1>
-                        {this.state.user ?
-                            <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
-                            :
-                            <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
-                        }
-                    </div>
-                </header>
-                <body>
-                    {this.state.user ?
-                        <div>
-                            <div className="user-profile">
-                                <img src={this.state.user.photoURL} />
-                            </div>
-                        </div>
-                        :
-                        <div className="wrapper">
-                            <p>You must be logged in to see your recipes.</p>
-                        </div>
-                    }
-                    <div class="container">
-                        <form class="form-signin">
-                            <h2 class="form-signin-heading">Please sign in</h2>
-                            <label for="inputEmail" className="sr-only">Email address</label>
-                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus/>
-                            <label for="inputPassword" className="sr-only">Password</label>
-                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required/>
-                            <div className="checkbox">
-                                <label>
-                                    <input type="checkbox" value="remember-me"/> Remember me (Todo)
-                                </label>
-                            </div>
-                            {this.state.user ?
-                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
-                                :
-                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
-                            }
-                        </form>
+              {/* Login */}
 
+              {/* Required meta tags */}
+              <meta charSet="utf-8" />
+              {/*<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> */}
+              {/* Bootstrap CSS */}
+              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
+              <link rel="stylesheet" href="styles.css" />
+              <title>Login Page</title>
+              {/* <header>
+                <h1 className="big">Home</h1>
+                <div>
+                    <button id="myBooksButton" onClick={this.sellerHubClick}
+                            data-tip data-for='myBooksTip'>
+                        My Books
+                    </button>
+                    <ReactTooltip id='myBooksTip' aria-haspopup='true' border={true} effect='solid' place='bottom'>
+                        <font size='3'> This will bring you to your page where you can see all of the current books
+                            you are trying to sell.</font><br/><br/>
+                        <font size='3'> From here, you can update, remove, or add a new book post to sell.</font>
+                    </ReactTooltip>
+                    <button id="searchCoursesButton" onClick={this.courseHubClick}
+                    data-tip data-for='searchCoursesTip'>
+                        Search Courses
+                    </button>
+                    <ReactTooltip id='searchCoursesTip' aria-haspopup='true' border={true} effect='solid' place='right'>
+                        <font size='3'> This will bring you to the course hub page, where you can search for whatever course
+                            you need books for.</font><br/><br/>
+                        <font size='3'> Once you click search, you will see all available books for that course. Then just find the
+                            book you need and click on the email seller button next to it.</font>
+                    </ReactTooltip>
+                </div>
+              </header> */}
+              <body>
+              {this.state.user ?
+                <div>
+                    <div className="user-profile">
+                        <img src={this.state.user.photoURL} />
+                        <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                     </div>
-                </body>
+                </div>
+                :
+                <div className="container">
+                  <form className="form-signin">
+                      <h2 className="big">Please Login :)</h2>
+                      <label for="inputEmail" className="sr-only">Email address</label>
+                      {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
+                      {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
+                      <input
+                          type="email"
+                          id="inputEmail"
+                          className="form-control"
+                          placeholder="Email address"
+                          required
+                          autofocus
+                      />
+                      <label for="inputPassword" className="sr-only">Password</label>
+                      {/* FOR BELOW value={userPassword} */}
+                      {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
+                      <input
+                          type="password"
+                          id="inputPassword"
+                          className="form-control"
+                          placeholder="Password"
+                          required
+                      />
+                      <div className="checkbox">
+                          <label>
+                              <input type="checkbox" value="remember-me"/> Remember me (Todo)
+                          </label>
+                      </div>
+                      <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
+                  </form>
+                </div>
+              }</body>
             </div>
         );
     }
