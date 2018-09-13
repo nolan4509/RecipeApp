@@ -142,19 +142,22 @@ http://localhost:5000/recipes/user/8675309/newRecipe/666/Da Beast/Unholy/Demon/D
 */
 
 // Creator - Create and post a Recipe
-app.post('recipes/user/:userID/newRecipe/:recId/:recipeName/:category/:ethnicity/:difficulty/:ingArray/:instructions/:cookTime/:vegetarian/:vegan/:glutenFree', function(req, res){
+app.post('recipes/user/:userID/newRecipe/:recId/:recipeName/:category/:ethnicity/:difficulty/:instructions/:cookTime/:vegetarian/:vegan/:glutenFree/*', function(req, res){
 	let userID = Number(req.params.userID);
 	let recipeID = Number(req.params.recId);
 	let recipeName = String(req.params.recipeName);
 	let category = String(req.params.category);
 	let ethnicity = String(req.params.ethnicity);
 	let difficulty = String(req.params.difficulty);
-	let ingArray = Array(req.params.ingArray);
 	let instructions = String(req.params.instructions);
 	let cookTime = Number(req.params.cookTime);
 	let vegetarian = (req.params.vegetarian);
 	let vegan = (req.params.vegan);
 	let glutenFree = (req.params.glutenFree);
+	// start at 14
+	let ingArray = [];
+	
+	
 	
 	// Add function to find user object from ID
 	
