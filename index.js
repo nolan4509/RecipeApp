@@ -1,5 +1,8 @@
 const express = require('express');
+const fetcher = require('express-param');
 const app = express();
+app.use(fetcher());
+
 const path = require('path');
 let fetch = require('node-fetch');
 
@@ -14,11 +17,11 @@ Scenarios:
 		- View a users recipes
 			GET /recipes/user/:userID
 		- Create and post a Recipe
-			POST /recipes/user/:userID/newRecipe/
+			POST /recipes/newRecipe/user/:userID
 		- Update an existing recipe
-			PUT /recipes/user/:userID/update/:postID
+			PUT /recipes/update/user/:userID
 		- Remove an existing recipe
-			DELETE /recipes/user/:userID/:postID/remove
+			DELETE /recipes/deleteRecipe/user/:userID
 	(Consumers)
 		- View a recipe 
 			GET /recipes/:postID
@@ -117,8 +120,11 @@ let standInDB = [testRecipePost];
 
 
 // Creator - view a user's recipes
-app.get('/recipes/user/:userID', function(req, res){
-	let userSearchID = Number(req.params.userID);
+app.get('/recipes/user/:userID', function(req, res, next){
+	let requiredParams = ['userID'];
+	let optionalParams = ['number:userID|=0'];
+	let options = req.fetchParameter(requiredParams, optionalParams);
+	let userSearchID = options.userID;
 	let itemFound = false;
 	retRecipes = [];
 	
@@ -138,11 +144,27 @@ app.get('/recipes/user/:userID', function(req, res){
 });
 
 /*
+====== HELPFUL LINKS =======================
+https://expressjs.com/en/guide/routing.html
+https://www.npmjs.com/package/express-param
+https://github.com/expressjs/express/issues/699
+https://stackoverflow.com/questions/15134199/how-to-split-and-modify-a-string-in-nodejs
+=============================================
+*/
+
+//variable argument test
+app.get('root/*', function(req,res) {
+	console.log("Got parameters : " + req.params[0]);
+	let paramArray = 
+});
+/*
 http://localhost:5000/recipes/user/8675309/newRecipe/666/Da Beast/Unholy/Demon/Demonic/[{"ingredient":"Goat Blood","quantity":666,"unit":"g"}]/eat my butt buttnutt/666/false/false/false
 */
 
 // Creator - Create and post a Recipe
 app.post('recipes/user/:userID/newRecipe/:recId/:recipeName/:category/:ethnicity/:difficulty/:instructions/:cookTime/:vegetarian/:vegan/:glutenFree/*', function(req, res){
+	let requiredParams = ['userID'];
+	let optionalParams = ['number:userID|=0'];
 	let userID = Number(req.params.userID);
 	let recipeID = Number(req.params.recId);
 	let recipeName = String(req.params.recipeName);
@@ -156,7 +178,7 @@ app.post('recipes/user/:userID/newRecipe/:recId/:recipeName/:category/:ethnicity
 	let glutenFree = (req.params.glutenFree);
 	// start at 14
 	let ingArray = [];
-	
+	let paramCount = Number(req.params)
 	
 	
 	// Add function to find user object from ID
