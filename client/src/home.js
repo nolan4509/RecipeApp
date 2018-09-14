@@ -8,6 +8,25 @@ import styles from './Login.css';
 //import './App.css';
 //import ReactTooltip from 'react-tooltip';
 
+const divStyle = {
+  marginBottom : '15px'
+};
+
+const divStyle2 = {
+  marginBottom : '10px',
+  background : '#ffd38b'
+};
+
+const divStyle3 = {
+  marginBottom : '10px',
+  background : '#ffc57e'
+};
+
+const bodyStyle = {
+  backgroundImage: 'url(http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg)'
+};
+
+
 class Home extends Component {
     constructor(props) {
         super(props)
@@ -169,24 +188,24 @@ class Home extends Component {
                     </ReactTooltip>
                 </div>
               </header> */}
-              <body>
+              <body style={bodyStyle}>
               {this.state.user ?
                 <div>
                   <div className="container">
-                		<div className="row" style="margin-bottom: 15px;">
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffd38b;">
+                    <div className="row" style={divStyle}>
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle2}>
                 	  			<h1>Chicken Salad</h1>
                 				<img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 				<h4>serves: 4 | cook time: 20 minutes</h4>
                 			</div>
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffc57e;">
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle3}>
                 				<div className="homepage-recipe-tile">
                 		  			<h1>Instant Pot Honey Garlic Chicken</h1>
                 					<img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 					<h4>serves: 4 | cook time: 30 minutes</h4>
                 				</div>
                 			</div>
-                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffd38b;">
+                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle2}>
                 		    	<div className="homepage-recipe-tile">
                 		      		<h1>General Tso’s Chicken</h1>
                 					<img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
@@ -194,20 +213,20 @@ class Home extends Component {
                 				</div>
                 		    </div>
                 		</div>
-                		<div className="row" style="margin-bottom: 15px;">
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffc57e;">
+                		<div className="row" style={divStyle}>
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle3}>
                 	  			<h1>Chicken Salad</h1>
                 				<img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 				<h4>serves: 4 | cook time: 20 minutes</h4>
                 			</div>
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffd38b;">
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle2}>
                 				<div className="homepage-recipe-tile">
                 		  			<h1>Instant Pot Honey Garlic Chicken</h1>
                 					<img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 					<h4>serves: 4 | cook time: 30 minutes</h4>
                 				</div>
                 			</div>
-                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffc57e;">
+                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle3}>
                 		    	<div className="homepage-recipe-tile">
                 		      		<h1>General Tso’s Chicken</h1>
                 					<img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
@@ -215,20 +234,20 @@ class Home extends Component {
                 				</div>
                 		    </div>
                 		</div>
-                		<div className="row" style="margin-bottom: 15px;">
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffd38b;">
+                		<div className="row" style={divStyle}>
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle2}>
                 	  			<h1>Chicken Salad</h1>
                 				<img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 				<h4>serves: 4 | cook time: 20 minutes</h4>
                 			</div>
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffc57e 	;">
+                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle3}>
                 				<div className="homepage-recipe-tile">
                 		  			<h1>Instant Pot Honey Garlic Chicken</h1>
                 					<img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 					<h4>serves: 4 | cook time: 30 minutes</h4>
                 				</div>
                 			</div>
-                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style="margin-bottom: 10px; background-color: #ffd38b;">
+                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle2}>
                 		    	<div className="homepage-recipe-tile">
                 		      		<h1>General Tso’s Chicken</h1>
                 					<img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
@@ -273,6 +292,11 @@ class Home extends Component {
                   </form>
                 </div>
               }</body>
+              {/* Optional JavaScript */}
+              {/* jQuery first, then Popper.js, then Bootstrap JS */}
+              <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
             </div>
         );
     }
