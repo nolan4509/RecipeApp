@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Navbar, Jumbotron, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+//import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+//import { Link } from 'react-router-dom';
 import firebase, { auth, provider } from './firebase.js';
 import './Login.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -165,6 +165,7 @@ class Login extends Component {
                       </div>
                       <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
                   </form>
+                  {/* Add another form here, consisting of just a button(?) that onClick -> googleLogin, and make 'login' for user&password */}
                 </div>
               }</body>
             </div>
