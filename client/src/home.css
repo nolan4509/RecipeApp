@@ -1,27 +1,27 @@
 /* divStyle */
 .rowSpacing {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 /* divStyle2 */
 .tileStyleA {
-  margin-bottom: 10px;
-  background-color: #ffd38b;
+    margin-bottom: 10px;
+    background-color: #ffd38b;
 }
 
 /* divStyle3 */
 .tileStyleB {
-  margin-bottom: 10px;
-  background-color: #ffc57e;
+    margin-bottom: 10px;
+    background-color: #ffc57e;
 }
 
 /* bodyStyle */
-.bodyStyle= {
-  background-image: 'url(http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg)';
+.bodyStyle {
+    background-image: 'url(http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg)';
 }
 
 h1 {
-  text-align:
+    text-align: center;
 }
 
 /* All below is from login.css */
