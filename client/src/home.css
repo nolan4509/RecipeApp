@@ -1,3 +1,31 @@
+/* divStyle */
+.rowSpacing {
+  margin-bottom: 15px;
+}
+
+/* divStyle2 */
+.tileStyleA {
+  margin-bottom: 10px;
+  background-color: #ffd38b;
+}
+
+/* divStyle3 */
+.tileStyleB {
+  margin-bottom: 10px;
+  background-color: #ffc57e;
+}
+
+/* bodyStyle */
+.bodyStyle= {
+  background-image: 'url(http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg)';
+}
+
+h1 {
+  text-align:
+}
+
+/* All below is from login.css */
+/*
 body {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -5,37 +33,33 @@ body {
 }
 
 h1 {
-  text-align: center;
+	text-align: center;
 }
 
 h4 {
-  text-align: center;
+	text-align: center;
 }
 
 .homepage-recipe-tile {
-  margin-left: 1.2%;
-  margin-right: 1.2%;
+	margin-left: 1.2%;
+	margin-right: 1.2%;
 }
 
 .info-panel {
-  padding: 4px;
+	padding: 4px;
 }
-
 .form-signin {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
-
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
   margin-bottom: 10px;
 }
-
 .form-signin .checkbox {
   font-weight: 400;
 }
-
 .form-signin .form-control {
   position: relative;
   box-sizing: border-box;
@@ -43,19 +67,17 @@ h4 {
   padding: 10px;
   font-size: 16px;
 }
-
 .form-signin .form-control:focus {
   z-index: 2;
 }
-
 .form-signin input[type="email"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-
 .form-signin input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+*/
