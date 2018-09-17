@@ -17,8 +17,7 @@
 
 /* bodyStyle */
 .bodyStyle {
-    background-image: 'url(http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg)';
-    background-size: 200px;
+    background-image: url('http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg');
     background-color: #ffc57e;
 }
 

@@ -108,12 +108,12 @@ class Home extends Component {
     }
 
     render() {
-        return (<div>
+        return (<div className="bodyStyle">
             {/* Home */}
             <head>
                 {/* Required meta tags */}
-                <meta charSet="utf-8"/> {/* <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> */}
-                {/* Bootstrap CSS */}
+                <meta charSet="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
                 <link rel="stylesheet" href="home.css"/>
                 <title>Home Page</title>
@@ -180,98 +180,98 @@ class Home extends Component {
                     </Nav>
                 </Collapse>
             </Navbar>
-            <body className={styles.bodyStyle}>
-                {
-                    this.state.user
-                        ? <div>
-                                <div className="container">
-                                    <div className="row rowSpacing">
-                                        <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                            <h1>Chicken Salad</h1>
-                                            <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 4 | cook time: 20 minutes</h4>
-                                        </div>
-                                        <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                            <div className="homepage-recipe-tile">
-                                                <h1>Instant Pot Honey Garlic Chicken</h1>
-                                                <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                                <h4>serves: 4 | cook time: 30 minutes</h4>
-                                            </div>
-                                        </div>
-                                        <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                            <div className="homepage-recipe-tile">
-                                                <h1>General Tso’s Chicken</h1>
-                                                <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                                <h4>serves: 8 | cook time: 40 minutes</h4>
-                                            </div>
+
+            {
+                this.state.user
+                    ? <div>
+                            <div className="container">
+                                <div className="row rowSpacing">
+                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                        <h1>Chicken Salad</h1>
+                                        <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                        <h4>serves: 4 | cook time: 20 minutes</h4>
+                                    </div>
+                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                        <div className="homepage-recipe-tile">
+                                            <h1>Instant Pot Honey Garlic Chicken</h1>
+                                            <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                            <h4>serves: 4 | cook time: 30 minutes</h4>
                                         </div>
                                     </div>
-                                    <div className="row rowSpacing">
-                                        <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                            <h1>Chicken Salad</h1>
-                                            <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 4 | cook time: 20 minutes</h4>
-                                        </div>
-                                        <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                            <div className="homepage-recipe-tile">
-                                                <h1>Instant Pot Honey Garlic Chicken</h1>
-                                                <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                                <h4>serves: 4 | cook time: 30 minutes</h4>
-                                            </div>
-                                        </div>
-                                        <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                            <div className="homepage-recipe-tile">
-                                                <h1>General Tso’s Chicken</h1>
-                                                <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                                <h4>serves: 8 | cook time: 40 minutes</h4>
-                                            </div>
+                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                        <div className="homepage-recipe-tile">
+                                            <h1>General Tso’s Chicken</h1>
+                                            <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                            <h4>serves: 8 | cook time: 40 minutes</h4>
                                         </div>
                                     </div>
-                                    <div className="row rowSpacing">
-                                        <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                            <h1>Chicken Salad</h1>
-                                            <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 4 | cook time: 20 minutes</h4>
-                                        </div>
-                                        <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                            <div className="homepage-recipe-tile">
-                                                <h1>Instant Pot Honey Garlic Chicken</h1>
-                                                <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                                <h4>serves: 4 | cook time: 30 minutes</h4>
-                                            </div>
-                                        </div>
-                                        <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                            <div className="homepage-recipe-tile">
-                                                <h1>General Tso’s Chicken</h1>
-                                                <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                                <h4>serves: 8 | cook time: 40 minutes</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                                 </div>
-                            </div>
-                        : <div className="container">
-                                <form className="form-signin">
-                                    <h2 className="big">Please Login :)</h2>
-                                    <label for="inputEmail" className="sr-only">Email address</label>
-                                    {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
-                                    {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
-                                    <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required="required" autofocus="autofocus"/>
-                                    <label for="inputPassword" className="sr-only">Password</label>
-                                    {/* FOR BELOW value={userPassword} */}
-                                    {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
-                                    <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="required"/>
-                                    <div className="checkbox">
-                                        <label>
-                                            <input type="checkbox" value="remember-me"/>
-                                            Remember me (Todo)
-                                        </label>
+                                <div className="row rowSpacing">
+                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                        <h1>Chicken Salad</h1>
+                                        <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                        <h4>serves: 4 | cook time: 20 minutes</h4>
                                     </div>
-                                    <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
-                                </form>
+                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                        <div className="homepage-recipe-tile">
+                                            <h1>Instant Pot Honey Garlic Chicken</h1>
+                                            <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                            <h4>serves: 4 | cook time: 30 minutes</h4>
+                                        </div>
+                                    </div>
+                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                        <div className="homepage-recipe-tile">
+                                            <h1>General Tso’s Chicken</h1>
+                                            <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                            <h4>serves: 8 | cook time: 40 minutes</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row rowSpacing">
+                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                        <h1>Chicken Salad</h1>
+                                        <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                        <h4>serves: 4 | cook time: 20 minutes</h4>
+                                    </div>
+                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                        <div className="homepage-recipe-tile">
+                                            <h1>Instant Pot Honey Garlic Chicken</h1>
+                                            <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                            <h4>serves: 4 | cook time: 30 minutes</h4>
+                                        </div>
+                                    </div>
+                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                        <div className="homepage-recipe-tile">
+                                            <h1>General Tso’s Chicken</h1>
+                                            <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                            <h4>serves: 8 | cook time: 40 minutes</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
-                }</body>
+                        </div>
+                    : <div className="container">
+                            <form className="form-signin">
+                                <h2 className="big">Please Login :)</h2>
+                                <label for="inputEmail" className="sr-only">Email address</label>
+                                {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
+                                {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
+                                <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required="required" autofocus="autofocus"/>
+                                <label for="inputPassword" className="sr-only">Password</label>
+                                {/* FOR BELOW value={userPassword} */}
+                                {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
+                                <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="required"/>
+                                <div className="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="remember-me"/>
+                                        Remember me (Todo)
+                                    </label>
+                                </div>
+                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
+                            </form>
+                        </div>
+            }
             {/* Optional JavaScript */}
             {/* jQuery first, then Popper.js, then Bootstrap JS */}
             <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
