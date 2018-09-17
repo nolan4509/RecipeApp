@@ -1,9 +1,32 @@
 import React, {Component} from 'react';
-import {Navbar, Jumbotron, Button} from 'react-bootstrap';
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    Container,
+    Row,
+    Col,
+    Jumbotron,
+    Button,
+    DropdownItem,
+    DropdownToggle,
+    DropdownMenu,
+    UncontrolledDropdown,
+    Form,
+    Label,
+    Input,
+    InputGroup,
+    InputGroupAddon
+} from 'reactstrap';
+//import {Navbar, Jumbotron, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import firebase, {auth, provider} from './firebase.js';
 import './login.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+//import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import styles from './home.css';
 //import './App.css';
 //import ReactTooltip from 'react-tooltip';
@@ -15,13 +38,15 @@ class Home extends Component {
         this.handleChangeName = this.handleChangeName.bind(this)
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
+        this.toggle = this.toggle.bind(this);
         this.state = {
             userID: '',
             userName: '',
             userEmail: '',
             userRecipes: [],
             user: null,
-            submissionStatus: ''
+            submissionStatus: '',
+            isOpen: false
         }
     }
 
@@ -76,6 +101,12 @@ class Home extends Component {
         });
     }
 
+    toggle() {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+
     render() {
         return (<div>
             {/* Home */}
@@ -84,87 +115,72 @@ class Home extends Component {
                 <meta charSet="utf-8"/> {/* <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> */}
                 {/* Bootstrap CSS */}
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
-                <link rel="stylesheet" href="styles.css"/>
+                <link rel="stylesheet" href="home.css"/>
                 <title>Home Page</title>
             </head>
             {/* Home Page to be infinite scrolling, subcategories will have pagination */}
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <a className="navbar-brand" href="Home.html">Fuck the Microwave</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"/>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link" href="Home.html">Home
-                                <span className="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="NewRecipe.html">New Recipe</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="RecipeInfo.html">Favorites</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Quick Fix</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Breakfast</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Lunch</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Dinner</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Desserts</a>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <Navbar color="light" light="light" expand="lg">
+                <NavbarBrand href="Home.html">
+                    <h1>Fuck</h1>Fuck the Mircrowave</NavbarBrand>
+                <NavbarToggler onClick={this.toggle}/>
+                <Collapse isOpen={this.state.isOpen} navbar="navbar">
+                    <Nav className="mr-auto" navbar="navbar">
+                        <NavItem>
+                            <NavLink href="Home.html">Home</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="NewRecipe.html">New Recipe</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="RecipeInfo.html">Favorites</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="Home.html">Quick Fix</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="Home.html">Breakfast</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="Home.html">Lunch</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="Home.html">Dinner</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="Home.html">Desserts</NavLink>
+                        </NavItem>
+                        <UncontrolledDropdown nav="nav" inNavbar="inNavbar">
+                            <DropdownToggle nav="nav" caret="caret">
                                 Dropdown
-                            </a>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a className="dropdown-item" href="#">Action</a>
-                                <a className="dropdown-item" href="#">Another action</a>
-                                <div className="dropdown-divider"/>
-                                <a className="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                    </ul>
-                    <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-                </div>
-            </nav>
-            {/* <header>
-                <h1 className="big">Home</h1>
-                <div>
-                    <button id="myBooksButton" onClick={this.sellerHubClick}
-                            data-tip data-for='myBooksTip'>
-                        My Books
-                    </button>
-                    <ReactTooltip id='myBooksTip' aria-haspopup='true' border={true} effect='solid' place='bottom'>
-                        <font size='3'> This will bring you to your page where you can see all of the current books
-                            you are trying to sell.</font><br/><br/>
-                        <font size='3'> From here, you can update, remove, or add a new book post to sell.</font>
-                    </ReactTooltip>
-                    <button id="searchCoursesButton" onClick={this.courseHubClick}
-                    data-tip data-for='searchCoursesTip'>
-                        Search Courses
-                    </button>
-                    <ReactTooltip id='searchCoursesTip' aria-haspopup='true' border={true} effect='solid' place='right'>
-                        <font size='3'> This will bring you to the course hub page, where you can search for whatever course
-                            you need books for.</font><br/><br/>
-                        <font size='3'> Once you click search, you will see all available books for that course. Then just find the
-                            book you need and click on the email seller button next to it.</font>
-                    </ReactTooltip>
-                </div>
-              </header> */
-            }
-            <body className="bodyStyle">
+                            </DropdownToggle>
+                            <DropdownMenu right="right">
+                                <DropdownItem>
+                                    Action
+                                </DropdownItem>
+                                <DropdownItem>
+                                    Another Action
+                                </DropdownItem>
+                                <DropdownItem>
+                                    Something else here
+                                </DropdownItem>
+                                <DropdownItem divider="divider"/>
+                                <DropdownItem>
+                                    Reset..
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                        <InputGroup>
+                            <Form>
+                                <Input type="search" placeholder="Search" aria-label="Search"/>
+                                <InputGroupAddon addonType="append">
+                                    <Button type="submit">Search</Button>
+                                </InputGroupAddon>
+                            </Form>
+                        </InputGroup>
+                    </Nav>
+                </Collapse>
+            </Navbar>
+            <body className={styles.bodyStyle}>
                 {
                     this.state.user
                         ? <div>
