@@ -1,64 +1,43 @@
-import React, { Component } from 'react';
-import { Navbar, Jumbotron, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import firebase, { auth, provider } from './firebase.js';
-import './Login.css';
+import React, {Component} from 'react';
+import {Navbar, Jumbotron, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import firebase, {auth, provider} from './firebase.js';
+import './login.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import styles from './Login.css';
+import styles from './home.css';
 //import './App.css';
 //import ReactTooltip from 'react-tooltip';
 
-const divStyle = {
-  marginBottom : '15px'
-};
-
-const divStyle2 = {
-  marginBottom : '10px',
-  background : '#ffd38b'
-};
-
-const divStyle3 = {
-  marginBottom : '10px',
-  background : '#ffc57e'
-};
-
-const bodyStyle = {
-  backgroundImage: 'url(http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg)'
-};
-
-
 class Home extends Component {
-    constructor(props) {
-        super(props)
-        this.handleChangeEmail = this.handleChangeEmail.bind(this)
-        this.handleChangeName = this.handleChangeName.bind(this)
-        this.login = this.login.bind(this);
-        this.logout = this.logout.bind(this);
-        this.state = {
-            userID: '',
-            userName: '',
-            userEmail: '',
-            userRecipes: [],
-            user: null,
-            submissionStatus: ''
-        }
+  constructor(props) {
+    super(props)
+    this.handleChangeEmail = this.handleChangeEmail.bind(this)
+    this.handleChangeName = this.handleChangeName.bind(this)
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+    this.state = {
+      userID: '',
+      userName: '',
+      userEmail: '',
+      userRecipes: [],
+      user: null,
+      submissionStatus: ''
     }
-    /*
+  }
+
+  /*
     call the 'signOut' method on auth, and then using the Promise API
     we remove the user from our application's state. With 'this.state.user'
     now equal to null, the user will see the Log In button instead of the Log Out button.
     */
-    logout() {
-        auth.signOut()
-            .then(() => {
-                this.setState({
-                    user: null
-                });
-            });
-        this.props.history.push('/')
-    }
+  logout() {
+    auth.signOut().then(() => {
+      this.setState({user: null});
+    });
+    this.props.history.push('/')
+  }
 
-    /*
+  /*
     Here call the 'signInWithPopup' method from the auth module,
     and pass in our 'provider' Now when you click the 'login'
     button, it will trigger a popup that gives up the option to
@@ -69,102 +48,97 @@ class Home extends Component {
     property called '.user' that has all the information about the user who just signed in, we then
     store this inside of the state using 'setState'
     */
-    login() {
-        auth.signInWithPopup(provider)
-            .then((result) => {
-                const user = result.user;
-                this.setState({
-                    user
-                });
-            });
-        this.props.history.push('/home')
-    }
+  login() {
+    auth.signInWithPopup(provider).then((result) => {
+      const user = result.user;
+      this.setState({user});
+    });
+    this.props.history.push('/home')
+  }
 
-    handleChangeEmail(event) {
-        this.setState({
-            email : event.target.value,
-            userID : event.target.value.substr(0, event.target.value.indexOf('@'))
-        })
-    }
+  handleChangeEmail(event) {
+    this.setState({
+      email: event.target.value,
+      userID: event.target.value.substr(0, event.target.value.indexOf('@'))
+    })
+  }
 
-    handleChangeName(event) {
-        this.setState({
-            userName : event.target.value
-        })
-    }
+  handleChangeName(event) {
+    this.setState({userName: event.target.value})
+  }
 
-    componentDidMount() {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({ user }); // When user signs in, checks the firebase database to see
-                                        // if they were already previously authenticated, if so, restore
-            }
-        });
-    }
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({user}); // When user signs in, checks the firebase database to see
+        // if they were already previously authenticated, if so, restore
+      }
+    });
+  }
 
-    render() {
-        return (
-            <div>
-              {/* Home */}
+  render() {
+    return (<div>
+      {/* Home */}
 
-              {/* Required meta tags */}
-              <meta charSet="utf-8" />
-              {/*<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> */}
-              {/* Bootstrap CSS */}
-              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
-              <link rel="stylesheet" href="styles.css" />
-              <title>Home Page</title>
-              {/* Home Page to be infinite scrolling, subcategories will have pagination */}
-              <nav className="navbar navbar-expand-lg navbar-light bg-light">
-              <a className="navbar-brand" href="Home.html">Fuck the Microwave</a>
-              <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon" />
-              </button>
-              <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                  <a className="nav-link" href="Home.html">Home <span className="sr-only">(current)</span></a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="NewRecipe.html">New Recipe</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="RecipeInfo.html">Favorites</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Quick Fix</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Breakfast</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Lunch</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Dinner</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Desserts</a>
-                </li>
-                <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                  </a>
-                  <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a className="dropdown-item" href="#">Action</a>
-                    <a className="dropdown-item" href="#">Another action</a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">Something else here</a>
-                  </div>
-                </li>
-              </ul>
-              <form className="form-inline my-2 my-lg-0">
-                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
+      {/* Required meta tags */}
+      <meta charSet="utf-8"/> {/* <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> */}
+      {/* Bootstrap CSS */}
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
+      <link rel="stylesheet" href="styles.css"/>
+      <title>Home Page</title>
+      {/* Home Page to be infinite scrolling, subcategories will have pagination */}
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="Home.html">Fuck the Microwave</a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"/>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <a className="nav-link" href="Home.html">Home
+                <span className="sr-only">(current)</span>
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="NewRecipe.html">New Recipe</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="RecipeInfo.html">Favorites</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Quick Fix</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Breakfast</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Lunch</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Dinner</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Desserts</a>
+            </li>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a className="dropdown-item" href="#">Action</a>
+                <a className="dropdown-item" href="#">Another action</a>
+                <div className="dropdown-divider"/>
+                <a className="dropdown-item" href="#">Something else here</a>
               </div>
-              </nav>
-              {/* <header>
+            </li>
+          </ul>
+          <form className="form-inline my-2 my-lg-0">
+            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+      {/* <header>
                 <h1 className="big">Home</h1>
                 <div>
                     <button id="myBooksButton" onClick={this.sellerHubClick}
@@ -187,119 +161,107 @@ class Home extends Component {
                             book you need and click on the email seller button next to it.</font>
                     </ReactTooltip>
                 </div>
-              </header> */}
-              <body style={bodyStyle}>
-              {this.state.user ?
-                <div>
-                  <div className="container">
-                    <div className="row" style={divStyle}>
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle2}>
-                	  			<h1>Chicken Salad</h1>
-                				<img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                				<h4>serves: 4 | cook time: 20 minutes</h4>
-                			</div>
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle3}>
-                				<div className="homepage-recipe-tile">
-                		  			<h1>Instant Pot Honey Garlic Chicken</h1>
-                					<img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                					<h4>serves: 4 | cook time: 30 minutes</h4>
-                				</div>
-                			</div>
-                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle2}>
-                		    	<div className="homepage-recipe-tile">
-                		      		<h1>General Tso’s Chicken</h1>
-                					<img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                					<h4>serves: 8 | cook time: 40 minutes</h4>
-                				</div>
-                		    </div>
-                		</div>
-                		<div className="row" style={divStyle}>
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle3}>
-                	  			<h1>Chicken Salad</h1>
-                				<img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                				<h4>serves: 4 | cook time: 20 minutes</h4>
-                			</div>
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle2}>
-                				<div className="homepage-recipe-tile">
-                		  			<h1>Instant Pot Honey Garlic Chicken</h1>
-                					<img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                					<h4>serves: 4 | cook time: 30 minutes</h4>
-                				</div>
-                			</div>
-                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle3}>
-                		    	<div className="homepage-recipe-tile">
-                		      		<h1>General Tso’s Chicken</h1>
-                					<img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                					<h4>serves: 8 | cook time: 40 minutes</h4>
-                				</div>
-                		    </div>
-                		</div>
-                		<div className="row" style={divStyle}>
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle2}>
-                	  			<h1>Chicken Salad</h1>
-                				<img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                				<h4>serves: 4 | cook time: 20 minutes</h4>
-                			</div>
-                			<div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle3}>
-                				<div className="homepage-recipe-tile">
-                		  			<h1>Instant Pot Honey Garlic Chicken</h1>
-                					<img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                					<h4>serves: 4 | cook time: 30 minutes</h4>
-                				</div>
-                			</div>
-                		    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile" style={divStyle2}>
-                		    	<div className="homepage-recipe-tile">
-                		      		<h1>General Tso’s Chicken</h1>
-                					<img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                					<h4>serves: 8 | cook time: 40 minutes</h4>
-                				</div>
-                		    </div>
-                		</div>
-                    <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
-                  </div>
-                </div>
-                :
+              </header> */
+      }
+      <body className="bodyStyle">
+        {
+          this.state.user
+            ? <div>
                 <div className="container">
-                  <form className="form-signin">
-                      <h2 className="big">Please Login :)</h2>
-                      <label for="inputEmail" className="sr-only">Email address</label>
-                      {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
-                      {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
-                      <input
-                          type="email"
-                          id="inputEmail"
-                          className="form-control"
-                          placeholder="Email address"
-                          required
-                          autofocus
-                      />
-                      <label for="inputPassword" className="sr-only">Password</label>
-                      {/* FOR BELOW value={userPassword} */}
-                      {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
-                      <input
-                          type="password"
-                          id="inputPassword"
-                          className="form-control"
-                          placeholder="Password"
-                          required
-                      />
-                      <div className="checkbox">
-                          <label>
-                              <input type="checkbox" value="remember-me"/> Remember me (Todo)
-                          </label>
+                  <div className="row rowSpacing">
+                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                      <h1>Chicken Salad</h1>
+                      <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                      <h4>serves: 4 | cook time: 20 minutes</h4>
+                    </div>
+                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                      <div className="homepage-recipe-tile">
+                        <h1>Instant Pot Honey Garlic Chicken</h1>
+                        <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                        <h4>serves: 4 | cook time: 30 minutes</h4>
                       </div>
-                      <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
-                  </form>
+                    </div>
+                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                      <div className="homepage-recipe-tile">
+                        <h1>General Tso’s Chicken</h1>
+                        <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                        <h4>serves: 8 | cook time: 40 minutes</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row rowSpacing">
+                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                      <h1>Chicken Salad</h1>
+                      <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                      <h4>serves: 4 | cook time: 20 minutes</h4>
+                    </div>
+                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                      <div className="homepage-recipe-tile">
+                        <h1>Instant Pot Honey Garlic Chicken</h1>
+                        <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                        <h4>serves: 4 | cook time: 30 minutes</h4>
+                      </div>
+                    </div>
+                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                      <div className="homepage-recipe-tile">
+                        <h1>General Tso’s Chicken</h1>
+                        <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                        <h4>serves: 8 | cook time: 40 minutes</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row rowSpacing">
+                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                      <h1>Chicken Salad</h1>
+                      <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                      <h4>serves: 4 | cook time: 20 minutes</h4>
+                    </div>
+                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                      <div className="homepage-recipe-tile">
+                        <h1>Instant Pot Honey Garlic Chicken</h1>
+                        <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                        <h4>serves: 4 | cook time: 30 minutes</h4>
+                      </div>
+                    </div>
+                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                      <div className="homepage-recipe-tile">
+                        <h1>General Tso’s Chicken</h1>
+                        <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                        <h4>serves: 8 | cook time: 40 minutes</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                 </div>
-              }</body>
-              {/* Optional JavaScript */}
-              {/* jQuery first, then Popper.js, then Bootstrap JS */}
-              <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-              <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-            </div>
-        );
-    }
+              </div>
+            : <div className="container">
+                <form className="form-signin">
+                  <h2 className="big">Please Login :)</h2>
+                  <label for="inputEmail" className="sr-only">Email address</label>
+                  {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
+                  {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
+                  <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required="required" autofocus="autofocus"/>
+                  <label for="inputPassword" className="sr-only">Password</label>
+                  {/* FOR BELOW value={userPassword} */}
+                  {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
+                  <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="required"/>
+                  <div className="checkbox">
+                    <label>
+                      <input type="checkbox" value="remember-me"/>
+                      Remember me (Todo)
+                    </label>
+                  </div>
+                  <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
+                </form>
+              </div>
+        }</body>
+      {/* Optional JavaScript */}
+      {/* jQuery first, then Popper.js, then Bootstrap JS */}
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </div>);
+  }
 }
 
 export default Home;
