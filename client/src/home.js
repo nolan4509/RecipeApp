@@ -20,7 +20,13 @@ import {
     Label,
     Input,
     InputGroup,
-    InputGroupAddon
+    InputGroupAddon,
+    Card,
+    CardImg,
+    CardText,
+    CardBody,
+    CardTitle,
+    CardSubtitle
 } from 'reactstrap';
 //import {Navbar, Jumbotron, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
@@ -182,75 +188,79 @@ class Home extends Component {
             </Navbar>
 
             {
+                /* Below, visual differences between this code and the static html code are:
+                - Image borders are slightly smaller
+                - Text everywhere is slightly smaller...find css class changing this?
+                - Navbar is slightly lower than should be..not actually at the top of the page
+                - Search button is off color and sizing */
+            }
+            {
                 this.state.user
-                    ? <div>
-                            <div className="container">
-                                <div className="row rowSpacing">
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                        <h1>Chicken Salad</h1>
-                                        <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                        <h4>serves: 4 | cook time: 20 minutes</h4>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>Instant Pot Honey Garlic Chicken</h1>
-                                            <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 4 | cook time: 30 minutes</h4>
-                                        </div>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>General Tso’s Chicken</h1>
-                                            <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 8 | cook time: 40 minutes</h4>
-                                        </div>
+                    ? <Container>
+                            <Row className="row rowSpacing">
+                                <Col md="4" className="border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                    <Card style={{
+                                            backgroundColor: '#ffd38b'
+                                        }}>
+                                        <CardImg className="img-thumbnail mx-auto d-block" top="top" width="200" height="200" src="images/chickun.jpg" alt="ChickenSaladImage"/>
+                                        <CardBody>
+                                            <CardTitle>Chicken Salad</CardTitle>
+                                            <CardSubtitle>serves: 4 | cook time: 20 minutes</CardSubtitle>
+                                            <CardText>Dinner Meal</CardText>
+                                            <Button>Button</Button>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                                <Col md="4" className="border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                    <Card style={{
+                                            backgroundColor: '#ffc57e'
+                                        }}>
+                                        <CardImg className="img-thumbnail mx-auto d-block" top="top" width="200" height="200" src="images/eeffreef.jpg" alt="HoneyPotGarlicImage"/>
+                                        <CardBody>
+                                            <CardTitle>Instant Pot Honey Garlic Chicken</CardTitle>
+                                            <CardSubtitle>serves: 4 | cook time: 30 minutes</CardSubtitle>
+                                            <CardText>Dinner Meal</CardText>
+                                            <Button>Button</Button>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                                <Col md="4" className="border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                    <Card style={{
+                                            backgroundColor: '#ffd38b'
+                                        }}>
+                                        <CardImg className="img-thumbnail mx-auto d-block" top="top" width="200" height="200" src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage"/>
+                                        <CardBody>
+                                            <CardTitle>General Tso’s Chicken</CardTitle>
+                                            <CardSubtitle>serves: 8 | cook time: 40 minutes</CardSubtitle>
+                                            <CardText>Dinner Meal</CardText>
+                                            <Button>Button</Button>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <div className="row rowSpacing">
+                                <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                    <h1>Chicken Salad</h1>
+                                    <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                    <h4>serves: 4 | cook time: 20 minutes</h4>
+                                </div>
+                                <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                    <div className="homepage-recipe-tile">
+                                        <h1>Instant Pot Honey Garlic Chicken</h1>
+                                        <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                        <h4>serves: 4 | cook time: 30 minutes</h4>
                                     </div>
                                 </div>
-                                <div className="row rowSpacing">
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                        <h1>Chicken Salad</h1>
-                                        <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                        <h4>serves: 4 | cook time: 20 minutes</h4>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>Instant Pot Honey Garlic Chicken</h1>
-                                            <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 4 | cook time: 30 minutes</h4>
-                                        </div>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>General Tso’s Chicken</h1>
-                                            <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 8 | cook time: 40 minutes</h4>
-                                        </div>
+                                <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                    <div className="homepage-recipe-tile">
+                                        <h1>General Tso’s Chicken</h1>
+                                        <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                        <h4>serves: 8 | cook time: 40 minutes</h4>
                                     </div>
                                 </div>
-                                <div className="row rowSpacing">
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                        <h1>Chicken Salad</h1>
-                                        <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                        <h4>serves: 4 | cook time: 20 minutes</h4>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>Instant Pot Honey Garlic Chicken</h1>
-                                            <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 4 | cook time: 30 minutes</h4>
-                                        </div>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>General Tso’s Chicken</h1>
-                                            <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 8 | cook time: 40 minutes</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
-                        </div>
+                            <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
+                        </Container>
                     : <div className="container">
                             <form className="form-signin">
                                 <h2 className="big">Please Login :)</h2>
