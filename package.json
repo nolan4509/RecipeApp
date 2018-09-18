@@ -16,7 +16,9 @@
     "express": "^4.16.3",
     "express-param": "^1.0.2",
     "firebase": "^4.13.1",
+    "hoek": "^5.0.4",
     "node-fetch": "1.7.3",
+    "npm": "^6.4.0",
     "password-generator": "^2.1.0"
   },
   "devDependencies": {
