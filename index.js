@@ -1,4 +1,5 @@
 const express = require('express');
+const myParser = require('body-parser')
 const fetcher = require('express-param');
 const app = express();
 app.use(fetcher());
@@ -17,7 +18,7 @@ Scenarios:
 		- View a users recipes
 			GET /recipes/user/:userID
 		- Create and post a Recipe
-			POST /recipes/newRecipe/user/:userID
+			POST /newRecipe
 		- Update an existing recipe
 			PUT /recipes/update/user/:userID
 		- Remove an existing recipe
@@ -104,6 +105,10 @@ var config = {
 };
 firebase.initializeApp(config);
 
+//var urlencodedparser = myParser.urlencoded({extended: false});
+app.use(myParser.urlencoded({ // to support URL-encoded bodies
+    extended: true
+}));
 //test data
 let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net');
 let testUserArray = [testUser];
@@ -148,40 +153,44 @@ https://stackoverflow.com/questions/15134199/how-to-split-and-modify-a-string-in
 ============================================= */
 
 //variable argument test
-app.get('test/*', function(req, res) {
-    console.log("Got parameters : " + req.params[0]);
-    let paramArray = req.params;
-    console.log(paramArray[1]);
+app.get('/newRecipe', function(req, res) {
+    res.sendFile(__dirname + '/client/public/NewRecipe.html');
 });
-/* http://localhost:5000/recipes/user/8675309/newRecipe/666/Da Beast/Unholy/Demon/Demonic/[{"ingredient":"Goat Blood","quantity":666,"unit":"g"}]/eat my butt buttnutt/666/false/false/false */
 
 // Creator - Create and post a Recipe
-app.post('recipes/user/:userID/newRecipe/:recId/:recipeName/:category/:ethnicity/:difficulty/:instructions/:cookTime/:vegetarian/:vegan/:glutenFree/*', function(req, res) {
-    let requiredParams = ['userID'];
-    let optionalParams = ['number:userID|=0'];
-    let userID = Number(req.params.userID);
-    let recipeID = Number(req.params.recId);
-    let recipeName = String(req.params.recipeName);
-    let category = String(req.params.category);
-    let ethnicity = String(req.params.ethnicity);
-    let difficulty = String(req.params.difficulty);
-    let instructions = String(req.params.instructions);
-    let cookTime = Number(req.params.cookTime);
-    let vegetarian = (req.params.vegetarian);
-    let vegan = (req.params.vegan);
-    let glutenFree = (req.params.glutenFree);
-    // start at 14
-    let ingArray = [];
-    let paramCount = Number(req.params);
-
-    // Add function to find user object from ID
-
+app.post('/newRecipe', function(req, res) {
+    console.log(req.body);
+    let recipeTitle = String(req.body.recipeTitleField);
+    //console.log(recipeTitle);
+    let recipeID = Number(req.body.recipeIDField);
+    let userID = Number(req.body.authorIDField);
+    let category = String(req.body.categoryField);
+    let ethnicity = String(req.body.ethnicityField);
+    let difficulty = String(req.body.difficultyField);
+    let instructions = String(req.body.recipeInstructionsField);
+    let cookTime = Number(req.body.cookTimeField);
+    let vegetarian = false;
+    let vegan = false;
+    let glutenFree = false;
+    if (req.body.vegetarianCheck == "TRUE") {
+        vegetarian = true;
+    };
+    if (req.body.veganCheck == "TRUE") {
+        vegan = true;
+    };
+    if (req.body.glutenCheck == "TRUE") {
+        glutenFree = true;
+    };
+    /*
     let newRecipe = new Recipe(recipeName, category, ethnicity, difficulty, ingArray, instructions, cookTime, vegetarian, vegan, glutenFree);
     let newPost = new RecipePost(recipeID, userID,
-    /* tempVariable */
-    newRecipe, []);
+
+    tempVariable
+    newRecipe,
+    []);
     standInDB.push(newPost);
-    return;
+    */
+    res.sendFile(__dirname + '/client/public/NewRecipe.html')
 });
 
 // Function for searching by post id
