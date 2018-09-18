@@ -10,24 +10,27 @@ import {
     Container,
     Row,
     Col,
-    Jumbotron,
     Button,
     DropdownItem,
     DropdownToggle,
     DropdownMenu,
     UncontrolledDropdown,
     Form,
-    Label,
     Input,
     InputGroup,
-    InputGroupAddon
+    InputGroupAddon,
+    Card,
+    CardImg,
+    CardText,
+    CardBody,
+    CardTitle,
+    CardSubtitle
 } from 'reactstrap';
-//import {Navbar, Jumbotron, Button} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
-import firebase, {auth, provider} from './firebase.js';
-import './login.css';
+//import {Link} from 'react-router-dom';
+import {auth, provider} from './firebase.js';
+import './home.css';
+//import styles from './home.css';
 //import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import styles from './home.css';
 //import './App.css';
 //import ReactTooltip from 'react-tooltip';
 
@@ -111,173 +114,176 @@ class Home extends Component {
         return (<div className="bodyStyle">
             {/* Home */}
             <head>
-                {/* Required meta tags */}
-                <meta charSet="utf-8"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
                 <link rel="stylesheet" href="home.css"/>
-                <title>Home Page</title>
             </head>
             {/* Home Page to be infinite scrolling, subcategories will have pagination */}
-            <Navbar color="light" light="light" expand="lg">
-                <NavbarBrand href="Home.html">
-                    <h1>Fuck</h1>Fuck the Mircrowave</NavbarBrand>
-                <NavbarToggler onClick={this.toggle}/>
-                <Collapse isOpen={this.state.isOpen} navbar="navbar">
-                    <Nav className="mr-auto" navbar="navbar">
-                        <NavItem>
-                            <NavLink href="Home.html">Home</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="NewRecipe.html">New Recipe</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="RecipeInfo.html">Favorites</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="Home.html">Quick Fix</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="Home.html">Breakfast</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="Home.html">Lunch</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="Home.html">Dinner</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="Home.html">Desserts</NavLink>
-                        </NavItem>
-                        <UncontrolledDropdown nav="nav" inNavbar="inNavbar">
-                            <DropdownToggle nav="nav" caret="caret">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="Home.html">Fuck the Microwave</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="Home.html">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="NewRecipe.html">New Recipe</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="RecipeInfo.html">Favorites</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Quick Fix</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Breakfast</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Lunch</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Dinner</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Desserts</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Dropdown
-                            </DropdownToggle>
-                            <DropdownMenu right="right">
-                                <DropdownItem>
-                                    Action
-                                </DropdownItem>
-                                <DropdownItem>
-                                    Another Action
-                                </DropdownItem>
-                                <DropdownItem>
-                                    Something else here
-                                </DropdownItem>
-                                <DropdownItem divider="divider"/>
-                                <DropdownItem>
-                                    Reset..
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
-                        <InputGroup>
-                            <Form>
-                                <Input type="search" placeholder="Search" aria-label="Search"/>
-                                <InputGroupAddon addonType="append">
-                                    <Button type="submit">Search</Button>
-                                </InputGroupAddon>
-                            </Form>
-                        </InputGroup>
-                    </Nav>
-                </Collapse>
-            </Navbar>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
 
             {
                 this.state.user
-                    ? <div>
-                            <div className="container">
-                                <div className="row rowSpacing">
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                        <h1>Chicken Salad</h1>
-                                        <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                        <h4>serves: 4 | cook time: 20 minutes</h4>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>Instant Pot Honey Garlic Chicken</h1>
-                                            <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 4 | cook time: 30 minutes</h4>
-                                        </div>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>General Tso’s Chicken</h1>
-                                            <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 8 | cook time: 40 minutes</h4>
-                                        </div>
+                    ? <Container>
+                            <div className="row rowSpacing">
+                                <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                    <h1>Chicken Salad</h1>
+                                    <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                    <h4>serves: 4 | cook time: 20 minutes</h4>
+                                </div>
+                                <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                    <div className="homepage-recipe-tile">
+                                        <h1>Instant Pot Honey Garlic Chicken</h1>
+                                        <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                        <h4>serves: 4 | cook time: 30 minutes</h4>
                                     </div>
                                 </div>
-                                <div className="row rowSpacing">
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                        <h1>Chicken Salad</h1>
-                                        <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                        <h4>serves: 4 | cook time: 20 minutes</h4>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>Instant Pot Honey Garlic Chicken</h1>
-                                            <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 4 | cook time: 30 minutes</h4>
-                                        </div>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>General Tso’s Chicken</h1>
-                                            <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 8 | cook time: 40 minutes</h4>
-                                        </div>
+                                <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                    <div className="homepage-recipe-tile">
+                                        <h1>General Tso’s Chicken</h1>
+                                        <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                        <h4>serves: 8 | cook time: 40 minutes</h4>
                                     </div>
                                 </div>
-                                <div className="row rowSpacing">
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                        <h1>Chicken Salad</h1>
-                                        <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                        <h4>serves: 4 | cook time: 20 minutes</h4>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>Instant Pot Honey Garlic Chicken</h1>
-                                            <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 4 | cook time: 30 minutes</h4>
-                                        </div>
-                                    </div>
-                                    <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                        <div className="homepage-recipe-tile">
-                                            <h1>General Tso’s Chicken</h1>
-                                            <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                            <h4>serves: 8 | cook time: 40 minutes</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
-                        </div>
-                    : <div className="container">
-                            <form className="form-signin">
-                                <h2 className="big">Please Login :)</h2>
-                                <label for="inputEmail" className="sr-only">Email address</label>
-                                {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
-                                {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
-                                <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required="required" autofocus="autofocus"/>
-                                <label for="inputPassword" className="sr-only">Password</label>
-                                {/* FOR BELOW value={userPassword} */}
-                                {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
-                                <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="required"/>
-                                <div className="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="remember-me"/>
-                                        Remember me (Todo)
-                                    </label>
+
+                            <div className="row rowSpacing">
+                                <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                    <h1>Chicken Salad</h1>
+                                    <img src="images/chickun.jpg" alt="ChickenSaladImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                    <h4>serves: 4 | cook time: 20 minutes</h4>
                                 </div>
-                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
-                            </form>
-                        </div>
+                                <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                    <div className="homepage-recipe-tile">
+                                        <h1>Instant Pot Honey Garlic Chicken</h1>
+                                        <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                        <h4>serves: 4 | cook time: 30 minutes</h4>
+                                    </div>
+                                </div>
+                                <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                    <div className="homepage-recipe-tile">
+                                        <h1>General Tso’s Chicken</h1>
+                                        <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                        <h4>serves: 8 | cook time: 40 minutes</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <Row className="row rowSpacing">
+                                <Col md="4" className="border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                    <Card style={{
+                                            backgroundColor: '#ffd38b'
+                                        }}>
+                                        <CardImg className="img-thumbnail mx-auto d-block" top="top" width="200" height="200" src="images/chickun.jpg" alt="ChickenSaladImage"/>
+                                        <CardBody>
+                                            <CardTitle>Chicken Salad</CardTitle>
+                                            <CardSubtitle>serves: 4 | cook time: 20 minutes</CardSubtitle>
+                                            <CardText>Dinner Meal</CardText>
+                                            <Button>Button</Button>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                                <Col md="4" className="border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+                                    <Card style={{
+                                            backgroundColor: '#ffc57e'
+                                        }}>
+                                        <CardImg className="img-thumbnail mx-auto d-block" top="top" width="200" height="200" src="images/eeffreef.jpg" alt="HoneyPotGarlicImage"/>
+                                        <CardBody>
+                                            <CardTitle>Instant Pot Honey Garlic Chicken</CardTitle>
+                                            <CardSubtitle>serves: 4 | cook time: 30 minutes</CardSubtitle>
+                                            <CardText>Dinner Meal</CardText>
+                                            <Button>Button</Button>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                                <Col md="4" className="border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
+                                    <Card style={{
+                                            backgroundColor: '#ffd38b'
+                                        }}>
+                                        <CardImg className="img-thumbnail mx-auto d-block" top="top" width="200" height="200" src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage"/>
+                                        <CardBody>
+                                            <CardTitle>General Tso’s Chicken</CardTitle>
+                                            <CardSubtitle>serves: 8 | cook time: 40 minutes</CardSubtitle>
+                                            <CardText>Dinner Meal</CardText>
+                                            <Button>Button</Button>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
+                        </Container>
+                    : <div className="container">
+                        {/* This is displayed if the user isn't logged in. */
+                        }
+                        <form className="form-signin">
+                            <h2 className="big">Please Login :)</h2>
+                            <label for="inputEmail" className="sr-only">Email address</label>
+                            {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
+                            {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
+                            <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required="required" autofocus="autofocus"/>
+                            <label for="inputPassword" className="sr-only">Password</label>
+                            {/* FOR BELOW value={userPassword} */}
+                            {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
+                            <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="required"/>
+                            <div className="checkbox">
+                                <label>
+                                    <input type="checkbox" value="remember-me"/>
+                                    Remember me (Todo)
+                                </label>
+                            </div>
+                            <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
+                        </form>
+                    </div>
             }
-            {/* Optional JavaScript */}
-            {/* jQuery first, then Popper.js, then Bootstrap JS */}
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        </div>);
+            </div>);
     }
 }
 
