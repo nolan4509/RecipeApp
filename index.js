@@ -148,9 +148,10 @@ https://stackoverflow.com/questions/15134199/how-to-split-and-modify-a-string-in
 ============================================= */
 
 //variable argument test
-app.get('root/*', function(req, res) {
+app.get('test/*', function(req, res) {
     console.log("Got parameters : " + req.params[0]);
-    let paramArray =
+    let paramArray = req.params;
+    console.log(paramArray[1]);
 });
 /* http://localhost:5000/recipes/user/8675309/newRecipe/666/Da Beast/Unholy/Demon/Demonic/[{"ingredient":"Goat Blood","quantity":666,"unit":"g"}]/eat my butt buttnutt/666/false/false/false */
 
@@ -171,7 +172,7 @@ app.post('recipes/user/:userID/newRecipe/:recId/:recipeName/:category/:ethnicity
     let glutenFree = (req.params.glutenFree);
     // start at 14
     let ingArray = [];
-    let paramCount = Number(req.params)
+    let paramCount = Number(req.params);
 
     // Add function to find user object from ID
 
