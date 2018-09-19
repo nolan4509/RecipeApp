@@ -56,6 +56,27 @@ class Login extends Component {
         });
     }
 
+    /*  From TextBook App
+    login = () => {
+
+        fetch(`/add/user/${this.state.userName}/${this.state.userID}/${this.state.email}`, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }
+        }).then(
+            this.setState({
+                submissionStatus: `Welcome`
+            }))
+            .catch((ex) => {
+                console.log('parsing failed', ex)
+            })
+
+        this.props.history.push("/home")
+    }
+    */
+
     handleChangeEmail(event) {
         this.setState({
             userEmail: event.target.value,
