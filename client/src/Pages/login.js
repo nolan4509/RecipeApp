@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
-//import { Navbar, Jumbotron, Button } from 'react-bootstrap';
-//import { Link } from 'react-router-dom';
-import/* firebase, */
-{auth, provider}
-from './firebase.js';
-import './login.css'; //WHY IS THIS HERE IF THE BOTTOM ONE IS TOO??
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-//import styles from './login.css'; THIS IS ALREADY HERE, IS IT WHAT I NEED?
+import './login.css';
+import {auth, provider} from '../firebase.js';
 
 class Login extends Component {
     constructor(props) {
