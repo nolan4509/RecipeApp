@@ -1,27 +1,26 @@
-/* divStyle */
 .rowSpacing {
     margin-bottom: 15px;
 }
 
-/* divStyle2 */
 .tileStyleA {
     margin-bottom: 10px;
     background-color: #ffd38b;
 }
 
-/* divStyle3 */
 .tileStyleB {
     margin-bottom: 10px;
     background-color: #ffc57e;
 }
 
-/* bodyStyle */
 .bodyStyle {
     background-image: url('http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg');
-    background-color: #ffc57e;
 }
 
 h1 {
+    text-align: center;
+}
+
+h4 {
     text-align: center;
 }
 
@@ -34,53 +33,42 @@ h1 {
     padding: 4px;
 }
 
-/* All below is from login.css */
-/*
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
-}
-
-h1 {
-	text-align: center;
-}
-
-h4 {
-	text-align: center;
-}
-
-
+/* Form stuff from login? */
 .form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
 }
+
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
+
 .form-signin .checkbox {
-  font-weight: 400;
+    font-weight: 400;
 }
+
 .form-signin .form-control {
-  position: relative;
-  box-sizing: border-box;
-  height: auto;
-  padding: 10px;
-  font-size: 16px;
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
 }
+
 .form-signin .form-control:focus {
-  z-index: 2;
+    z-index: 2;
 }
+
 .form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 }
+
 .form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
-*/
