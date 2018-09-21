@@ -135,7 +135,7 @@ let testUserArray = [];
 testUserArray[0] = testUser;
 let testSpaghetti = new Ingredient('Spaghetti', 200, 'g');
 let testBeef = new Ingredient('Beef', 100, 'g');
-let testSauce = new Ingredient('Tomato Sauce', 10, 'fl oz');
+let testSauce = new Ingredient('Tomato Sauce', 10, 'fl oz';
 let testIngredientArray = [];
 testIngredientArray[0] = testSpaghetti,
 testBeef,
