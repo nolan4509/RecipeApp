@@ -1,15 +1,11 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-// import $ from 'jquery';
-// import Popper from 'popper.js';
-//import 'bootstrap/dist/js/bootstrap.js';
-////import 'bootstrap/dist/css/bootstrap-theme.css';
+import App from './App';
 import {render} from 'react-dom';
-import Main from './routes';
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter} from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
+import 'bootstrap/dist/css/bootstrap.css';
 
 render((<BrowserRouter>
-    <Main/>
+    <App/>
 </BrowserRouter>), document.getElementById('root'));
 registerServiceWorker();
