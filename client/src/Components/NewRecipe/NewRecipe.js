@@ -10,20 +10,9 @@ class NewRecipe extends Component {
         }
     }
 
-    this.name = name; //string
-    this.category = category; //string
-    this.ethnicity = ethnicity; //string
-    this.difficulty = difficulty; //string
-    this.ingredientArray = ingredientArray; //array of Ingredient objects
-    this.instructions = instructions; //string (maybe array?)
-    this.cookTime = cookTime; //integer
-    this.vegetarian = vegetarian; //boolean
-    this.vegan = vegan; //boolean
-    this.glutenFree = glutenFree; //boolean
-
     static defaultProps = {
         categories: [
-            'Web Design', 'Web Development', 'Mobile Development'
+            'Breakfast', 'Lunch', 'Dinner'
         ],
         ethnicities: [
             'American', 'Asian', 'Mexican', 'Other'

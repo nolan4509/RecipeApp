@@ -98,16 +98,40 @@ class Login extends Component {
             recipes: [
                 {
                     id: uuid.v4(),
-                    title: 'Business Website',
-                    category: 'Web Deisgn'
+                    name: 'Honey Pot Chicken',
+                    category: 'Dinner',
+                    ethnicity: 'American',
+                    difficulty: 'Medium',
+                    ingredients: 'Chicken, Onions, SAUCE',
+                    instructions: 'COOK THE CHICKEN ',
+                    cookTime: 'Three Days',
+                    vegetarian: 'No',
+                    vegan: 'No',
+                    glutenFree: 'No'
                 }, {
                     id: uuid.v4(),
-                    title: 'Social App',
-                    category: 'Mobile Development'
+                    name: 'Chicken Salad',
+                    category: 'Dinner',
+                    ethnicity: 'American',
+                    difficulty: 'Medium',
+                    ingredients: 'Chicken, Onions, SAUCEY SAUCE',
+                    instructions: 'MAKE THE SALAD',
+                    cookTime: 'TWO Days',
+                    vegetarian: 'No',
+                    vegan: 'No',
+                    glutenFree: 'No'
                 }, {
                     id: uuid.v4(),
-                    title: 'Ecommerce Shopping Cart',
-                    category: 'Web Development'
+                    name: 'Ramen',
+                    category: 'Lunch',
+                    ethnicity: 'American',
+                    difficulty: 'Medium',
+                    ingredients: 'Noodles, Spicey Goodness',
+                    instructions: 'Boil Water and then Shove Noodles in it.',
+                    cookTime: 'Three Minutes',
+                    vegetarian: 'No',
+                    vegan: 'No',
+                    glutenFree: 'No'
                 }
             ]
         });

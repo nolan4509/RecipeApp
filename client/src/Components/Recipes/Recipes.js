@@ -11,7 +11,7 @@ class Recipes extends Component {
         let recipeItems;
         if (this.props.recipes) {
             recipeItems = this.props.recipes.map(recipe => {
-                //console.log(recipe);
+                console.log(recipe);
                 return (<RecipeItem onDelete={this.deleteRecipe.bind(this)} key={recipe.title} recipe={recipe}/>);
             });
         }
