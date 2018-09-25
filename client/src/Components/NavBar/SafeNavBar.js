@@ -34,12 +34,12 @@ class SafeNavBar extends Component {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="Home.html">Home
+                        <a class="nav-link" href="/home">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="NewRecipe.html">New Recipe</a>
+                        <a class="nav-link" href="/NewRecipe">New Recipe</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="RecipeInfo.html">Favorites</a>
@@ -69,6 +69,12 @@ class SafeNavBar extends Component {
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Something else here</a>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Recipes">Recipes</a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">

@@ -4,7 +4,7 @@ import {auth, provider} from '../firebase.js';
 
 import Recipes from '../Components/Recipes/Recipes';
 import NewRecipe from '../Components/NewRecipe/NewRecipe';
-import uuid from 'uuid';
+import SafeNavBar from '../Components/NavBar/SafeNavBar';
 
 class Login extends Component {
     constructor(props) {
@@ -18,7 +18,6 @@ class Login extends Component {
             userName: '',
             userEmail: '',
             userRecipes: [],
-            recipes: [],
             user: null,
             submissionStatus: ''
         }
@@ -93,50 +92,6 @@ class Login extends Component {
         this.setState({userName: event.target.value})
     }
 
-    getRecipes() {
-        this.setState({
-            recipes: [
-                {
-                    id: uuid.v4(),
-                    name: 'Honey Pot Chicken',
-                    category: 'Dinner',
-                    ethnicity: 'American',
-                    difficulty: 'Medium',
-                    ingredients: 'Chicken, Onions, SAUCE',
-                    instructions: 'COOK THE CHICKEN ',
-                    cookTime: 'Three Days',
-                    vegetarian: 'No',
-                    vegan: 'No',
-                    glutenFree: 'No'
-                }, {
-                    id: uuid.v4(),
-                    name: 'Chicken Salad',
-                    category: 'Dinner',
-                    ethnicity: 'American',
-                    difficulty: 'Medium',
-                    ingredients: 'Chicken, Onions, SAUCEY SAUCE',
-                    instructions: 'MAKE THE SALAD',
-                    cookTime: 'TWO Days',
-                    vegetarian: 'No',
-                    vegan: 'No',
-                    glutenFree: 'No'
-                }, {
-                    id: uuid.v4(),
-                    name: 'Ramen',
-                    category: 'Lunch',
-                    ethnicity: 'American',
-                    difficulty: 'Medium',
-                    ingredients: 'Noodles, Spicey Goodness',
-                    instructions: 'Boil Water and then Shove Noodles in it.',
-                    cookTime: 'Three Minutes',
-                    vegetarian: 'No',
-                    vegan: 'No',
-                    glutenFree: 'No'
-                }
-            ]
-        });
-    }
-
     componentDidMount() {
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -144,23 +99,6 @@ class Login extends Component {
                 // if they were already previously authenticated, if so, restore
             }
         });
-    }
-
-    componentWillMount() {
-        this.getRecipes();
-    }
-
-    handleDeleteRecipe(id) {
-        let recipes = this.state.recipes;
-        let index = recipes.findIndex(x => x.id === id);
-        recipes.splice(index, 1);
-        this.setState({recipes: recipes});
-    }
-
-    handleNewRecipe(recipe) {
-        let recipes = this.state.recipes;
-        recipes.push(recipe);
-        this.setState({recipes: recipes});
     }
 
     render() {
@@ -199,8 +137,8 @@ class Login extends Component {
               </header> */
             }
             <body>
-                <NewRecipe newRecipe={this.handleNewRecipe.bind(this)}/>
-                <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this)}/> {
+                <SafeNavBar/> {/* <NewRecipe newRecipe={this.handleNewRecipe.bind(this)}/> */}
+                {/* <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this)}/> */}{
                     this.state.user
                         ? <div>
                                 <div className="user-profile">
