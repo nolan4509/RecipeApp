@@ -156,7 +156,7 @@ app.post('/add/user/:userName/:userID/:email', function(req, res) {
     let email = String(req.params.email);
 
     userArray[userArray.length] = new User(id, name, email);
-    database.child('Users/' + `${userID}`).set({ //store into firebase
+    database.child('Users/' + `${id}`).set({ //store into firebase
         userinfo: userArray[userArray.length - 1]
     });
     res.send(userArray[userArray.length - 1]);
