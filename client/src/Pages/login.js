@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import './login.css';
 import {auth, provider} from '../firebase.js';
 
-import Recipes from '../Components/Recipes/Recipes';
-import NewRecipe from '../Components/NewRecipe/NewRecipe';
 import SafeNavBar from '../Components/NavBar/SafeNavBar';
 
 class Login extends Component {

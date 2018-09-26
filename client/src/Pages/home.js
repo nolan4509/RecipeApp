@@ -2,25 +2,25 @@ import React, {Component} from 'react';
 import './home.css';
 import {auth, provider} from '../firebase.js';
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
+    // Collapse,
+    // Navbar,
+    // NavbarToggler,
+    // NavbarBrand,
+    // Nav,
+    // NavItem,
+    // NavLink,
     Container,
     Row,
     Col,
     Button,
-    DropdownItem,
-    DropdownToggle,
-    DropdownMenu,
-    UncontrolledDropdown,
-    Form,
-    Input,
-    InputGroup,
-    InputGroupAddon,
+    // DropdownItem,
+    // DropdownToggle,
+    // DropdownMenu,
+    // UncontrolledDropdown,
+    // Form,
+    // Input,
+    // InputGroup,
+    // InputGroupAddon,
     Card,
     CardImg,
     CardText,
@@ -29,7 +29,7 @@ import {
     CardSubtitle
 } from 'reactstrap';
 import SafeNavBar from '../Components/NavBar/SafeNavBar';
-import MainNavBar from '../Components/NavBar/MainNavBar';
+// import MainNavBar from '../Components/NavBar/MainNavBar';
 import TestComponent from '../Components/TestComponent/TestComponent';
 
 class Home extends Component {

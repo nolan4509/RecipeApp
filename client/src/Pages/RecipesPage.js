@@ -51,6 +51,54 @@ class RecipesPage extends Component {
                     vegetarian: 'No',
                     vegan: 'No',
                     glutenFree: 'No'
+                }, {
+                    id: uuid.v4(),
+                    name: 'Ramen',
+                    category: 'Lunch',
+                    ethnicity: 'American',
+                    difficulty: 'Medium',
+                    ingredients: 'Noodles, Spicey Goodness',
+                    instructions: 'Boil Water and then Shove Noodles in it.',
+                    cookTime: 'Three Minutes',
+                    vegetarian: 'No',
+                    vegan: 'No',
+                    glutenFree: 'No'
+                }, {
+                    id: uuid.v4(),
+                    name: 'Ramen',
+                    category: 'Lunch',
+                    ethnicity: 'American',
+                    difficulty: 'Medium',
+                    ingredients: 'Noodles, Spicey Goodness',
+                    instructions: 'Boil Water and then Shove Noodles in it.',
+                    cookTime: 'Three Minutes',
+                    vegetarian: 'No',
+                    vegan: 'No',
+                    glutenFree: 'No'
+                }, {
+                    id: uuid.v4(),
+                    name: 'Ramen',
+                    category: 'Lunch',
+                    ethnicity: 'American',
+                    difficulty: 'Medium',
+                    ingredients: 'Noodles, Spicey Goodness',
+                    instructions: 'Boil Water and then Shove Noodles in it.',
+                    cookTime: 'Three Minutes',
+                    vegetarian: 'No',
+                    vegan: 'No',
+                    glutenFree: 'No'
+                }, {
+                    id: uuid.v4(),
+                    name: 'Ramen',
+                    category: 'Lunch',
+                    ethnicity: 'American',
+                    difficulty: 'Medium',
+                    ingredients: 'Noodles, Spicey Goodness',
+                    instructions: 'Boil Water and then Shove Noodles in it.',
+                    cookTime: 'Three Minutes',
+                    vegetarian: 'No',
+                    vegan: 'No',
+                    glutenFree: 'No'
                 }
             ]
         });
