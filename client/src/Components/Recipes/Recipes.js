@@ -11,13 +11,15 @@ class Recipes extends Component {
         let recipeItems;
         if (this.props.recipes) {
             recipeItems = this.props.recipes.map(recipe => {
-                //console.log(recipe);
+                // console.log(recipe);
                 return (<RecipeItem onDelete={this.deleteRecipe.bind(this)} key={recipe.title} recipe={recipe}/>);
             });
         }
         return (<div className="Recipes">
             <h3>Latest Recipes</h3>
-            {recipeItems}
+            <div className="row rowSpacing">
+                {recipeItems}
+            </div>
         </div>);
     }
 }
