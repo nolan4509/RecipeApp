@@ -195,6 +195,7 @@ app.post('/newRecipe', function(req, res) {
     let recipeID = Number(req.body.recipeIDField);
     let authorID = Number(req.body.authorIDField);
     let category = String(req.body.categoryField);
+    // apparently this is lacist. professor wakefield says this should be cuisine
     let ethnicity = String(req.body.ethnicityField);
     let difficulty = String(req.body.difficultyField);
     let ingredients = String(req.body.ingredientsField);
@@ -259,7 +260,7 @@ app.get('/recipes/:recipeID', function(req, res) {
 
     // Search the database for a recipe with matching ID
     recipeArray.map(RP => {
-        if (RP.id === recipeSearchID) {
+        if (RP.id == recipeSearchID) {
             retRecipe = RP;
             res.send(JSON.stringify(retRecipes));
         }
