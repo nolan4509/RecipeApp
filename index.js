@@ -109,18 +109,12 @@ function updateUsers() { //load users from firebase to userArray
             let newEntry = true;
             for (var usrIndex = 0; usrIndex < userArray.length; usrIndex++) {
                 if (userArray[usrIndex].id == userNode.id) {
+                    console.log('updating user entry...');
                     userArray[usrIndex] = userNode;
                     newEntry = false;
                     break;
                 }
             }
-            // userArray.map(usr => {
-            //     if (userNode.id == usr.id) {
-            //         console.log('updating user entry...');
-            //         userArray[usr.index] = userNode;
-            //         newEntry = false;
-            //     }
-            // });
             if (newEntry) {
                 console.log('creating user entry...');
                 userArray[userArray.length] = userNode;
@@ -129,13 +123,28 @@ function updateUsers() { //load users from firebase to userArray
     });
     console.log('done!');
 }
-function updateRecipes() { //load recipes from firebase into recipeArray
 
+function updateRecipes() { //load recipes from firebase into recipeArray
+    console.log('updating recipes from database...');
     recipeDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
-            recipeArray[recipeArray.length] = new Recipe(childSnap.val().recipe.recipeID, childSnap.val().recipe.authorID, childSnap.val().recipe.name, childSnap.val().recipe.category, childSnap.val().recipe.ethnicity, childSnap.val().recipe.difficulty, childSnap.val().recipe.ingredients, childSnap.val().recipe.instructions, childSnap.val().recipe.cookTime, childSnap.val().recipe.vegetarian, childSnap.val().recipe.vegan, childSnap.val().recipe.glutenFree, childSnap.val().recipe.rating);
+            let recipeNode = new Recipe(childSnap.val().recipe.recipeID, childSnap.val().recipe.authorID, childSnap.val().recipe.name, childSnap.val().recipe.category, childSnap.val().recipe.ethnicity, childSnap.val().recipe.difficulty, childSnap.val().recipe.ingredients, childSnap.val().recipe.instructions, childSnap.val().recipe.cookTime, childSnap.val().recipe.vegetarian, childSnap.val().recipe.vegan, childSnap.val().recipe.glutenFree, childSnap.val().recipe.rating);
+            let newEntry = true;
+            for (var rcpIndex = 0; rcpIndex < recipeArray.length; rcpIndex++) {
+                if (recipeArray[rcpIndex].recipeID == recipeNode.recipeID) {
+                    console.log('updating recipe entry...');
+                    recipeArray[rcpIndex] = recipeNode;
+                    newEntry = false;
+                    break;
+                }
+            }
+            if (newEntry) {
+                console.log('creating recipe entry...');
+                recipeArray[recipeArray.length] = recipeNode;
+            }
         });
     });
+    console.log('done!');
 }
 
 //var urlencodedparser = myParser.urlencoded({extended: false});
