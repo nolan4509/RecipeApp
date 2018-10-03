@@ -127,18 +127,14 @@ class Home extends Component {
                                     <h4>serves: 4 | cook time: 20 minutes</h4>
                                 </div>
                                 <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                    <div className="homepage-recipe-tile">
-                                        <h1>Instant Pot Honey Garlic Chicken</h1>
-                                        <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                        <h4>serves: 4 | cook time: 30 minutes</h4>
-                                    </div>
+                                    <h1>Instant Pot Honey Garlic Chicken</h1>
+                                    <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                    <h4>serves: 4 | cook time: 30 minutes</h4>
                                 </div>
                                 <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                    <div className="homepage-recipe-tile">
-                                        <h1>General Tso’s Chicken</h1>
-                                        <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                        <h4>serves: 8 | cook time: 40 minutes</h4>
-                                    </div>
+                                    <h1>General Tso’s Chicken</h1>
+                                    <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                    <h4>serves: 8 | cook time: 40 minutes</h4>
                                 </div>
                             </div>
 
@@ -149,18 +145,14 @@ class Home extends Component {
                                     <h4>serves: 4 | cook time: 20 minutes</h4>
                                 </div>
                                 <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleA">
-                                    <div className="homepage-recipe-tile">
-                                        <h1>Instant Pot Honey Garlic Chicken</h1>
-                                        <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                        <h4>serves: 4 | cook time: 30 minutes</h4>
-                                    </div>
+                                    <h1>Instant Pot Honey Garlic Chicken</h1>
+                                    <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                    <h4>serves: 4 | cook time: 30 minutes</h4>
                                 </div>
                                 <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
-                                    <div className="homepage-recipe-tile">
-                                        <h1>General Tso’s Chicken</h1>
-                                        <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                                        <h4>serves: 8 | cook time: 40 minutes</h4>
-                                    </div>
+                                    <h1>General Tso’s Chicken</h1>
+                                    <img src="images/theGeneralsChicken.jpg" alt="GeneralTsosChickenImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                                    <h4>serves: 8 | cook time: 40 minutes</h4>
                                 </div>
                             </div>
                             <Row className="row rowSpacing">
