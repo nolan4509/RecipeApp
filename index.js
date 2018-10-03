@@ -14,27 +14,27 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 Scenarios:
 	(Creators)
 		- View a users recipes
-			GET /recipes/user/:userID
+			GET /recipes/:userID
 		- Create and post a Recipe
 			POST /newRecipe
 		- Update an existing recipe
-			PUT /recipes/update/user/:userID
+			PUT /recipes/update/:recipeID
 		- Remove an existing recipe
-			DELETE /recipes/deleteRecipe/user/:userID
+			DELETE /recipes/remove/:recipeID
 	(Consumers)
 		- View a recipe
-			GET /recipes/:postID
+			GET /recipes/:recipeID
 		- View all reviews for a recipe
-			GET /recipes/:postID/reviews
+			GET /recipes/:recipeID/reviews
 		- Create a review
-			POST /recipes/:postID/reviews/user/:userName/newReview
+			POST /recipes/:recipeID/reviews/user/:userName/newReview
 		- Update an existing review
-			PUT /recipes/:postID/reviews/user/:userName/update/:reviewID
+			PUT /recipes/:recipeID/reviews/user/:userName/update/:reviewID
 		- Remove an existing review
-			DELETE /recipes/:postID/reviews/:reviewID
+			DELETE /recipes/:recipeID/reviews/:reviewID
 	(Both)
 		- Create a new User account
-			POST /add/user/:userName/
+			POST /add/user/:userName/:userID/:email
 */
 
 //Primary recipe object
@@ -145,6 +145,24 @@ function updateRecipes() { //load recipes from firebase into recipeArray
         });
     });
     console.log('done!');
+}
+
+function removeRecipe(id) {
+    console.log('Removing Recipe...');
+    let authorID = null;
+    for (var index = 0; index < recipeArray.length; index++) {
+        if (id == recipeArray[index].recipeID) {
+            console.log(recipeArray);
+            console.log('Found!  removing...');
+            authorID = recipeArray[index].authorID;
+            recipeArray.splice(index, 1);
+            console.log(recipeArray);
+            console.log('...done!');
+            break;
+        }
+    }
+    console.log('id:' + authorID);
+    return authorID;
 }
 
 //var urlencodedparser = myParser.urlencoded({extended: false});
@@ -281,8 +299,8 @@ app.get('/recipes/:recipeID', function(req, res) {
 });
 
 // Creator - view a user's recipes
-app.get('/user/:searchID/recipes', function(req, res, next) {
-    let searchID = Number(req.params.searchID);
+app.get('/recipes/:userID', function(req, res, next) {
+    let searchID = Number(req.params.userID);
     let user = null;
     retRecipes = [];
 
@@ -307,6 +325,18 @@ app.get('/user/:searchID/recipes', function(req, res, next) {
         return;
     }
     res.send(JSON.stringify(retRecipes));
+});
+
+app.delete('/recipes/remove/:recipeID', function(req, res) {
+    let authorID = removeRecipe(Number(req.params.recipeID));
+    console.log(authorID);
+    if (authorID != null) {
+        database.child('/Recipes' + `${Number(req.params.recipeID)}`).delete();
+        console.log('recipe removed from firebase!');
+        // need to find a way to remove value from user's list of posts
+    } else {
+        console.log('recipe not found');
+    }
 });
 
 // Return reviews of a recipe using the recipe ID as a search term
