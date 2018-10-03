@@ -13,28 +13,28 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 /* New Comment
 Scenarios:
 	(Creators)
-		- View a users recipes - FULLY WORKING
-			GET /recipes/user/:userID
-		- Create and post a Recipe - FULLY WORKING
+		- View a users recipes
+			GET /recipes/:userID
+		- Create and post a Recipe
 			POST /newRecipe
-		- Update an existing recipe - NOT YET
-			PUT /recipes/update/user/:userID
-		- Remove an existing recipe - NOT YET
-			DELETE /recipes/deleteRecipe/user/:userID
+		- Update an existing recipe
+			PUT /recipes/update/:recipeID
+		- Remove an existing recipe
+			DELETE /recipes/remove/:recipeID
 	(Consumers)
-		- View a recipe - FULLY WORKING
-			GET /recipes/:postID
-		- View all reviews for a recipe - HOLD OFF
-			GET /recipes/:postID/reviews
-		- Create a review - HOLD OFF
-			POST /recipes/:postID/reviews/user/:userName/newReview
-		- Update an existing review - HOLD OFF
-			PUT /recipes/:postID/reviews/user/:userName/update/:reviewID
-		- Remove an existing review - HOLD OFF
-			DELETE /recipes/:postID/reviews/:reviewID
+		- View a recipe
+			GET /recipes/:recipeID
+		- View all reviews for a recipe
+			GET /recipes/:recipeID/reviews
+		- Create a review
+			POST /recipes/:recipeID/reviews/user/:userName/newReview
+		- Update an existing review
+			PUT /recipes/:recipeID/reviews/user/:userName/update/:reviewID
+		- Remove an existing review
+			DELETE /recipes/:recipeID/reviews/:reviewID
 	(Both)
-		- Create a new User account - FULLY WORKING
-			POST /add/user/:userName/
+		- Create a new User account
+			POST /add/user/:userName/:userID/:email
 */
 
 //Primary recipe object
@@ -147,6 +147,15 @@ function updateRecipes() { //load recipes from firebase into recipeArray
     console.log('done!');
 }
 
+function removeRecipe(var id) {
+    for (var index = 0; index < recipeArray.length; index++) {
+        if (id == recipeArray[index].recipeID) {
+            recipeArray.splice(index, 1);
+            break;
+        }
+    }
+}
+
 //var urlencodedparser = myParser.urlencoded({extended: false});
 app.use(myParser.urlencoded({ // to support URL-encoded bodies
     extended: true
@@ -180,7 +189,6 @@ https://stackoverflow.com/questions/15134199/how-to-split-and-modify-a-string-in
 ============================================= */
 
 //Both - Create new user account name id email bookpossts
-// FULLY WORKING
 app.post('/add/user/:userName/:userID/:email', function(req, res) {
     let id = String(req.params.userID);
     let name = String(req.params.userName);
@@ -194,13 +202,11 @@ app.post('/add/user/:userName/:userID/:email', function(req, res) {
 });
 
 //variable argument test
-// PURELY TESTING PURPOSES
 app.get('/newRecipe', function(req, res) {
     res.sendFile(__dirname + '/client/public/NewRecipe.html');
 });
 
 // Creator - Create and post a Recipe
-// FULLY WORKING
 app.post('/newRecipe', function(req, res) {
     let recipeTitle = String(req.body.recipeTitleField);
     //console.log(recipeTitle);
@@ -266,7 +272,6 @@ app.post('/newRecipe', function(req, res) {
 });
 
 // Search for Recipe by ID
-// FULLY WORKING
 app.get('/recipes/:recipeID', function(req, res) {
     let recipeSearchID = Number(req.params.recipeID);
     retRecipe = null;
@@ -285,9 +290,8 @@ app.get('/recipes/:recipeID', function(req, res) {
 });
 
 // Creator - view a user's recipes
-// FULLY WORKING
-app.get('/user/:searchID/recipes', function(req, res, next) {
-    let searchID = Number(req.params.searchID);
+app.get('/recipes/:userID', function(req, res, next) {
+    let searchID = Number(req.params.userID);
     let user = null;
     retRecipes = [];
 
