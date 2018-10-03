@@ -13,27 +13,27 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 /* New Comment
 Scenarios:
 	(Creators)
-		- View a users recipes
+		- View a users recipes - FULLY WORKING
 			GET /recipes/user/:userID
-		- Create and post a Recipe
+		- Create and post a Recipe - FULLY WORKING
 			POST /newRecipe
-		- Update an existing recipe
+		- Update an existing recipe - NOT YET
 			PUT /recipes/update/user/:userID
-		- Remove an existing recipe
+		- Remove an existing recipe - NOT YET
 			DELETE /recipes/deleteRecipe/user/:userID
 	(Consumers)
-		- View a recipe
+		- View a recipe - FULLY WORKING
 			GET /recipes/:postID
-		- View all reviews for a recipe
+		- View all reviews for a recipe - HOLD OFF
 			GET /recipes/:postID/reviews
-		- Create a review
+		- Create a review - HOLD OFF
 			POST /recipes/:postID/reviews/user/:userName/newReview
-		- Update an existing review
+		- Update an existing review - HOLD OFF
 			PUT /recipes/:postID/reviews/user/:userName/update/:reviewID
-		- Remove an existing review
+		- Remove an existing review - HOLD OFF
 			DELETE /recipes/:postID/reviews/:reviewID
 	(Both)
-		- Create a new User account
+		- Create a new User account - FULLY WORKING
 			POST /add/user/:userName/
 */
 
@@ -180,6 +180,7 @@ https://stackoverflow.com/questions/15134199/how-to-split-and-modify-a-string-in
 ============================================= */
 
 //Both - Create new user account name id email bookpossts
+// FULLY WORKING
 app.post('/add/user/:userName/:userID/:email', function(req, res) {
     let id = String(req.params.userID);
     let name = String(req.params.userName);
@@ -193,11 +194,13 @@ app.post('/add/user/:userName/:userID/:email', function(req, res) {
 });
 
 //variable argument test
+// PURELY TESTING PURPOSES
 app.get('/newRecipe', function(req, res) {
     res.sendFile(__dirname + '/client/public/NewRecipe.html');
 });
 
 // Creator - Create and post a Recipe
+// FULLY WORKING
 app.post('/newRecipe', function(req, res) {
     let recipeTitle = String(req.body.recipeTitleField);
     //console.log(recipeTitle);
@@ -263,6 +266,7 @@ app.post('/newRecipe', function(req, res) {
 });
 
 // Search for Recipe by ID
+// FULLY WORKING
 app.get('/recipes/:recipeID', function(req, res) {
     let recipeSearchID = Number(req.params.recipeID);
     retRecipe = null;
@@ -281,6 +285,7 @@ app.get('/recipes/:recipeID', function(req, res) {
 });
 
 // Creator - view a user's recipes
+// FULLY WORKING
 app.get('/user/:searchID/recipes', function(req, res, next) {
     let searchID = Number(req.params.searchID);
     let user = null;
