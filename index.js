@@ -57,11 +57,11 @@ class Recipe {
 }
 
 class User {
-    constructor(id, name, email) {
+    constructor(id, name, email, recipePosts) {
         this.id = id; //integer
         this.name = name; //string
         this.email = email; //string
-        this.recipePosts = []; //store integers of the post IDs they currently own
+        this.recipePosts = recipePosts; //store integers of the post IDs they currently own
         //this.recipes = []; array of RecipePost objects
     }
 }
@@ -102,18 +102,49 @@ let userDatabase = database.child('Users');
 let recipeDatabase = database.child('Recipes');
 
 function updateUsers() { //load users from firebase to userArray
+    console.log('updating users from database...')
     userDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
-            userArray[userArray.length] = new User(childSnap.val().userinfo.name, childSnap.val().userinfo.id, childSnap.val().userinfo.email, childSnap.val().userinfo.recipes)
+            let userNode = new User(childSnap.val().userinfo.id, childSnap.val().userinfo.name, childSnap.val().userinfo.email, childSnap.val().userinfo.recipePosts);
+            let newEntry = true;
+            for (var usrIndex = 0; usrIndex < userArray.length; usrIndex++) {
+                if (userArray[usrIndex].id == userNode.id) {
+                    console.log('updating user entry...');
+                    userArray[usrIndex] = userNode;
+                    newEntry = false;
+                    break;
+                }
+            }
+            if (newEntry) {
+                console.log('creating user entry...');
+                userArray[userArray.length] = userNode;
+            }
         });
     });
+    console.log('done!');
 }
+
 function updateRecipes() { //load recipes from firebase into recipeArray
+    console.log('updating recipes from database...');
     recipeDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
-            recipeArray[recipeArray.length] = new Recipe(childSnap.val().recipe.id, childSnap.val().recipe.author, childSnap.val().recipe.name, childSnap.val().recipe.category, childSnap.val().recipe.ethnicity, childSnap.val().recipe.difficulty, childSnap.val().recipe.ingredients, childSnap.val().recipe.instructions, childSnap.val().recipe.cookTime, childSnap.val().recipe.vegetarian, childSnap.val().recipe.vegan, childSnap.val().recipe.glutenFree, childSnap.val().recipe.rating);
+            let recipeNode = new Recipe(childSnap.val().recipe.recipeID, childSnap.val().recipe.authorID, childSnap.val().recipe.name, childSnap.val().recipe.category, childSnap.val().recipe.ethnicity, childSnap.val().recipe.difficulty, childSnap.val().recipe.ingredients, childSnap.val().recipe.instructions, childSnap.val().recipe.cookTime, childSnap.val().recipe.vegetarian, childSnap.val().recipe.vegan, childSnap.val().recipe.glutenFree, childSnap.val().recipe.rating);
+            let newEntry = true;
+            for (var rcpIndex = 0; rcpIndex < recipeArray.length; rcpIndex++) {
+                if (recipeArray[rcpIndex].recipeID == recipeNode.recipeID) {
+                    console.log('updating recipe entry...');
+                    recipeArray[rcpIndex] = recipeNode;
+                    newEntry = false;
+                    break;
+                }
+            }
+            if (newEntry) {
+                console.log('creating recipe entry...');
+                recipeArray[recipeArray.length] = recipeNode;
+            }
         });
     });
+    console.log('done!');
 }
 
 //var urlencodedparser = myParser.urlencoded({extended: false});
@@ -141,7 +172,6 @@ recipeArray[0] = testRecipe;
 
 updateUsers(); //loads users from firebase into userArray
 updateRecipes(); //loads recipePosts from firebase into recipeArray
-
 /* ====== HELPFUL LINKS =======================
 https://expressjs.com/en/guide/routing.html
 https://www.npmjs.com/package/express-param
@@ -155,7 +185,7 @@ app.post('/add/user/:userName/:userID/:email', function(req, res) {
     let name = String(req.params.userName);
     let email = String(req.params.email);
 
-    userArray[userArray.length] = new User(id, name, email);
+    userArray[userArray.length] = new User(id, name, email, []);
     database.child('Users/' + `${id}`).set({ //store into firebase
         userinfo: userArray[userArray.length - 1]
     });
@@ -169,12 +199,12 @@ app.get('/newRecipe', function(req, res) {
 
 // Creator - Create and post a Recipe
 app.post('/newRecipe', function(req, res) {
-    console.log(req.body);
     let recipeTitle = String(req.body.recipeTitleField);
     //console.log(recipeTitle);
     let recipeID = Number(req.body.recipeIDField);
     let authorID = Number(req.body.authorIDField);
     let category = String(req.body.categoryField);
+    // apparently this is lacist. professor wakefield says this should be cuisine
     let ethnicity = String(req.body.ethnicityField);
     let difficulty = String(req.body.difficultyField);
     let ingredients = String(req.body.ingredientsField);
@@ -196,9 +226,8 @@ app.post('/newRecipe', function(req, res) {
         glutenFree = true;
     };
     let user = null;
-
     userArray.map(usr => {
-        if (usr.id === authorID) {
+        if (usr.id == authorID) {
             user = usr;
         }
     });
@@ -206,16 +235,30 @@ app.post('/newRecipe', function(req, res) {
         res.send("User not found");
         return;
     }
+    // console.log(recipeArray[recipeArray.length - 1].recipeID);
+    // console.log(recipeArray + ' ' + recipeArray.length);
     //Careful with below...might prove to contain an error if recipeArray empty
-    let recipeIndex = recipeArray[recipeArray.length - 1].id + 1; //add 1 to most recent recipe so all recipeIds are unique
-    recipeArray[recipeArray.length] = new Recipe(recipeID, authorID, recipeTitle, category, ethnicity, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating);
-    user.recipePosts[user.recipePosts.length] = recipeIndex;
 
+    let recipeIndex = recipeArray[recipeArray.length - 1].recipeID + 1; //add 1 to most recent recipe so all recipeIds are unique
+    recipeArray[recipeArray.length] = new Recipe(recipeIndex, authorID, recipeTitle, category, ethnicity, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating);
+
+    if (user.recipePosts == null) {
+        user.recipePosts = [recipeIndex];
+    } else {
+        user.recipePosts[user.recipePosts.length] = recipeIndex;
+    }
+    console.log(recipeIndex);
     database.child('Recipes/' + `${recipeIndex}`).set({
         recipe: recipeArray[recipeArray.length - 1]
     });
-    database.child('Users/' + `${authorID}`).set({userinfo: user});
+    database.child('Users/' + `${user.id}`).update({userinfo: user});
+
+    updateUsers();
+    updateRecipes();
+    console.log(userArray);
+    console.log(recipeArray);
     res.send(recipeArray[recipeArray.length - 1]);
+
     // res.sendFile(__dirname + '/client/public/NewRecipe.html')
 });
 
@@ -226,7 +269,7 @@ app.get('/recipes/:recipeID', function(req, res) {
 
     // Search the database for a recipe with matching ID
     recipeArray.map(RP => {
-        if (RP.id === recipeSearchID) {
+        if (RP.id == recipeSearchID) {
             retRecipe = RP;
             res.send(JSON.stringify(retRecipes));
         }
@@ -238,14 +281,14 @@ app.get('/recipes/:recipeID', function(req, res) {
 });
 
 // Creator - view a user's recipes
-app.get('/user/:userID/recipes', function(req, res, next) {
-    let userID = Number(req.params.userID);
+app.get('/user/:searchID/recipes', function(req, res, next) {
+    let searchID = Number(req.params.searchID);
     let user = null;
-    retRecipes = null;
+    retRecipes = [];
 
     //Search the recipe database for matching user ids
     userArray.map(usr => {
-        if (usr.id == userID) {
+        if (usr.id == searchID) {
             user = usr;
         }
     });
@@ -253,21 +296,17 @@ app.get('/user/:userID/recipes', function(req, res, next) {
         res.send("User Not Found.");
         return;
     }
-    let postID = user.recipePosts[user.recipePosts.length - 1];
-    // console.log(user);
-    // console.log(user.recipePosts.length);
-    // console.log(postID);
-
     recipeArray.map(recipe => {
-        if (recipe.id === postID) {
-            retRecipes = recipe;
-            res.send(JSON.stringify(retRecipes));
+        if (recipe.authorID == searchID) {
+            retRecipes.push(recipe);
         }
     });
 
-    if (retRecipes === null) {
+    if (retRecipes === []) {
         res.send('No recipes found for requested user id');
+        return;
     }
+    res.send(JSON.stringify(retRecipes));
 });
 
 // Return reviews of a recipe using the recipe ID as a search term
