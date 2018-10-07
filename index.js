@@ -147,6 +147,7 @@ function updateRecipes() { //load recipes from firebase into recipeArray
     console.log('done!');
 }
 
+// removes the recipe from recipeArray and returns the authorID
 function removeRecipe(id) {
     console.log('Removing Recipe...');
     let authorID = null;
@@ -165,20 +166,19 @@ function removeRecipe(id) {
     return authorID;
 }
 
+//Removes recipe from user's array of recipes on database and in recipeArray
 function removeRecipeFromUser(userID, recipeID) {
     console.log('searching for user with id ' + userID + '...');
     for (var usr = 0; usr < userArray.length; usr++) {
         if (userArray[usr].id == userID) {
             console.log('...found!');
             let user = userArray[usr];
-            console.log(user);
             console.log('searching for recipe with id ' + recipeID + '...');
             for (var rcp = 0; rcp < user.recipePosts.length; rcp++) {
                 if (user.recipePosts[rcp] == recipeID) {
                     console.log('...found!');
                     console.log('removing entry...');
                     user.recipePosts.splice(rcp, 1);
-                    //userDatabase.child(`${userID}` + 'userinfo/recipePosts').remove;
                     userDatabase.child(`${userID}`).update({userinfo: user});
                     console.log('...done!');
                     return;
