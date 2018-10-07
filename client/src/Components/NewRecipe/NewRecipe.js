@@ -1,12 +1,44 @@
-import React, {Component} from 'react';
+import React, {
+    Component
+} from 'react';
+import {
+    Prompt
+} from 'react-router-dom';
 import './styles.css';
 import uuid from 'uuid';
 
 class NewRecipe extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.handleChangeName = this.handleChangeName.bind(this)
+        this.handleChangeRecipeID = this.handleChangeRecipeID.bind(this)
+        this.handleChangeAuthorID = this.handleChangeAuthorID.bind(this)
+        this.handleChangeCategory = this.handleChangeCategory.bind(this)
+        this.handleChangeEthnicity = this.handleChangeEthnicity.bind(this)
+        this.handleChangeDifficulty = this.handleChangeDifficulty.bind(this)
+        this.handleChangeIngredients = this.handleChangeIngredients.bind(this)
+        this.handleChangeInstructions = this.handleChangeInstructions.bind(this)
+        this.handleChangeCookTime = this.handleChangeCookTime.bind(this)
+        this.handleChangeVegetarian = this.handleChangeVegetarian.bind(this)
+        this.handleChangeVegan = this.handleChangeVegan.bind(this)
+        this.handleChangeGlutenFree = this.handleChangeGlutenFree.bind(this)
         this.state = {
-            newRecipe: {}
+            newRecipe: {},
+            name: 'Please',
+            recipeID: '777',
+            category: '',
+            ethnicity: '',
+            difficulty: '',
+            ingredients: 'FOR',
+            instructions: 'FUCK',
+            cookTime: 'SAKE',
+            vegetarian: false,
+            vegan: false,
+            glutenFree: false,
+            userID: '4509',
+            authorID: '4509',
+            complete: false,
+            submissionStatus: ''
         }
     }
 
@@ -20,6 +52,54 @@ class NewRecipe extends Component {
         difficulties: ['Easy', 'Medium', 'Difficult']
     }
 
+    postRecipe = (e) => {
+        e.preventDefault()
+        //this.target.reset()
+        this.setState({
+            complete: false
+        })
+        let reqBody = {
+            name: this.state.name,
+            recipeID: this.state.recipeID,
+            authorID: this.state.authorID,
+            category: this.state.category,
+            ethnicity: this.state.ethnicity,
+            difficulty: this.state.difficulty,
+            ingredients: this.state.ingredients,
+            instructions: this.state.instructions,
+            cookTime: this.state.cookTime,
+            vegetarian: this.state.vegetarian,
+            vegan: this.state.vegan,
+            glutenFree: this.state.glutenFree
+        }
+        console.log('Recipe Name: ' + this.state.name)
+        fetch('/newRecipe', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(reqBody)
+        }).then((res) => {
+            if (res.ok) {
+                console.log('Inside Res.ok');
+                console.log('Author ID: ' + this.state.authorID);
+                console.log('reqBody: ' + JSON.stringify(reqBody));
+                console.log(res.ok);
+                this.setState({
+                    submissionStatus: 'New Recipe Created!'
+                })
+                return res.json();
+            } else {
+                throw new Error('Something went wrong with your fetch');
+            }
+        }).then((json) => {
+            console.log(json);
+        })
+        // e.preventDefault()
+        //this.props.history.push("/home")
+    }
+
     handleSubmit(e) {
         if (this.refs.name.value === '') {
             alert('Title is required');
@@ -28,6 +108,8 @@ class NewRecipe extends Component {
                 newRecipe: {
                     id: uuid.v4(),
                     name: this.refs.name.value,
+                    recipeID: this.refs.recipeID.value,
+                    authorID: this.refs.authorID.value,
                     category: this.refs.category.value,
                     ethnicity: this.refs.ethnicity.value,
                     difficulty: this.refs.difficulty.value,
@@ -46,6 +128,78 @@ class NewRecipe extends Component {
         e.preventDefault();
     }
 
+    handleChangeName(event) {
+        this.setState({
+            name: event.target.value
+        })
+    }
+
+    handleChangeRecipeID(event) {
+        this.setState({
+            recipeID: event.target.value
+        })
+    }
+
+    handleChangeAuthorID(event) {
+        this.setState({
+            authorID: event.target.value
+        })
+    }
+
+    handleChangeCategory(event) {
+        this.setState({
+            category: event.target.value
+        })
+    }
+
+    handleChangeEthnicity(event) {
+        this.setState({
+            ethnicity: event.target.value
+        })
+    }
+
+    handleChangeDifficulty(event) {
+        this.setState({
+            difficulty: event.target.value
+        })
+    }
+
+    handleChangeIngredients(event) {
+        this.setState({
+            ingredients: event.target.value
+        })
+    }
+
+    handleChangeInstructions(event) {
+        this.setState({
+            instructions: event.target.value
+        })
+    }
+
+    handleChangeCookTime(event) {
+        this.setState({
+            cookTime: event.target.value
+        })
+    }
+
+    handleChangeVegetarian(event) {
+        this.setState({
+            vegetarian: event.target.value
+        })
+    }
+
+    handleChangeVegan(event) {
+        this.setState({
+            vegan: event.target.value
+        })
+    }
+
+    handleChangeGlutenFree(event) {
+        this.setState({
+            glutenFree: event.target.value
+        })
+    }
+
     render() {
         let categoryOptions = this.props.categories.map(category => {
             return <option key={category} value={category}>{category}</option>
@@ -56,58 +210,78 @@ class NewRecipe extends Component {
         let difficultyOptions = this.props.difficulties.map(difficulty => {
             return <option key={difficulty} value={difficulty}>{difficulty}</option>
         });
-        return (<div>
+
+        const {
+            complete
+        } = this.state
+
+        return (<div className="backgroundStyle">
             <h3>New Recipe</h3>
-            <form onSubmit={this.handleSubmit.bind(this)}>
+            <form id="newRecipeForm" onSubmit={this.postRecipe}>
+                <Prompt
+                    when={!complete}
+                    message={location => (
+                    `Are you sure you want to go to ${location.pathname} before finishing your recipe post?`
+                    )}
+                />
                 <div>
                     <label>Recipe Name</label><br/>
-                    <input type="text" ref="name"/>
+                    <input type="text" name="recipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
+                </div>
+                <div>
+                    <label>Recipe ID</label><br/>
+                    <input type="text" name="recipeIDField" value={this.state.recipeID} onChange={this.handleChangeRecipeID}/>
+                </div>
+                <div>
+                    <label>Author ID</label><br/>
+                    <input type="text" name="authorIDField" value={this.state.authorID} onChange={this.handleChangeAuthorID}/>
                 </div>
                 <div>
                     <label>Category</label><br/>
-                    <select ref="category">
+                    <select ref="category" name="categoryField" value={this.state.category} onChange={this.handleChangeCategory}>
                         {categoryOptions}
                     </select>
                 </div>
                 <div>
                     <label>Ethnicity</label><br/>
-                    <select ref="ethnicity">
+                    <select ref="ethnicity" name="ethnicityField" value={this.state.ethnicity} onChange={this.handleChangeEthnicity}>
                         {ethnicityOptions}
                     </select>
                 </div>
                 <div>
                     <label>Difficulty</label><br/>
-                    <select ref="difficulty">
+                    <select ref="difficulty" name="difficultyField" value={this.state.difficulty} onChange={this.handleChangeDifficulty}>
                         {difficultyOptions}
                     </select>
                 </div>
                 <div>
                     <label>Ingredients</label><br/>
-                    <input type="text" ref="ingredientArray"/>
+                    <input type="text" ref="ingredientArray" name="ingredientsField" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
                 </div>
                 <div>
                     <label>Instructions</label><br/>
-                    <input type="text" ref="instructions"/>
+                    <input type="text" ref="instructions" name="instructionsField" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
                 </div>
                 <div>
                     <label>Cook Time</label><br/>
-                    <input type="text" ref="cookTime"/>
+                    <input type="text" ref="cookTime" name="cookTimeField" value={this.state.cookTime} onChange={this.handleChangeCookTime}/>
                 </div>
                 <div>
                     <label>Vegetarian</label><br/>
-                    <input type="text" ref="vegetarian"/>
+                    <input type="checkbox" ref="vegetarian" name="vegetarianCheck" value={this.state.vegetarian} onChange={this.handleChangeVegetarian}/>
                 </div>
                 <div>
                     <label>Vegan</label><br/>
-                    <input type="text" ref="vegan"/>
+                    <input type="checkbox" ref="vegan" name="veganCheck" value={this.state.vegan} onChange={this.handleChangeVegan}/>
                 </div>
                 <div>
                     <label>Gluten Free</label><br/>
-                    <input type="text" ref="glutenFree"/>
+                    <input type="checkbox" ref="glutenFree" name="glutenCheck" value={this.state.glutenFree} onChange={this.handleChangeGlutenFree}/>
                 </div>
                 <br/>
-                <input type="submit" value="Submit"/>
+                <button id="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
                 <br/>
+                <h3>{this.state.submissionStatus}</h3>
             </form>
         </div>);
     }
