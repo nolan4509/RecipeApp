@@ -147,13 +147,22 @@ function updateRecipes() { //load recipes from firebase into recipeArray
     console.log('done!');
 }
 
-function removeRecipe(var id) {
+function removeRecipe(id) {
+    console.log('Removing Recipe...');
+    let authorID = null;
     for (var index = 0; index < recipeArray.length; index++) {
         if (id == recipeArray[index].recipeID) {
+            console.log(recipeArray);
+            console.log('Found!  removing...');
+            authorID = recipeArray[index].authorID;
             recipeArray.splice(index, 1);
+            console.log(recipeArray);
+            console.log('...done!');
             break;
         }
     }
+    console.log('id:' + authorID);
+    return authorID;
 }
 
 //var urlencodedparser = myParser.urlencoded({extended: false});
@@ -316,6 +325,20 @@ app.get('/recipes/:userID', function(req, res, next) {
         return;
     }
     res.send(JSON.stringify(retRecipes));
+});
+
+app.delete('/recipes/remove/:recipeID', function(req, res) {
+    let recipeID = Number(req.params.recipeID)
+    let authorID = removeRecipe(recipeID);
+    console.log('Author ID: ' + authorID);
+    console.log('Recipe ID: ' + recipeID);
+    if (authorID != null) {
+        database.child('/Recipes' + `${Number(req.params.recipeID)}`).remove();
+        console.log('recipe removed from firebase!');
+        // need to find a way to remove value from user's list of posts
+    } else {
+        console.log('recipe not found');
+    }
 });
 
 // Return reviews of a recipe using the recipe ID as a search term
