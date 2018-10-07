@@ -165,6 +165,7 @@ function removeRecipe(id) {
     return authorID;
 }
 
+
 function removeRecipeFromUser(userID, recipeID) {
     console.log('searching for user with id ' + userID + '...');
     for (var usr = 0; usr < userArray.length; usr++) {
@@ -363,6 +364,7 @@ app.delete('/recipes/remove/:recipeID', function(req, res) {
         database.child('Recipes/' + `${recipeID}`).remove();
         console.log('recipe removed from firebase!');
         removeRecipeFromUser(authorID, recipeID);
+
         // need to find a way to remove value from user's list of posts
     } else {
         console.log('recipe not found');

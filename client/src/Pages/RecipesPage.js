@@ -116,7 +116,7 @@ class RecipesPage extends Component {
     }
 
     render() {
-        return (<div>
+        return (<div className="bodyStyle">
             <SafeNavBar/>
             <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this)}/>
         </div>);
