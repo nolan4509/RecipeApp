@@ -165,6 +165,33 @@ function removeRecipe(id) {
     return authorID;
 }
 
+function removeRecipeFromUser(userID, recipeID) {
+    console.log('searching for user with id ' + userID + '...');
+    for (var usr = 0; usr < userArray.length; usr++) {
+        if (userArray[usr].id == userID) {
+            console.log('...found!');
+            let user = userArray[usr];
+            console.log(user);
+            console.log('searching for recipe with id ' + recipeID + '...');
+            for (var rcp = 0; rcp < user.recipePosts.length; rcp++) {
+                if (user.recipePosts[rcp] == recipeID) {
+                    console.log('...found!');
+                    console.log('removing entry...');
+                    user.recipePosts.splice(rcp, 1);
+                    //userDatabase.child(`${userID}` + 'userinfo/recipePosts').remove;
+                    userDatabase.child(`${userID}`).update({userinfo: user});
+                    console.log('...done!');
+                    return;
+                }
+            }
+            console.log('recipe not found!');
+            return;
+        }
+    }
+    console.log('user not found!');
+    return;
+}
+
 //var urlencodedparser = myParser.urlencoded({extended: false});
 app.use(myParser.urlencoded({ // to support URL-encoded bodies
     extended: true
@@ -328,15 +355,20 @@ app.get('/recipes/:userID', function(req, res, next) {
 });
 
 app.delete('/recipes/remove/:recipeID', function(req, res) {
-    let authorID = removeRecipe(Number(req.params.recipeID));
-    console.log(authorID);
+    let recipeID = Number(req.params.recipeID)
+    let authorID = removeRecipe(recipeID);
+    console.log('Author ID: ' + authorID);
+    console.log('Recipe ID: ' + recipeID);
     if (authorID != null) {
-        database.child('/Recipes' + `${Number(req.params.recipeID)}`).delete();
+        database.child('Recipes/' + `${recipeID}`).remove();
         console.log('recipe removed from firebase!');
+        removeRecipeFromUser(authorID, recipeID);
         // need to find a way to remove value from user's list of posts
     } else {
         console.log('recipe not found');
     }
+
+    // Removing the recipe from the user's recipePosts
 });
 
 // Return reviews of a recipe using the recipe ID as a search term
