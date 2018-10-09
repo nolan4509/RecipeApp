@@ -27,7 +27,7 @@ class NewRecipe extends Component {
             difficulty: '',
             ingredients: 'FOR',
             instructions: 'FUCK',
-            cookTime: 'SAKE',
+            cookTime: '30',
             vegetarian: false,
             vegan: false,
             glutenFree: false,
@@ -187,7 +187,7 @@ class NewRecipe extends Component {
                 <Prompt when={!complete} message={location => (`Are you sure you want to go to ${location.pathname} before finishing your recipe post?`)}/>
                 <div>
                     <label>Recipe Name</label><br/>
-                    <input type="text" name="recipeTitleField" id="recipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
+                    <input type="text" name="recipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
                 </div>
                 <div>
                     <label>Recipe ID</label><br/>

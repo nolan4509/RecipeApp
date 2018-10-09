@@ -245,30 +245,30 @@ app.get('/newRecipe', function(req, res) {
 
 // Creator - Create and post a Recipe
 app.post('/newRecipe', function(req, res) {
-    let recipeTitle = String(req.body.recipeTitleField);
-    console.log(req.body);
-    let recipeID = Number(req.body.recipeIDField);
-    let authorID = Number(req.body.authorIDField);
-    let category = String(req.body.categoryField);
+    let recipeTitle = String(req.body.name);
+    console.log(recipeTitle);
+    let recipeID = Number(req.body.recipeID);
+    let authorID = Number(req.body.authorID);
+    let category = String(req.body.category);
     // apparently this is lacist. professor wakefield says this should be cuisine
-    let ethnicity = String(req.body.ethnicityField);
-    let difficulty = String(req.body.difficultyField);
-    let ingredients = String(req.body.ingredientsField);
-    let instructions = String(req.body.recipeInstructionsField);
-    let cookTime = Number(req.body.cookTimeField);
+    let ethnicity = String(req.body.ethnicity);
+    let difficulty = String(req.body.difficulty);
+    let ingredients = String(req.body.ingredients);
+    let instructions = String(req.body.instructions);
+    let cookTime = Number(req.body.cookTime);
     let vegetarian = false;
     let vegan = false;
     let glutenFree = false;
 
     // dummy placeholder
     let rating = 5;
-    if (req.body.vegetarianCheck == "TRUE") {
+    if (req.body.vegetarian == "TRUE") {
         vegetarian = true;
     };
-    if (req.body.veganCheck == "TRUE") {
+    if (req.body.vegan == "TRUE") {
         vegan = true;
     };
-    if (req.body.glutenCheck == "TRUE") {
+    if (req.body.glutenFree == "TRUE") {
         glutenFree = true;
     };
     let user = null;
