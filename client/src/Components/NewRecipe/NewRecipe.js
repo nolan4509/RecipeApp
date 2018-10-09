@@ -1,9 +1,5 @@
-import React, {
-    Component
-} from 'react';
-import {
-    Prompt
-} from 'react-router-dom';
+import React, {Component} from 'react';
+import {Prompt} from 'react-router-dom';
 import './styles.css';
 import uuid from 'uuid';
 
@@ -55,9 +51,7 @@ class NewRecipe extends Component {
     postRecipe = (e) => {
         e.preventDefault()
         //this.target.reset()
-        this.setState({
-            complete: false
-        })
+        this.setState({complete: false})
         let reqBody = {
             name: this.state.name,
             recipeID: this.state.recipeID,
@@ -86,9 +80,7 @@ class NewRecipe extends Component {
                 console.log('Author ID: ' + this.state.authorID);
                 console.log('reqBody: ' + JSON.stringify(reqBody));
                 console.log(res.ok);
-                this.setState({
-                    submissionStatus: 'New Recipe Created!'
-                })
+                this.setState({submissionStatus: 'New Recipe Created!'})
                 return res.json();
             } else {
                 throw new Error('Something went wrong with your fetch');
@@ -129,75 +121,51 @@ class NewRecipe extends Component {
     }
 
     handleChangeName(event) {
-        this.setState({
-            name: event.target.value
-        })
+        this.setState({name: event.target.value})
     }
 
     handleChangeRecipeID(event) {
-        this.setState({
-            recipeID: event.target.value
-        })
+        this.setState({recipeID: event.target.value})
     }
 
     handleChangeAuthorID(event) {
-        this.setState({
-            authorID: event.target.value
-        })
+        this.setState({authorID: event.target.value})
     }
 
     handleChangeCategory(event) {
-        this.setState({
-            category: event.target.value
-        })
+        this.setState({category: event.target.value})
     }
 
     handleChangeEthnicity(event) {
-        this.setState({
-            ethnicity: event.target.value
-        })
+        this.setState({ethnicity: event.target.value})
     }
 
     handleChangeDifficulty(event) {
-        this.setState({
-            difficulty: event.target.value
-        })
+        this.setState({difficulty: event.target.value})
     }
 
     handleChangeIngredients(event) {
-        this.setState({
-            ingredients: event.target.value
-        })
+        this.setState({ingredients: event.target.value})
     }
 
     handleChangeInstructions(event) {
-        this.setState({
-            instructions: event.target.value
-        })
+        this.setState({instructions: event.target.value})
     }
 
     handleChangeCookTime(event) {
-        this.setState({
-            cookTime: event.target.value
-        })
+        this.setState({cookTime: event.target.value})
     }
 
     handleChangeVegetarian(event) {
-        this.setState({
-            vegetarian: event.target.value
-        })
+        this.setState({vegetarian: event.target.value})
     }
 
     handleChangeVegan(event) {
-        this.setState({
-            vegan: event.target.value
-        })
+        this.setState({vegan: event.target.value})
     }
 
     handleChangeGlutenFree(event) {
-        this.setState({
-            glutenFree: event.target.value
-        })
+        this.setState({glutenFree: event.target.value})
     }
 
     render() {
@@ -211,22 +179,15 @@ class NewRecipe extends Component {
             return <option key={difficulty} value={difficulty}>{difficulty}</option>
         });
 
-        const {
-            complete
-        } = this.state
+        const {complete} = this.state
 
         return (<div className="backgroundStyle">
             <h3>New Recipe</h3>
             <form id="newRecipeForm" onSubmit={this.postRecipe}>
-                <Prompt
-                    when={!complete}
-                    message={location => (
-                    `Are you sure you want to go to ${location.pathname} before finishing your recipe post?`
-                    )}
-                />
+                <Prompt when={!complete} message={location => (`Are you sure you want to go to ${location.pathname} before finishing your recipe post?`)}/>
                 <div>
                     <label>Recipe Name</label><br/>
-                    <input type="text" name="recipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
+                    <input type="text" name="recipeTitleField" id="recipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
                 </div>
                 <div>
                     <label>Recipe ID</label><br/>

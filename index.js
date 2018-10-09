@@ -165,7 +165,6 @@ function removeRecipe(id) {
     return authorID;
 }
 
-
 function removeRecipeFromUser(userID, recipeID) {
     console.log('searching for user with id ' + userID + '...');
     for (var usr = 0; usr < userArray.length; usr++) {
@@ -197,6 +196,7 @@ function removeRecipeFromUser(userID, recipeID) {
 app.use(myParser.urlencoded({ // to support URL-encoded bodies
     extended: true
 }));
+app.use(myParser.json());
 //test data
 let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net', []);
 let userArray = [];
@@ -246,7 +246,7 @@ app.get('/newRecipe', function(req, res) {
 // Creator - Create and post a Recipe
 app.post('/newRecipe', function(req, res) {
     let recipeTitle = String(req.body.recipeTitleField);
-    //console.log(recipeTitle);
+    console.log(req.body);
     let recipeID = Number(req.body.recipeIDField);
     let authorID = Number(req.body.authorIDField);
     let category = String(req.body.categoryField);
