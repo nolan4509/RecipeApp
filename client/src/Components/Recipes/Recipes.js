@@ -1,8 +1,11 @@
-import React, {Component} from 'react';
+import React, {
+    Component
+} from 'react';
 import './styles.css';
 import RecipeItem from '../RecipeItem/RecipeItem';
 
 class Recipes extends Component {
+
     deleteRecipe(id) {
         this.props.onDelete(id);
     }
@@ -16,7 +19,6 @@ class Recipes extends Component {
             });
         }
         return (<div className="container">
-            <h3>Latest Recipes</h3>
             <div className="row rowSpacing">
                 {recipeItems}
             </div>

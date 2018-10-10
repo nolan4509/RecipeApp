@@ -24,19 +24,19 @@ class NewRecipe extends Component {
         this.handleChangeGlutenFree = this.handleChangeGlutenFree.bind(this)
         this.state = {
             newRecipe: {},
-            name: 'Please',
-            recipeID: '777',
+            name: '',
+            recipeID: '',
             category: '',
             cuisine: '',
             difficulty: '',
-            ingredients: 'FOR',
-            instructions: 'FUCK',
-            cookTime: '30',
+            ingredients: '',
+            instructions: '',
+            cookTime: '',
             vegetarian: false,
             vegan: false,
             glutenFree: false,
             userID: '4509',
-            authorID: '4509',
+            authorID: '',
             complete: false,
             submissionStatus: ''
         }
@@ -94,34 +94,9 @@ class NewRecipe extends Component {
         //this.props.history.push("/home")
     }
 
-    handleSubmit(e) {
-        if (this.refs.name.value === '') {
-            alert('Title is required');
-        } else {
-            this.setState({
-                newRecipe: {
-                    id: uuid.v4(),
-                    name: this.refs.name.value,
-                    recipeID: this.refs.recipeID.value,
-                    authorID: this.refs.authorID.value,
-                    category: this.refs.category.value,
-                    cuisine: this.refs.cuisine.value,
-                    difficulty: this.refs.difficulty.value,
-                    ingredientArray: this.refs.ingredientArray.value,
-                    instructions: this.refs.instructions.value,
-                    cookTime: this.refs.cookTime.value,
-                    vegetarian: this.refs.vegetarian.value,
-                    vegan: this.refs.vegan.value,
-                    glutenFree: this.refs.glutenFree.value
-                }
-            }, function() {
-                //console.log(this.state);
-                this.props.newRecipe(this.state.newRecipe);
-            });
-        }
-        e.preventDefault();
-    }
 
+    //See about making the JSX below not require these functions...
+    //onChange={this.handleChangeName} --> onChange={this.setState({name: event.target.value})}
     handleChangeName(event) {
         this.setState({
             name: event.target.value
@@ -233,7 +208,7 @@ class NewRecipe extends Component {
                 </div>
                 <div>
                     <label>Cuisine</label><br/>
-                    <select ref="cuisine" name="ethnicityField" value={this.state.cuisine} onChange={this.handleChangeEthnicity}>
+                    <select ref="cuisine" name="ethnicityField" value={this.state.cuisine} onChange={this.handleChangeCuisine}>
                         {cuisineOptions}
                     </select>
                 </div>

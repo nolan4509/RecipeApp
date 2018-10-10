@@ -102,49 +102,49 @@ let userDatabase = database.child('Users');
 let recipeDatabase = database.child('Recipes');
 
 function updateUsers() { //load users from firebase to userArray
-    console.log('updating users from database...')
+    // console.log('updating users from database...')
     userDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
             let userNode = new User(childSnap.val().userinfo.id, childSnap.val().userinfo.name, childSnap.val().userinfo.email, childSnap.val().userinfo.recipePosts);
             let newEntry = true;
             for (var usrIndex = 0; usrIndex < userArray.length; usrIndex++) {
                 if (userArray[usrIndex].id == userNode.id) {
-                    console.log('updating user entry...');
+                    // console.log('updating user entry...');
                     userArray[usrIndex] = userNode;
                     newEntry = false;
                     break;
                 }
             }
             if (newEntry) {
-                console.log('creating user entry...');
+                // console.log('creating user entry...');
                 userArray[userArray.length] = userNode;
             }
         });
     });
-    console.log('done!');
+    // console.log('done!');
 }
 
 function updateRecipes() { //load recipes from firebase into recipeArray
-    console.log('updating recipes from database...');
+    // console.log('updating recipes from database...');
     recipeDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
             let recipeNode = new Recipe(childSnap.val().recipe.recipeID, childSnap.val().recipe.authorID, childSnap.val().recipe.name, childSnap.val().recipe.category, childSnap.val().recipe.cuisine, childSnap.val().recipe.difficulty, childSnap.val().recipe.ingredients, childSnap.val().recipe.instructions, childSnap.val().recipe.cookTime, childSnap.val().recipe.vegetarian, childSnap.val().recipe.vegan, childSnap.val().recipe.glutenFree, childSnap.val().recipe.rating);
             let newEntry = true;
             for (var rcpIndex = 0; rcpIndex < recipeArray.length; rcpIndex++) {
                 if (recipeArray[rcpIndex].recipeID == recipeNode.recipeID) {
-                    console.log('updating recipe entry...');
+                    // console.log('updating recipe entry...');
                     recipeArray[rcpIndex] = recipeNode;
                     newEntry = false;
                     break;
                 }
             }
             if (newEntry) {
-                console.log('creating recipe entry...');
+                // console.log('creating recipe entry...');
                 recipeArray[recipeArray.length] = recipeNode;
             }
         });
     });
-    console.log('done!');
+    // console.log('done!');
 }
 
 function removeRecipe(id) {
@@ -331,11 +331,11 @@ app.get('/recipes/:recipeID', function(req, res) {
 });
 
 // Creator - view a user's recipes
-app.get('/recipes/:userID', function(req, res, next) {
+app.get('/recipes/user/:userID', function(req, res) {
     let searchID = Number(req.params.userID);
     let user = null;
     retRecipes = [];
-
+    console.log('User ID: ' + searchID);
     //Search the recipe database for matching user ids
     userArray.map(usr => {
         if (usr.id == searchID) {
