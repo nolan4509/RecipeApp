@@ -234,7 +234,7 @@ class NewRecipe extends Component {
                 <div>
                     <label>Cuisine</label><br/>
                     <select ref="cuisine" name="ethnicityField" value={this.state.cuisine} onChange={this.handleChangeEthnicity}>
-                        {ethnicityOptions}
+                        {cuisineOptions}
                     </select>
                 </div>
                 <div>
