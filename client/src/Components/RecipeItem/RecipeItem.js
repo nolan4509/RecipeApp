@@ -1,14 +1,7 @@
-import React, {Component} from 'react';
+import React, {
+    Component
+} from 'react';
 import './styles.css';
-import {
-    Card,
-    CardTitle,
-    CardBody,
-    CardText,
-    Container,
-    Col,
-    Row
-} from 'reactstrap';
 
 class RecipeItem extends Component {
     deleteRecipe(id) {

@@ -5,7 +5,7 @@ import {
     Prompt
 } from 'react-router-dom';
 import './styles.css';
-import uuid from 'uuid';
+// import uuid from 'uuid';
 
 class NewRecipe extends Component {
     constructor(props) {

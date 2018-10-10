@@ -179,7 +179,9 @@ function removeRecipeFromUser(userID, recipeID) {
                     console.log('...found!');
                     console.log('removing entry...');
                     user.recipePosts.splice(rcp, 1);
-                    userDatabase.child(`${userID}`).update({userinfo: user});
+                    userDatabase.child(`${userID}`).update({
+                        userinfo: user
+                    });
                     console.log('...done!');
                     return;
                 }
@@ -296,7 +298,9 @@ app.post('/newRecipe', function(req, res) {
     database.child('Recipes/' + `${recipeIndex}`).set({
         recipe: recipeArray[recipeArray.length - 1]
     });
-    database.child('Users/' + `${user.id}`).update({userinfo: user});
+    database.child('Users/' + `${user.id}`).update({
+        userinfo: user
+    });
 
     updateUsers();
     updateRecipes();
@@ -412,7 +416,9 @@ app.put('/recipes/update/:recipeID', function(req, res) {
         }
     }
     recipeArray[rcp] = selectedRecipe;
-    database.child('Recipes/' + `${selectedRecipe.recipeID}`).update({recipe: selectedRecipe});
+    database.child('Recipes/' + `${selectedRecipe.recipeID}`).update({
+        recipe: selectedRecipe
+    });
     res.send(selectedRecipe);
 });
 
