@@ -15,7 +15,7 @@ class Recipes extends Component {
                 return (<RecipeItem onDelete={this.deleteRecipe.bind(this)} key={recipe.title} recipe={recipe}/>);
             });
         }
-        return (<div className="Recipes">
+        return (<div className="container">
             <h3>Latest Recipes</h3>
             <div className="row rowSpacing">
                 {recipeItems}

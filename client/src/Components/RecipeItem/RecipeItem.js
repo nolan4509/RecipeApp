@@ -17,7 +17,7 @@ class RecipeItem extends Component {
 
     render() {
         return (<div className="flowContainer">
-            <div className="col-md border border-warning rounded m-2 homepage-recipe-tile tileStyleB">
+            <div className="border border-warning rounded homepage-recipe-tile tileStyleB">
                 <h1>{this.props.recipe.name}</h1>
                 <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 <h4>{this.props.recipe.cookTime}</h4>

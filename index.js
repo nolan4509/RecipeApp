@@ -39,12 +39,12 @@ Scenarios:
 
 //Primary recipe object
 class Recipe {
-    constructor(recipeID, authorID, name, category, ethnicity, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating) {
+    constructor(recipeID, authorID, name, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating) {
         this.recipeID = recipeID; //integer
         this.authorID = authorID; //integer
         this.name = name; //string
         this.category = category; //string
-        this.ethnicity = ethnicity; //string
+        this.cuisine = cuisine; //string
         this.difficulty = difficulty; //string
         this.ingredients = ingredients; //String of ingredients (To be changed later)
         this.instructions = instructions; //string (maybe array?)
@@ -128,7 +128,7 @@ function updateRecipes() { //load recipes from firebase into recipeArray
     console.log('updating recipes from database...');
     recipeDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
-            let recipeNode = new Recipe(childSnap.val().recipe.recipeID, childSnap.val().recipe.authorID, childSnap.val().recipe.name, childSnap.val().recipe.category, childSnap.val().recipe.ethnicity, childSnap.val().recipe.difficulty, childSnap.val().recipe.ingredients, childSnap.val().recipe.instructions, childSnap.val().recipe.cookTime, childSnap.val().recipe.vegetarian, childSnap.val().recipe.vegan, childSnap.val().recipe.glutenFree, childSnap.val().recipe.rating);
+            let recipeNode = new Recipe(childSnap.val().recipe.recipeID, childSnap.val().recipe.authorID, childSnap.val().recipe.name, childSnap.val().recipe.category, childSnap.val().recipe.cuisine, childSnap.val().recipe.difficulty, childSnap.val().recipe.ingredients, childSnap.val().recipe.instructions, childSnap.val().recipe.cookTime, childSnap.val().recipe.vegetarian, childSnap.val().recipe.vegan, childSnap.val().recipe.glutenFree, childSnap.val().recipe.rating);
             let newEntry = true;
             for (var rcpIndex = 0; rcpIndex < recipeArray.length; rcpIndex++) {
                 if (recipeArray[rcpIndex].recipeID == recipeNode.recipeID) {
@@ -196,6 +196,7 @@ function removeRecipeFromUser(userID, recipeID) {
 app.use(myParser.urlencoded({ // to support URL-encoded bodies
     extended: true
 }));
+app.use(myParser.json());
 //test data
 let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net', []);
 let userArray = [];
@@ -244,30 +245,30 @@ app.get('/newRecipe', function(req, res) {
 
 // Creator - Create and post a Recipe
 app.post('/newRecipe', function(req, res) {
-    let recipeTitle = String(req.body.recipeTitleField);
-    //console.log(recipeTitle);
-    let recipeID = Number(req.body.recipeIDField);
-    let authorID = Number(req.body.authorIDField);
-    let category = String(req.body.categoryField);
+    let recipeTitle = String(req.body.name);
+    console.log(recipeTitle);
+    let recipeID = Number(req.body.recipeID);
+    let authorID = Number(req.body.authorID);
+    let category = String(req.body.category);
     // apparently this is lacist. professor wakefield says this should be cuisine
-    let ethnicity = String(req.body.ethnicityField);
-    let difficulty = String(req.body.difficultyField);
-    let ingredients = String(req.body.ingredientsField);
-    let instructions = String(req.body.recipeInstructionsField);
-    let cookTime = Number(req.body.cookTimeField);
+    let cuisine = String(req.body.cuisine);
+    let difficulty = String(req.body.difficulty);
+    let ingredients = String(req.body.ingredients);
+    let instructions = String(req.body.instructions);
+    let cookTime = Number(req.body.cookTime);
     let vegetarian = false;
     let vegan = false;
     let glutenFree = false;
 
     // dummy placeholder
     let rating = 5;
-    if (req.body.vegetarianCheck == "TRUE") {
+    if (req.body.vegetarian == "TRUE") {
         vegetarian = true;
     };
-    if (req.body.veganCheck == "TRUE") {
+    if (req.body.vegan == "TRUE") {
         vegan = true;
     };
-    if (req.body.glutenCheck == "TRUE") {
+    if (req.body.glutenFree == "TRUE") {
         glutenFree = true;
     };
     let user = null;
@@ -285,7 +286,7 @@ app.post('/newRecipe', function(req, res) {
     //Careful with below...might prove to contain an error if recipeArray empty
 
     let recipeIndex = recipeArray[recipeArray.length - 1].recipeID + 1; //add 1 to most recent recipe so all recipeIds are unique
-    recipeArray[recipeArray.length] = new Recipe(recipeIndex, authorID, recipeTitle, category, ethnicity, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating);
+    recipeArray[recipeArray.length] = new Recipe(recipeIndex, authorID, recipeTitle, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating);
 
     if (user.recipePosts == null) {
         user.recipePosts = [recipeIndex];
@@ -296,7 +297,9 @@ app.post('/newRecipe', function(req, res) {
     database.child('Recipes/' + `${recipeIndex}`).set({
         recipe: recipeArray[recipeArray.length - 1]
     });
-    database.child('Users/' + `${user.id}`).update({userinfo: user});
+    database.child('Users/' + `${user.id}`).update({
+        userinfo: user
+    });
 
     updateUsers();
     updateRecipes();
@@ -363,6 +366,7 @@ app.delete('/recipes/remove/:recipeID', function(req, res) {
         database.child('Recipes/' + `${recipeID}`).remove();
         console.log('recipe removed from firebase!');
         removeRecipeFromUser(authorID, recipeID);
+
         // need to find a way to remove value from user's list of posts
     } else {
         console.log('recipe not found');
