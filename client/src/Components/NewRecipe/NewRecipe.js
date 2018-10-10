@@ -1,5 +1,9 @@
-import React, {Component} from 'react';
-import {Prompt} from 'react-router-dom';
+import React, {
+    Component
+} from 'react';
+import {
+    Prompt
+} from 'react-router-dom';
 import './styles.css';
 import uuid from 'uuid';
 
@@ -10,7 +14,7 @@ class NewRecipe extends Component {
         this.handleChangeRecipeID = this.handleChangeRecipeID.bind(this)
         this.handleChangeAuthorID = this.handleChangeAuthorID.bind(this)
         this.handleChangeCategory = this.handleChangeCategory.bind(this)
-        this.handleChangeEthnicity = this.handleChangeEthnicity.bind(this)
+        this.handleChangeCuisine = this.handleChangeCuisine.bind(this)
         this.handleChangeDifficulty = this.handleChangeDifficulty.bind(this)
         this.handleChangeIngredients = this.handleChangeIngredients.bind(this)
         this.handleChangeInstructions = this.handleChangeInstructions.bind(this)
@@ -23,7 +27,7 @@ class NewRecipe extends Component {
             name: 'Please',
             recipeID: '777',
             category: '',
-            ethnicity: '',
+            cuisine: '',
             difficulty: '',
             ingredients: 'FOR',
             instructions: 'FUCK',
@@ -42,7 +46,7 @@ class NewRecipe extends Component {
         categories: [
             'Breakfast', 'Lunch', 'Dinner'
         ],
-        ethnicities: [
+        cuisines: [
             'American', 'Asian', 'Mexican', 'Other'
         ],
         difficulties: ['Easy', 'Medium', 'Difficult']
@@ -51,13 +55,15 @@ class NewRecipe extends Component {
     postRecipe = (e) => {
         e.preventDefault()
         //this.target.reset()
-        this.setState({complete: false})
+        this.setState({
+            complete: false
+        })
         let reqBody = {
             name: this.state.name,
             recipeID: this.state.recipeID,
             authorID: this.state.authorID,
             category: this.state.category,
-            ethnicity: this.state.ethnicity,
+            cuisine: this.state.cuisine,
             difficulty: this.state.difficulty,
             ingredients: this.state.ingredients,
             instructions: this.state.instructions,
@@ -75,19 +81,15 @@ class NewRecipe extends Component {
             method: 'POST',
             body: JSON.stringify(reqBody)
         }).then((res) => {
-            if (res.ok) {
-                console.log('Inside Res.ok');
-                console.log('Author ID: ' + this.state.authorID);
-                console.log('reqBody: ' + JSON.stringify(reqBody));
-                console.log(res.ok);
-                this.setState({submissionStatus: 'New Recipe Created!'})
-                return res.json();
-            } else {
-                throw new Error('Something went wrong with your fetch');
-            }
+            this.setState({
+                submissionStatus: 'New Recipe Created!'
+            })
+            return res.json();
         }).then((json) => {
-            console.log(json);
-        })
+            console.log('Success: ' + json);
+        }).catch((error) => {
+            console.log('Error: ' + error);
+        });
         // e.preventDefault()
         //this.props.history.push("/home")
     }
@@ -103,7 +105,7 @@ class NewRecipe extends Component {
                     recipeID: this.refs.recipeID.value,
                     authorID: this.refs.authorID.value,
                     category: this.refs.category.value,
-                    ethnicity: this.refs.ethnicity.value,
+                    cuisine: this.refs.cuisine.value,
                     difficulty: this.refs.difficulty.value,
                     ingredientArray: this.refs.ingredientArray.value,
                     instructions: this.refs.instructions.value,
@@ -121,65 +123,91 @@ class NewRecipe extends Component {
     }
 
     handleChangeName(event) {
-        this.setState({name: event.target.value})
+        this.setState({
+            name: event.target.value
+        })
     }
 
     handleChangeRecipeID(event) {
-        this.setState({recipeID: event.target.value})
+        this.setState({
+            recipeID: event.target.value
+        })
     }
 
     handleChangeAuthorID(event) {
-        this.setState({authorID: event.target.value})
+        this.setState({
+            authorID: event.target.value
+        })
     }
 
     handleChangeCategory(event) {
-        this.setState({category: event.target.value})
+        this.setState({
+            category: event.target.value
+        })
     }
 
-    handleChangeEthnicity(event) {
-        this.setState({ethnicity: event.target.value})
+    handleChangeCuisine(event) {
+        this.setState({
+            cuisine: event.target.value
+        })
     }
 
     handleChangeDifficulty(event) {
-        this.setState({difficulty: event.target.value})
+        this.setState({
+            difficulty: event.target.value
+        })
     }
 
     handleChangeIngredients(event) {
-        this.setState({ingredients: event.target.value})
+        this.setState({
+            ingredients: event.target.value
+        })
     }
 
     handleChangeInstructions(event) {
-        this.setState({instructions: event.target.value})
+        this.setState({
+            instructions: event.target.value
+        })
     }
 
     handleChangeCookTime(event) {
-        this.setState({cookTime: event.target.value})
+        this.setState({
+            cookTime: event.target.value
+        })
     }
 
     handleChangeVegetarian(event) {
-        this.setState({vegetarian: event.target.value})
+        this.setState({
+            vegetarian: event.target.value
+        })
     }
 
     handleChangeVegan(event) {
-        this.setState({vegan: event.target.value})
+        this.setState({
+            vegan: event.target.value
+        })
     }
 
     handleChangeGlutenFree(event) {
-        this.setState({glutenFree: event.target.value})
+        this.setState({
+            glutenFree: event.target.value
+        })
     }
 
     render() {
         let categoryOptions = this.props.categories.map(category => {
             return <option key={category} value={category}>{category}</option>
         });
-        let ethnicityOptions = this.props.ethnicities.map(ethnicity => {
-            return <option key={ethnicity} value={ethnicity}>{ethnicity}</option>
+        let cuisineOptions = this.props.cuisines.map(cuisine => {
+            return <option key={cuisine} value={cuisine}>{cuisine}</option>
         });
         let difficultyOptions = this.props.difficulties.map(difficulty => {
             return <option key={difficulty} value={difficulty}>{difficulty}</option>
         });
 
-        const {complete} = this.state
+        const {
+            complete
+        } = this.state
 
         return (<div className="backgroundStyle">
             <h3>New Recipe</h3>
@@ -204,8 +232,8 @@ class NewRecipe extends Component {
                     </select>
                 </div>
                 <div>
-                    <label>Ethnicity</label><br/>
-                    <select ref="ethnicity" name="ethnicityField" value={this.state.ethnicity} onChange={this.handleChangeEthnicity}>
+                    <label>Cuisine</label><br/>
+                    <select ref="cuisine" name="ethnicityField" value={this.state.cuisine} onChange={this.handleChangeEthnicity}>
                         {ethnicityOptions}
                     </select>
                 </div>
