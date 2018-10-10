@@ -246,7 +246,6 @@ app.get('/newRecipe', function(req, res) {
 // Creator - Create and post a Recipe
 app.post('/newRecipe', function(req, res) {
     let recipeTitle = String(req.body.name);
-    console.log(recipeTitle);
     let recipeID = Number(req.body.recipeID);
     let authorID = Number(req.body.authorID);
     let category = String(req.body.category);
@@ -297,9 +296,7 @@ app.post('/newRecipe', function(req, res) {
     database.child('Recipes/' + `${recipeIndex}`).set({
         recipe: recipeArray[recipeArray.length - 1]
     });
-    database.child('Users/' + `${user.id}`).update({
-        userinfo: user
-    });
+    database.child('Users/' + `${user.id}`).update({userinfo: user});
 
     updateUsers();
     updateRecipes();
@@ -355,6 +352,68 @@ app.get('/recipes/:userID', function(req, res, next) {
         return;
     }
     res.send(JSON.stringify(retRecipes));
+});
+
+app.put('/recipes/update/:recipeID', function(req, res) {
+    let selectedRecipe = null;
+    recipeID = req.params.recipeID;
+    for (var rcp = 0; rcp < recipeArray.length; rcp++) {
+        if (recipeArray[rcp].recipeID == recipeID) {
+            selectedRecipe = recipeArray[rcp];
+            break;
+        }
+    }
+    if (selectedRecipe == null) {
+        res.send('could not find recipe with id ' + recipeID);
+        return;
+    }
+
+    // these seem redundant but better safe than sorry
+    if (req.body.name != null) {
+        selectedRecipe.name = req.body.name;
+    }
+    if (req.body.category != null) {
+        selectedRecipe.category = req.body.category;
+    }
+    if (req.body.cuisine != null) {
+        selectedRecipe.cuisine = req.body.cuisine;
+    }
+    if (req.body.difficulty != null) {
+        selectedRecipe.difficulty = req.body.difficulty;
+    }
+    if (req.body.ingredients != null) {
+        selectedRecipe.ingredients = req.body.ingredients;
+    }
+    if (req.body.instructions != null) {
+        selectedRecipe.instructions = req.body.instructions;
+    }
+    if (req.body.cookTime != null) {
+        selectedRecipe.cookTime = req.body.cookTime;
+    }
+    if (req.body.vegetarian != null) {
+        if (req.body.vegetarian == "TRUE") {
+            selectedRecipe.vegetarian = true;
+        } else {
+            selectedRecipe.vegetarian = false;
+        }
+    }
+    if (req.body.vegan != null) {
+        if (req.body.vegan == "TRUE") {
+            selectedRecipe.vegan = true;
+        } else {
+            selectedRecipe.vegan = false;
+        }
+    }
+    if (req.body.glutenFree != null) {
+        if (req.body.glutenFree == "TRUE") {
+            selectedRecipe.glutenFree = true;
+        } else {
+            selectedRecipe.glutenFree = false;
+        }
+    }
+    recipeArray[rcp] = selectedRecipe;
+    database.child('Recipes/' + `${selectedRecipe.recipeID}`).update({recipe: selectedRecipe});
+    res.send(selectedRecipe);
 });
 
 app.delete('/recipes/remove/:recipeID', function(req, res) {
