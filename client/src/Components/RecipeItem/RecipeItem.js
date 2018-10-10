@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
 import './styles.css';
+import {
+    Card,
+    CardTitle,
+    CardBody,
+    CardText,
+    Container,
+    Col,
+    Row
+} from 'reactstrap';
 
 class RecipeItem extends Component {
     deleteRecipe(id) {
@@ -7,10 +16,18 @@ class RecipeItem extends Component {
     }
 
     render() {
-        return (<li className="Recipe">
-            <strong>{this.props.recipe.title}</strong>: {this.props.recipe.category}
-            <a href="#" onClick={this.deleteRecipe.bind(this, this.props.recipe.id)}>X</a>
-        </li>);
+        return (<div className="flowContainer">
+            <div className="border border-warning rounded homepage-recipe-tile tileStyleB">
+                <h1>{this.props.recipe.name}</h1>
+                <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                <h4>{this.props.recipe.cookTime}</h4>
+                <h6>{this.props.recipe.difficulty}</h6>
+                <button onClick={this.deleteRecipe.bind(this, this.props.recipe.id)}>
+                    <h3>Delete</h3>
+                </button>
+            </div>
+
+        </div>);
     }
 }
 

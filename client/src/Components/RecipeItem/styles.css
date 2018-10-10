@@ -1,0 +1,45 @@
+/* Recipe Item Styles */
+.rowSpacing {
+    margin-bottom: 15px;
+}
+
+.flowContainer {
+    position: relative;
+    /* We first create a flex layout context */
+    display: flex;
+    /* Then we define the flow direction
+     and if we allow the items to wrap
+   * Remember this is the same as:
+   * flex-direction: row;
+   * flex-wrap: wrap;
+   */
+    flex-flow: row wrap;
+    align-items: stretch;
+    /* Then we define how is distributed the remaining space */
+    justify-content: space-evenly;
+}
+
+.tileStyleA {
+    margin-bottom: 10px;
+    background-color: #ffd38b;
+    min-width: 22.75rem;
+    max-width: 22.75rem;
+}
+
+.tileStyleB {
+    background-color: #ffc57e;
+}
+
+.homepage-recipe-tile {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding: 15px;
+    flex-basis: 0;
+    flex-grow: 1;
+    min-width: 22.75rem;
+    max-width: 22.75rem;
+    margin: 0.5rem;
+    /* this is bootstraps m-2 */
+    /* max-width: 100%; */
+}

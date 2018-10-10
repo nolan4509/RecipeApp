@@ -1,6 +1,8 @@
-/* New Recipe Styles */
-.backgroundStyle {
+/* Pages Styles */
+.rowSpacing {
+    margin-bottom: 15px;
+}
+
+.bodyStyle {
     background-image: url('http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg');
-    font-size: 1.25rem;
-    font-weight: bold;
 }

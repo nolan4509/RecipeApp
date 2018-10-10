@@ -6,16 +6,16 @@ import {
     NavbarToggler,
     NavbarBrand,
     Nav,
-    NavItem,
-    NavLink,
-    Container,
-    Row,
-    Col,
+    // NavItem,
+    // NavLink,
+    // Container,
+    // Row,
+    // Col,
     Button,
-    DropdownItem,
-    DropdownToggle,
-    DropdownMenu,
-    UncontrolledDropdown,
+    // DropdownItem,
+    // DropdownToggle,
+    // DropdownMenu,
+    // UncontrolledDropdown,
     Form,
     Input,
     InputGroup,
@@ -31,32 +31,32 @@ class MainNavBar extends Component {
             <NavbarToggler onClick={this.toggle}/>
             <Collapse isOpen={this.state.isOpen} navbar="navbar">
                 <Nav navbar="navbar">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="Home.html">Home
-                                <span class="sr-only">(current)</span>
+                    <ul className="navbar-nav mr-auto">
+                        <li className="nav-item active">
+                            <a className="nav-link" href="Home.html">Home
+                                <span className="sr-only">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="NewRecipe.html">New Recipe</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="NewRecipe.html">New Recipe</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="RecipeInfo.html">Favorites</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="RecipeInfo.html">Favorites</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Quick Fix</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="RecipeInfo.html">Quick Fix</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Breakfast</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="RecipeInfo.html">Breakfast</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Lunch</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="RecipeInfo.html">Lunch</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Dinner</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="RecipeInfo.html">Dinner</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Desserts</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="RecipeInfo.html">Desserts</a>
                         </li>
 
                         <InputGroup>
