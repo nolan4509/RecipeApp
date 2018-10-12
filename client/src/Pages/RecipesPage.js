@@ -40,20 +40,33 @@ class RecipesPage extends Component {
     }
 
     handleDeleteRecipe(id) {
-        let recipes = this.state.recipes;
-        let index = recipes.findIndex(x => x.id === id);
-        recipes.splice(index, 1);
-        this.setState({
-            recipes: recipes
+        // id.preventDefault();
+        console.log('trying to delete');
+        fetch(`/recipes/remove/${id}`, {
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res);
+            // Currently you must refresh the page after deleting something...
+            // let recipes = this.state.recipes;
+            // let index = recipes.findIndex(x => x.id === id);
+            // recipes.splice(index, 1);
+            // this.setState({
+            //     recipes: recipes
+            // })
         });
     }
+
 
     render() {
         return (<div className="bodyStyle">
             <SafeNavBar/>
             <h3>Latest Recipes for {this.state.userID}</h3>
             <h4>Loaded: {this.state.recipesLoaded}</h4>
-            <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this)}/>
+            <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)}/>
         </div>);
     }
 }
