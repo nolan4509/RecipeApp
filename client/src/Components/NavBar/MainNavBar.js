@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
-import './styles.css';
+import React, {
+    Component
+} from 'react';
+import './NavBar.css';
 import {
     Collapse,
     Navbar,

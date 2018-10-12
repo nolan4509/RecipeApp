@@ -1,7 +1,7 @@
 import React, {
     Component
 } from 'react';
-import './styles.css';
+import './RecipeItem.css';
 
 class RecipeItem extends Component {
     deleteRecipe(id) {
@@ -10,17 +10,21 @@ class RecipeItem extends Component {
 
     render() {
         return (<div className="flowContainer">
-            <div className="border border-warning rounded homepage-recipe-tile tileStyleB">
-                <h1>{this.props.recipe.name}</h1>
+            <div className="border border-warning rounded homepage-recipe-tile">
+                <h1 className="recipeName">{this.props.recipe.name}</h1>
                 <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                <h4>{this.props.recipe.cookTime}</h4>
-                <h6>{this.props.recipe.difficulty}</h6>
-                <button onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
-                    <h3>Delete</h3>
+                <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
+                <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
+                <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
+                    <span className="forFlipButton front">Click</span>
+                    <span className="forFlipButton center"></span>
+                    <span className="forFlipButton back">Here</span>
                 </button>
                 <div className="coolCheckbox">
                     <input type="checkbox" name="Test"/>
                 </div>
+                <br/>
+                <br/>
             </div>
 
         </div>);

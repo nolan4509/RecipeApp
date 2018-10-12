@@ -30,7 +30,12 @@
     background-color: #ffc57e;
 }
 
+.recipeDifficulty {
+    text-align: center;
+}
+
 .homepage-recipe-tile {
+    background-color: #ffc57e;
     position: relative;
     width: 100%;
     min-height: 1px;
@@ -42,6 +47,11 @@
     margin: 0.5rem;
     /* this is bootstraps m-2 */
     /* max-width: 100%; */
+}
+
+.homepage-recipe-tile:hover {
+    background-color: #ffd38b;
+    transition: .5s;
 }
 
 /* Blur on Hover */
@@ -98,7 +108,7 @@ body {
 .coolCheckbox {
     position: absolute;
     top: 90%;
-    left: 70%;
+    left: 80%;
     transform: translate(-50%, -50%);
 }
 
@@ -221,12 +231,14 @@ body {
     background: #262626;
 }
 */
-a.thing {
+button.recipeItemRemoveButton {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    /* Button Position in div or container */
+    top: 90%;
+    left: 20%;
     transform: translate(-50%, -50%);
-    width: 200px;
+    /* Button Size */
+    width: 130px;
     height: 60px;
     text-align: center;
     transform-style: preserve-3d;
@@ -234,7 +246,7 @@ a.thing {
     transform-origin: center center;
 }
 
-.spanthing {
+span {
     position: absolute;
     top: 0;
     left: 0;
@@ -249,7 +261,8 @@ a.thing {
     backface-visibility: hidden;
     border-radius: 30px;
     text-transform: uppercase;
-    color: #fff;
+    /* Text Color in button */
+    color: #000;
     transition: 1s;
 }
 
@@ -257,7 +270,7 @@ span.front {
     transform: rotateX(0deg) translateZ(20px);
 }
 
-a:hover span.front {
+button.recipeItemRemoveButton:hover span.front {
     transform: rotateX(-180deg) translateZ(20px);
 }
 
@@ -265,12 +278,12 @@ span.back {
     transform: rotateX(180deg) translateZ(20px);
 }
 
-a:hover span.back {
+button.recipeItemRemoveButton:hover span.back {
     transform: rotateX(0deg) translateZ(20px);
 }
 
 span.center {
-    background: linear-gradient(to left, #c31a5b, #7129bd);
+    background: linear-gradient(to right, #c31a5b, #7129bd);
 }
 
 span.center:before {
@@ -280,11 +293,11 @@ span.center:before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to left, #ffdd1f, #c31a5b);
+    background: linear-gradient(to right, #ffdd1f, #c31a5b);
     border-radius: 30px;
     transform: translateZ(-1px);
 }
 
-a:hover span.center {
+button.recipeItemRemoveButton:hover span.center {
     transform: rotateX(-180deg) translateZ(0px);
 }
