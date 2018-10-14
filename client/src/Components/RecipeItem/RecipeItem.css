@@ -231,7 +231,7 @@ body {
     background: #262626;
 }
 */
-button.recipeItemRemoveButton {
+a.recipeItemRemoveButton {
     position: absolute;
     /* Button Position in div or container */
     top: 90%;
@@ -256,29 +256,29 @@ span {
     text-align: center;
     line-height: 60px;
     font-size: 24px;
-    background: rgba(255, 255, 255, .05);
+    background: rgba(255, 255, 255, 0);
     transform-style: preserve-3d;
     backface-visibility: hidden;
     border-radius: 30px;
     text-transform: uppercase;
     /* Text Color in button */
     color: #000;
-    transition: 1s;
+    transition: 0.75s;
 }
 
 span.front {
     transform: rotateX(0deg) translateZ(20px);
 }
 
-button.recipeItemRemoveButton:hover span.front {
-    transform: rotateX(-180deg) translateZ(20px);
+a.recipeItemRemoveButton:hover span.front {
+    transform: rotateX(-540deg) translateZ(20px);
 }
 
 span.back {
-    transform: rotateX(180deg) translateZ(20px);
+    transform: rotateX(540deg) translateZ(20px);
 }
 
-button.recipeItemRemoveButton:hover span.back {
+a.recipeItemRemoveButton:hover span.back {
     transform: rotateX(0deg) translateZ(20px);
 }
 
@@ -298,6 +298,6 @@ span.center:before {
     transform: translateZ(-1px);
 }
 
-button.recipeItemRemoveButton:hover span.center {
-    transform: rotateX(-180deg) translateZ(0px);
+a.recipeItemRemoveButton:hover span.center {
+    transform: rotateX(-540deg) translateZ(0px);
 }

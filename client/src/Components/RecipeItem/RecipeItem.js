@@ -15,11 +15,11 @@ class RecipeItem extends Component {
                 <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
-                <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
+                <a className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
                     <span className="forFlipButton front">Click</span>
                     <span className="forFlipButton center"></span>
                     <span className="forFlipButton back">Here</span>
-                </button>
+                </a>
                 <div className="coolCheckbox">
                     <input type="checkbox" name="Test"/>
                 </div>
