@@ -10,16 +10,16 @@ class RecipeItem extends Component {
 
     render() {
         return (<div className="flowContainer">
-            <div className="border border-warning rounded homepage-recipe-tile">
+            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow">
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
                 <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
-                <a className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
+                <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
                     <span className="forFlipButton front">Click</span>
                     <span className="forFlipButton center"></span>
                     <span className="forFlipButton back">Here</span>
-                </a>
+                </button>
                 <div className="coolCheckbox">
                     <input type="checkbox" name="Test"/>
                 </div>

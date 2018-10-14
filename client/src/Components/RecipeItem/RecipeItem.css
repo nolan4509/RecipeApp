@@ -19,17 +19,6 @@
     justify-content: space-evenly;
 }
 
-.tileStyleA {
-    margin-bottom: 10px;
-    background-color: #ffd38b;
-    min-width: 22.75rem;
-    max-width: 22.75rem;
-}
-
-.tileStyleB {
-    background-color: #ffc57e;
-}
-
 .recipeDifficulty {
     text-align: center;
 }
@@ -99,12 +88,11 @@ section .layer1 {
 }
 */
 /* Cool Checkbox Slider Thing */
-body {
+/* body {
     margin: 0;
     padding: 0;
     background: #292929;
-}
-
+} */
 .coolCheckbox {
     position: absolute;
     top: 90%;
@@ -173,10 +161,7 @@ body {
 } */
 .rainbowShadow {
     position: relative;
-    margin: 200px auto 0;
-    width: 400px;
-    height: 250px;
-    background: linear-gradient(0deg, #000, #262626);
+    /* background: linear-gradient(0deg, #000, #262626); */
 }
 
 .rainbowShadow:before,
@@ -212,41 +197,24 @@ body {
 }
 
 /* Button Flipping */
-/*
-
-
-HTML HAD THIS:
-<a href="#">
-    <span class="front">Click</span>
-    <span class="center"></span>
-    <span class="back">Here</span>
-</a>
-
-
-
-body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: #262626;
-}
-*/
-a.recipeItemRemoveButton {
+button.recipeItemRemoveButton {
     position: absolute;
     /* Button Position in div or container */
     top: 90%;
     left: 20%;
     transform: translate(-50%, -50%);
     /* Button Size */
-    width: 130px;
+    width: 125px;
     height: 60px;
     text-align: center;
     transform-style: preserve-3d;
     perspective: 1000px;
     transform-origin: center center;
+    background: rgba(255, 255, 255, 0);
+    border-color: rgba(255, 255, 255, 0);
 }
 
-span {
+span.forFlipButton {
     position: absolute;
     top: 0;
     left: 0;
@@ -270,7 +238,7 @@ span.front {
     transform: rotateX(0deg) translateZ(20px);
 }
 
-a.recipeItemRemoveButton:hover span.front {
+button.recipeItemRemoveButton:hover span.front {
     transform: rotateX(-540deg) translateZ(20px);
 }
 
@@ -278,7 +246,7 @@ span.back {
     transform: rotateX(540deg) translateZ(20px);
 }
 
-a.recipeItemRemoveButton:hover span.back {
+button.recipeItemRemoveButton:hover span.back {
     transform: rotateX(0deg) translateZ(20px);
 }
 
@@ -298,6 +266,6 @@ span.center:before {
     transform: translateZ(-1px);
 }
 
-a.recipeItemRemoveButton:hover span.center {
+button.recipeItemRemoveButton:hover span.center {
     transform: rotateX(-540deg) translateZ(0px);
 }
