@@ -2,7 +2,8 @@ import React, {
     Component
 } from 'react';
 import Recipes from '../Components/Recipes/Recipes';
-import SafeNavBar from '../Components/NavBar/SafeNavBar';
+import NavBar from '../Components/NavBar/NavBar';
+import './styles.css';
 // import uuid from 'uuid';
 
 class RecipesPage extends Component {
@@ -63,9 +64,8 @@ class RecipesPage extends Component {
 
     render() {
         return (<div className="bodyStyle">
-            <SafeNavBar/>
-            <h3>Latest Recipes for {this.state.userID}</h3>
-            <h4>Loaded: {this.state.recipesLoaded}</h4>
+            <NavBar/>
+            <br/>
             <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)}/>
         </div>);
     }
