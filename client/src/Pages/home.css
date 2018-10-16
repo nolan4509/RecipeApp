@@ -1,24 +1,22 @@
-.rowSpacing {
+/* .rowSpacing {
     margin-bottom: 15px;
-}
-
+} */
 .backgroundStyle {
-    background-image: url('http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg') scroll;
+    /* background-simage: url('http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg'); */
+    /* background-size: cover; */
+    /* background-size: 100% 100%; */
+    /* background-position: center center; */
+    /* background-blend-mode: color; */
+    /* background-attachment: fixed; */
 }
 
-h1 {
+/* h1 {
     text-align: center;
 }
 
 h4 {
     text-align: center;
-}
-
-.homepage-recipe-tile {
-    margin-left: 1.2%;
-    margin-right: 1.2%;
-}
-
-.info-panel {
+} */
+/* .info-panel {
     padding: 4px;
-}
+} */

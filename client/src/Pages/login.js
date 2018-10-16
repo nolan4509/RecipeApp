@@ -64,7 +64,7 @@ class Login extends Component {
             this.setState({
                 user
             });
-            this.props.history.push('/Recipes')
+            this.props.history.push('/Home')
         });
     }
 
@@ -102,15 +102,18 @@ class Login extends Component {
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
             <link rel="stylesheet" href="styles.css"/>
             <title>Login Page</title>
-            <div className="backgroundStyle">
+            <div>
+                <NavBar/>
                 {
                     this.state.user
-                        ? <div>
+                        ? <div className="backgroundStyle">
                                 <RecipesPage/>
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
-                        : <div> <NavBar/>
-                        <div className="container">
+                        : <div>
+                            {/* <NavBar/> */}
+                        <div className="backgroundStyle">
+                            <div className="container">
                                 <form className="box">
                                     <h2 className="big">Please Login</h2>
                                     <div className="inputBox">
@@ -133,6 +136,7 @@ class Login extends Component {
                                     </div>
                                     <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
                                 </form>
+                            </div>
                                 {/* Add another form here, consisting of just a button(?) that onClick -> googleLogin, and make 'login' for user&password */}
                             </div>
                         </div>

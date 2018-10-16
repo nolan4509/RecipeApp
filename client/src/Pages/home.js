@@ -108,40 +108,46 @@ class Home extends Component {
     }
 
     render() {
-        return (<div className="backgroundStyle">
+        return (<div>
             <head>
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
                 <link rel="stylesheet" href="home.css"/>
             </head>
-            {/* <NavBar/> */}
+            <NavBar/>
             {
                 this.state.user
-                    ? <div>
+                    ? <div className="backgroundStyle">
                         {/* <NavBar/> */}
                         <RecipesPage/>
                         <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                     </div>
-                    : <div className="container">
-                        {/* This is displayed if the user isn't logged in. */
-                        }
-                        <form className="form-signin">
-                            <h2 className="big">Please Login :)</h2>
-                            <label for="inputEmail" className="sr-only">Email address</label>
-                            {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
-                            {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
-                            <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required="required" autofocus="autofocus"/>
-                            <label for="inputPassword" className="sr-only">Password</label>
-                            {/* FOR BELOW value={userPassword} */}
-                            {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
-                            <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="required"/>
-                            <div className="checkbox">
-                                <label>
-                                    <input type="checkbox" value="remember-me"/>
-                                    Remember me (Todo)
-                                </label>
-                            </div>
-                            <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
-                        </form>
+                    : <div className="backgroundStyle">
+                        {/* <NavBar/> */}
+                    <div className="container">
+                            <form className="box">
+                                <h2 className="big">Please Login</h2>
+                                <div className="inputBox">
+                                    <label htmlFor="inputEmail" className="sr-only inputBox">Email address</label>
+                                    {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
+                                    {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
+                                    <input type="email" id="inputEmail" placeholder="Email address" required="required" autoFocus="autofocus"/>
+                                </div>
+                                <div className="inputBox">
+                                    <label htmlFor="inputPassword" className="sr-only inputBox">Password</label>
+                                    {/* FOR BELOW value={userPassword} */}
+                                    {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
+                                    <input type="password" id="inputPassword" placeholder="Password" required="required"/>
+                                </div>
+                                <div className="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="remember-me"/>
+                                        Remember me (Todo)
+                                    </label>
+                                </div>
+                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
+                            </form>
+                            {/* Add another form here, consisting of just a button(?) that onClick -> googleLogin, and make 'login' for user&password */}
+                        </div>
                     </div>
             }
             </div>);

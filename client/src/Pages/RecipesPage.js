@@ -64,7 +64,7 @@ class RecipesPage extends Component {
 
     render() {
         return (<div className="bodyStyle">
-            <NavBar/>
+            {/* <NavBar/> */}
             <br/>
             <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)}/>
         </div>);
