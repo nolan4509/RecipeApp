@@ -19,7 +19,7 @@
     /* transform: translate(-80%, 10%); */
     width: 1050px;
     padding-left: 265px;
-    padding-top: 115px;
+    padding-top: 135px;
     padding-bottom: 20px;
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
@@ -28,31 +28,100 @@
 
 .newRecipeFormContent {
     position: relative;
+    font-size: 22px;
 }
 
 .newRecipeTitleField {
     text-align: left;
     font-size: 30px;
+    padding-bottom: 24px;
+    background-color: transparent;
 }
 
 .newRecipeTitleField label {
     padding-right: 15px;
 }
 
+.newRecipeTitleField input {
+    background-color: transparent;
+    border-radius: 3px;
+    border-width: medium;
+}
+
+.newRecipeDifficultyAndTimeLine {
+    padding-bottom: 14px;
+}
+
 .newRecipeDifficultyField {
     float: left;
+}
+
+.newRecipeDifficultyField label {
+    margin-bottom: 1px;
+}
+
+.newRecipeDifficultyField select {
+    background-color: transparent;
+    border-radius: 3px;
+    border-width: medium;
 }
 
 .newRecipeCookTimeField {
     padding-left: 140px;
 }
 
+.newRecipeCookTimeField label {
+    margin-bottom: 1px;
+}
+
+.newRecipeCookTimeField input {
+    background-color: transparent;
+    border-radius: 3px;
+    border-width: medium;
+}
+
+.newRecipeCategoryAndCuisineLine {
+    padding-bottom: 14px;
+}
+
 .newRecipeCategoryField {
     float: left;
 }
 
+.newRecipeCategoryField label {
+    margin-bottom: 1px;
+}
+
+.newRecipeCategoryField select {
+    background-color: transparent;
+    border-radius: 3px;
+    border-width: medium;
+}
+
 .newRecipeCuisineField {
     padding-left: 140px;
+}
+
+.newRecipeCuisineField label {
+    margin-bottom: 1px;
+}
+
+.newRecipeCuisineField select {
+    background-color: transparent;
+    border-radius: 3px;
+    border-width: medium;
+}
+
+.newRecipeIngredientsField textarea {
+    background-color: transparent;
+    border-radius: 3px;
+    border-width: medium;
+}
+
+.newRecipeInstructionsField textarea {
+    background-color: transparent;
+    border-radius: 3px;
+    border-width: medium;
 }
 
 .newRecipeVegetarianField {

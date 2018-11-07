@@ -2,7 +2,7 @@ import React, {
     Component
 } from 'react';
 import Recipes from '../Components/Recipes/Recipes';
-import NavBar from '../Components/NavBar/NavBar';
+// import NavBar from '../Components/NavBar/NavBar';
 import './styles.css';
 // import uuid from 'uuid';
 

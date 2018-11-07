@@ -6,21 +6,8 @@ import {
     auth,
     provider
 } from '../firebase.js';
-import {
-    Container,
-    Row,
-    Col,
-    Button,
-    Card,
-    CardImg,
-    CardText,
-    CardBody,
-    CardTitle,
-    CardSubtitle
-} from 'reactstrap';
 import NavBar from '../Components/NavBar/NavBar';
 // import MainNavBar from '../Components/NavBar/MainNavBar';
-import TestComponent from '../Components/TestComponent/TestComponent';
 import RecipesPage from './RecipesPage';
 
 class Home extends Component {

@@ -1,9 +1,6 @@
 import React, {
     Component
 } from 'react';
-import {
-    Prompt
-} from 'react-router-dom';
 import './NewRecipe.css';
 // import uuid from 'uuid';
 
@@ -180,9 +177,9 @@ class NewRecipe extends Component {
             return <option key={difficulty} value={difficulty}>{difficulty}</option>
         });
 
-        const {
-            complete
-        } = this.state
+        // const {
+        //     complete
+        // } = this.state
 
         return (<div className="backgroundStyle">
             <div className="newRecipeHeader">Add a New Recipe!</div>
@@ -223,11 +220,11 @@ class NewRecipe extends Component {
                         </div>
                         <div className="newRecipeIngredientsField">
                             <label htmlFor="newRecipeIngredientsField">Ingredients</label><br/>
-                            <textarea ref="ingredientArray" id="newRecipeIngredientsField" name="newRecipeIngredientsField" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
+                            <textarea ref="ingredientArray" id="newRecipeIngredientsField" name="newRecipeIngredientsField" rows="5" cols="50" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
                         </div>
                         <div className="newRecipeInstructionsField">
                             <label htmlFor="newRecipeInstructionsField">Instructions</label><br/>
-                            <textarea ref="instructions" id="newRecipeInstructionsField" name="newRecipeInstructionsField" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
+                            <textarea ref="instructions" id="newRecipeInstructionsField" name="newRecipeInstructionsField" rows="5" cols="50" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
                         </div>
                         <div className="newRecipeCheckBoxesLine">
                             <div className="newRecipeVegetarianField">
