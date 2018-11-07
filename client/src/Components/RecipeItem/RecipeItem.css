@@ -1,8 +1,4 @@
 /* Recipe Item Styles */
-.rowSpacing {
-    margin-bottom: 15px;
-}
-
 .flowContainer {
     position: relative;
     /* We first create a flex layout context */
@@ -19,7 +15,15 @@
     justify-content: space-evenly;
 }
 
+.recipeName {
+    text-align: center;
+}
+
 .recipeDifficulty {
+    text-align: center;
+}
+
+.recipeCookTime {
     text-align: center;
 }
 
@@ -34,21 +38,18 @@
     min-width: 22.75rem;
     max-width: 22.75rem;
     margin: 0.5rem;
+    transition: transform .5s;
     /* this is bootstraps m-2 */
     /* max-width: 100%; */
 }
 
 .homepage-recipe-tile:hover {
-    background-color: #ffd38b;
-    transition: .5s;
+    background-color: #ffd88b;
+    transform: scale(1.05);
 }
 
 /* Blur on Hover */
 /*
-body {
-    margin: 0;
-    padding: 0;
-}
 
 section {
     width: 100%;
@@ -164,7 +165,7 @@ body {
     /* background: linear-gradient(0deg, #000, #262626); */
 }
 
-.rainbowShadow:before,
+/* .rainbowShadow:before,
 .rainbowShadow:after {
     content: '';
     position: absolute;
@@ -194,8 +195,7 @@ body {
     100% {
         background-position: 0 0;
     }
-}
-
+} */
 /* Button Flipping */
 button.recipeItemRemoveButton {
     position: absolute;

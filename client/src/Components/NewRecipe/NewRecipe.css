@@ -1,6 +1,75 @@
 /* New Recipe Styles */
-/* .backgroundStyle {
-    background-image: url('http://www.freepptbackgrounds.net/wp-content/uploads/2014/02/Restaurant-Menu-Theme-Backgrounds.jpg');
-    /* font-size: 1.25rem;
-    /* font-weight: bold;
-} */
+.newRecipeHeader {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.notebookPage {
+    background-image: url('https://images-na.ssl-images-amazon.com/images/I/71rtniQ7H7L._SL1500_.jpg');
+    /* background-size: cover; */
+    background-repeat: no-repeat;
+    /* background-size: 100% 100%; */
+    background-position: center -60px;
+    /* background-blend-mode: color; */
+    /* background-attachment: fixed; */
+    position: relative;
+    top: 25px;
+    left: 17.5%;
+    /* transform: translate(-80%, 10%); */
+    width: 1050px;
+    padding-left: 265px;
+    padding-top: 115px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
+    border-radius: 10px;
+}
+
+.newRecipeFormContent {
+    position: relative;
+}
+
+.newRecipeTitleField {
+    text-align: left;
+    font-size: 30px;
+}
+
+.newRecipeTitleField label {
+    padding-right: 15px;
+}
+
+.newRecipeDifficultyField {
+    float: left;
+}
+
+.newRecipeCookTimeField {
+    padding-left: 140px;
+}
+
+.newRecipeCategoryField {
+    float: left;
+}
+
+.newRecipeCuisineField {
+    padding-left: 140px;
+}
+
+.newRecipeVegetarianField {
+    float: left;
+    padding-right: 20px;
+}
+
+.newRecipeVeganField {
+    float: left;
+    padding-right: 20px;
+}
+
+.newRecipeIDField {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.newRecipeAuthorIDField {
+    text-align: center;
+}

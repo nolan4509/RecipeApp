@@ -185,69 +185,80 @@ class NewRecipe extends Component {
         } = this.state
 
         return (<div className="backgroundStyle">
-            <h3>New Recipe</h3>
+            <div className="newRecipeHeader">Add a New Recipe!</div>
             <form id="newRecipeForm" onSubmit={this.postRecipe}>
-                <Prompt when={!complete} message={location => (`Are you sure you want to go to ${location.pathname} before finishing your recipe post?`)}/>
-                <div>
-                    <label>Recipe Name</label><br/>
-                    <input type="text" name="recipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
+                <div className="notebookPage">
+                    {/* <Prompt when={!complete} message={location => (`Are you sure you want to go to ${location.pathname} before finishing your recipe post?`)}/> */}
+                    <div className="newRecipeFormContent">
+                        <div className="newRecipeTitleField">
+                            <label htmlFor="newRecipeTitleField">Name:</label>
+                            <input type="text" id="newRecipeTitleField" name="newRecipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
+                        </div>
+
+                        <div className="newRecipeDifficultyAndTimeLine">
+                            <div className="newRecipeDifficultyField">
+                                <label htmlFor="newRecipeDifficultyField">Difficulty</label><br/>
+                                <select ref="difficulty" id="newRecipeDifficultyField" name="newRecipeDifficultyField" value={this.state.difficulty} onChange={this.handleChangeDifficulty}>
+                                    {difficultyOptions}
+                                </select>
+                            </div>
+                            <div className="newRecipeCookTimeField">
+                                <label htmlFor="newRecipeCookTimeField">Cook Time</label><br/>
+                                <input type="text" ref="cookTime" id="newRecipeCookTimeField" name="newRecipeCookTimeField" value={this.state.cookTime} onChange={this.handleChangeCookTime}/>
+                            </div>
+                        </div>
+                        <div className="newRecipeCategoryAndCuisineLine">
+                            <div className="newRecipeCategoryField">
+                                <label htmlFor="newRecipeCategoryField">Category</label><br/>
+                                <select ref="category" id="newRecipeCategoryField" name="newRecipeCategoryField" value={this.state.category} onChange={this.handleChangeCategory}>
+                                    {categoryOptions}
+                                </select>
+                            </div>
+                            <div className="newRecipeCuisineField">
+                                <label htmlFor="newRecipeCuisineField">Cuisine</label><br/>
+                                <select ref="cuisine" id="newRecipeCuisineField" name="newRecipeCuisineField" value={this.state.cuisine} onChange={this.handleChangeCuisine}>
+                                    {cuisineOptions}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="newRecipeIngredientsField">
+                            <label htmlFor="newRecipeIngredientsField">Ingredients</label><br/>
+                            <textarea ref="ingredientArray" id="newRecipeIngredientsField" name="newRecipeIngredientsField" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
+                        </div>
+                        <div className="newRecipeInstructionsField">
+                            <label htmlFor="newRecipeInstructionsField">Instructions</label><br/>
+                            <textarea ref="instructions" id="newRecipeInstructionsField" name="newRecipeInstructionsField" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
+                        </div>
+                        <div className="newRecipeCheckBoxesLine">
+                            <div className="newRecipeVegetarianField">
+                                <label htmlFor="newRecipeVegetarianField">Vegetarian</label><br/>
+                                <input type="checkbox" ref="vegetarian" id="newRecipeVegetarianField" name="newRecipeVegetarianField" value={this.state.vegetarian} onChange={this.handleChangeVegetarian}/>
+                            </div>
+                            <div className="newRecipeVeganField">
+                                <label htmlFor="newRecipeVeganField">Vegan</label><br/>
+                                <input type="checkbox" ref="vegan" id="newRecipeVeganField" name="newRecipeVeganField" value={this.state.vegan} onChange={this.handleChangeVegan}/>
+                            </div>
+                            <div className="newRecipeGlutenFreeField">
+                                <label htmlFor="newRecipeGlutenFreeField">Gluten Free</label><br/>
+                                <input type="checkbox" ref="glutenFree" id="newRecipeGlutenFreeField" name="newRecipeGlutenFreeField" value={this.state.glutenFree} onChange={this.handleChangeGlutenFree}/>
+                            </div>
+                        </div>
+                        <br/>
+                        <button id="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
+                        <br/>
+                        <h3>{this.state.submissionStatus}</h3>
+                    </div>
                 </div>
-                <div>
-                    <label>Recipe ID</label><br/>
-                    <input type="text" name="recipeIDField" value={this.state.recipeID} onChange={this.handleChangeRecipeID}/>
+                <div className="newRecipeIDField">
+                    <label htmlFor="newRecipeIDField">Recipe ID</label> < br / >
+                    <input type="text" name="newRecipeIDField" value={this.state.recipeID} onChange={this.handleChangeRecipeID}/>
                 </div>
-                <div>
-                    <label>Author ID</label><br/>
-                    <input type="text" name="authorIDField" value={this.state.authorID} onChange={this.handleChangeAuthorID}/>
+                <div className="newRecipeAuthorIDField">
+                    <label htmlFor="newRecipeAuthorIDField">Author ID</label> < br / >
+                    <input type="text" name="newRecipeAuthorIDField" value={this.state.authorID} onChange={this.handleChangeAuthorID}/>
                 </div>
-                <div>
-                    <label>Category</label><br/>
-                    <select ref="category" name="categoryField" value={this.state.category} onChange={this.handleChangeCategory}>
-                        {categoryOptions}
-                    </select>
-                </div>
-                <div>
-                    <label>Cuisine</label><br/>
-                    <select ref="cuisine" name="ethnicityField" value={this.state.cuisine} onChange={this.handleChangeCuisine}>
-                        {cuisineOptions}
-                    </select>
-                </div>
-                <div>
-                    <label>Difficulty</label><br/>
-                    <select ref="difficulty" name="difficultyField" value={this.state.difficulty} onChange={this.handleChangeDifficulty}>
-                        {difficultyOptions}
-                    </select>
-                </div>
-                <div>
-                    <label>Ingredients</label><br/>
-                    <input type="text" ref="ingredientArray" name="ingredientsField" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
-                </div>
-                <div>
-                    <label>Instructions</label><br/>
-                    <input type="text" ref="instructions" name="instructionsField" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
-                </div>
-                <div>
-                    <label>Cook Time</label><br/>
-                    <input type="text" ref="cookTime" name="cookTimeField" value={this.state.cookTime} onChange={this.handleChangeCookTime}/>
-                </div>
-                <div>
-                    <label>Vegetarian</label><br/>
-                    <input type="checkbox" ref="vegetarian" name="vegetarianCheck" value={this.state.vegetarian} onChange={this.handleChangeVegetarian}/>
-                </div>
-                <div>
-                    <label>Vegan</label><br/>
-                    <input type="checkbox" ref="vegan" name="veganCheck" value={this.state.vegan} onChange={this.handleChangeVegan}/>
-                </div>
-                <div>
-                    <label>Gluten Free</label><br/>
-                    <input type="checkbox" ref="glutenFree" name="glutenCheck" value={this.state.glutenFree} onChange={this.handleChangeGlutenFree}/>
-                </div>
-                <br/>
-                <button id="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
-                <br/>
-                <h3>{this.state.submissionStatus}</h3>
             </form>
-        </div>);
+            </div>);
     }
 }
 

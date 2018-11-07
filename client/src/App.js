@@ -7,6 +7,7 @@ import Home from './Pages/home';
 import Login from './Pages/login';
 import NewRecipe from './Pages/NewRecipePage';
 import Recipes from './Pages/RecipesPage';
+import RecipeView from './Components/RecipeView/RecipeView';
 
 const App = () => (<main>
     <Switch>
@@ -14,6 +15,7 @@ const App = () => (<main>
         <Route path='/home' component={Home}/>
         <Route path='/NewRecipe' component={NewRecipe}/>
         <Route path='/Recipes' component={Recipes}/>
+        <Route path='/Recipes/view' component={RecipeView}/>
     </Switch>
 </main>)
 

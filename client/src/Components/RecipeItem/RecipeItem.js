@@ -8,6 +8,10 @@ class RecipeItem extends Component {
         this.props.onDelete(id);
     }
 
+    viewRecipe(id) {
+        this.props.push(`/recipes/${id}`);
+    }
+
     render() {
         return (<div className="flowContainer">
             <div className="border border-warning rounded homepage-recipe-tile rainbowShadow">
@@ -16,6 +20,7 @@ class RecipeItem extends Component {
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
                 <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
+                {/* <button className="recipeItemRemoveButton" onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}> */}
                     <span className="forFlipButton front">Click</span>
                     <span className="forFlipButton center"></span>
                     <span className="forFlipButton back">Here</span>
