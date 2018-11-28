@@ -2,25 +2,24 @@ import React, {
     Component
 } from 'react';
 import './login.css';
-import {
-    auth,
-    provider
-} from '../firebase.js';
-
+import firebase from '../firebase.js';
 import NavBar from '../Components/NavBar/NavBar';
 import RecipesPage from './RecipesPage';
+require('firebase/auth');
 
 class Login extends Component {
     constructor(props) {
         super(props)
         this.handleChangeEmail = this.handleChangeEmail.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
+        this.handleChangePassword = this.handleChangePassword.bind(this)
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.state = {
             userID: '',
             userName: '',
             userEmail: '',
+            userPassword: '',
             userRecipes: [],
             user: null,
             submissionStatus: ''
@@ -32,12 +31,12 @@ class Login extends Component {
     now equal to null, the user will see the Log In button instead of the Log Out button.
     */
     logout() {
-        auth.signOut().then(() => {
+        firebase.auth().signOut().then(() => {
             this.setState({
                 user: null
             });
         });
-        this.props.history.push('/')
+        this.props.history.push('/Home')
     }
 
     /*
@@ -52,26 +51,40 @@ class Login extends Component {
     store this inside of the state using 'setState'
     */
     login() {
-        /*
-      auth.doSignInWithEmailAndPassword(userEmail, userPassword)
-      .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        history.push(routes.HOME);
-      })
-      */
-        auth.signInWithPopup(provider).then((result) => {
+        firebase.auth().signInWithEmailAndPassword(this.state.userEmail, this.state.userPassword).then((result) => {
             const user = result.user;
             this.setState({
                 user
             });
-            this.props.history.push('/Home')
+            console.log(user);
+            console.log(this.state.user);
+            this.props.history.push('/Home');
         });
-    }
+        /*
+        .catch(function(error) {
+                console.log(error.code);
+                console.log(error.message);
+            }
+              auth.signInWithPopup(provider).then((result) => {
+                  const user = result.user;
+                  this.setState({
+                      user
+                  });
+                  this.props.history.push('/Home')
+              });
+              */
+    };
 
     handleChangeEmail(event) {
         this.setState({
             userEmail: event.target.value,
             userID: event.target.value.substr(0, event.target.value.indexOf('@'))
+        })
+    }
+
+    handleChangePassword(event) {
+        this.setState({
+            userPassword: event.target.value
         })
     }
 
@@ -82,7 +95,7 @@ class Login extends Component {
     }
 
     componentDidMount() {
-        auth.onAuthStateChanged((user) => {
+        firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.setState({
                     user
@@ -118,15 +131,11 @@ class Login extends Component {
                                     <h2 className="big">Please Login</h2>
                                     <div className="inputBox">
                                         <label htmlFor="inputEmail" className="sr-only inputBox">Email address</label>
-                                        {/* FOR BELOW note: for later can have them hit enter for user+pass combo, and button for google value={userEmail} */}
-                                        {/* onChange={event => this.setState(byPropKey('userEmail', event.target.value))} */}
-                                        <input type="email" id="inputEmail" placeholder="Email address" required="required" autoFocus="autofocus"/>
+                                        <input type="email" id="inputEmail" placeholder="Email address" required="required" autoFocus="autofocus" value={this.state.userEmail} onChange={this.handleChangeEmail}/>
                                     </div>
                                     <div className="inputBox">
                                         <label htmlFor="inputPassword" className="sr-only">Password</label>
-                                        {/* FOR BELOW value={userPassword} */}
-                                        {/* onChange={event => this.setState(byPropKey('userPassword', event.target.value))} */}
-                                        <input type="password" id="inputPassword" placeholder="Password" required="required"/>
+                                        <input type="password" id="inputPassword" placeholder="Password" required="required" value={this.state.userPassword} onChange={this.handleChangePassword}/>
                                     </div>
                                     <div className="checkbox">
                                         <label>
