@@ -11,6 +11,7 @@ class RecipesPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            // This will need to be changed to work with authorization
             userID: '4509',
             recipesLoaded: 'False',
             recipes: []
@@ -63,12 +64,13 @@ class RecipesPage extends Component {
 
 
     render() {
-        return (<div className="bodyStyle">
-            {/* <NavBar/> */}
-            <br/>
-            <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)}/>
-        </div>);
+        return ( < div className = "bodyStyle" > { /* <NavBar/> */ } <
+            br / >
+            <
+            Recipes recipes = { this.state.recipes } onDelete = { this.handleDeleteRecipe.bind(this.state.recipes.recipeID) }
+            /> <
+            /div>);
+        }
     }
-}
 
-export default RecipesPage;
+    export default RecipesPage;
