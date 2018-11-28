@@ -220,11 +220,11 @@ class NewRecipe extends Component {
                         </div>
                         <div className="newRecipeIngredientsField">
                             <label htmlFor="newRecipeIngredientsField">Ingredients</label><br/>
-                            <textarea ref="ingredientArray" id="newRecipeIngredientsField" name="newRecipeIngredientsField" rows="5" cols="50" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
+                            <textarea ref="ingredientArray" id="newRecipeIngredientsField" name="newRecipeIngredientsField" rows="4" cols="40" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
                         </div>
                         <div className="newRecipeInstructionsField">
                             <label htmlFor="newRecipeInstructionsField">Instructions</label><br/>
-                            <textarea ref="instructions" id="newRecipeInstructionsField" name="newRecipeInstructionsField" rows="5" cols="50" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
+                            <textarea ref="instructions" id="newRecipeInstructionsField" name="newRecipeInstructionsField" rows="4" cols="40" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
                         </div>
                         <div className="newRecipeCheckBoxesLine">
                             <div className="newRecipeVegetarianField">
@@ -241,7 +241,7 @@ class NewRecipe extends Component {
                             </div>
                         </div>
                         <br/>
-                        <button id="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
+                        <button id="newRecipeButton" className="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
                         <br/>
                         <h3>{this.state.submissionStatus}</h3>
                     </div>
