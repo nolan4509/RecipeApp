@@ -58,7 +58,8 @@ class Login extends Component {
             });
             console.log(user);
             console.log(this.state.user);
-            this.props.history.push('/Home');
+            console.log("logged in as id: " + firebase.auth().currentUser.uid);
+            //      this.props.history.push('/Home');
         });
         /*
         .catch(function(error) {
@@ -107,14 +108,6 @@ class Login extends Component {
 
     render() {
         return (<div>
-            {/* Login */}
-
-            {/* Required meta tags */}
-            <meta charSet="utf-8"/> {/* <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> */}
-            {/* Bootstrap CSS */}
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
-            <link rel="stylesheet" href="styles.css"/>
-            <title>Login Page</title>
             <div>
                 <NavBar/>
                 {

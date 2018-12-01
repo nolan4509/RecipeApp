@@ -20,21 +20,20 @@ class RecipesPage extends Component {
 
     getRecipes() {
         fetch(`/recipes/user/${this.state.userID}`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
-            .then((result) => {
-                // console.log('Success: ' + result);
-                this.setState({
-                    recipesLoaded: 'True',
-                    recipes: result
-                })
-            }).catch((error) => {
-                console.log('Error: ' + error);
-            });
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json()).then((result) => {
+            // console.log('Success: ' + result);
+            this.setState({
+                recipesLoaded: 'True',
+                recipes: result
+            })
+        }).catch((error) => {
+            console.log('Error: ' + error);
+        });
     }
 
     componentDidMount() {
@@ -62,15 +61,13 @@ class RecipesPage extends Component {
         });
     }
 
-
     render() {
-        return ( < div className = "bodyStyle" > { /* <NavBar/> */ } <
-            br / >
-            <
-            Recipes recipes = { this.state.recipes } onDelete = { this.handleDeleteRecipe.bind(this.state.recipes.recipeID) }
-            /> <
-            /div>);
-        }
+        return (<div className = "bodyStyle">
+            {/* <NavBar/> */}
+            <br/>
+            <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)}/>
+        </div>);
     }
+}
 
-    export default RecipesPage;
+export default RecipesPage;
