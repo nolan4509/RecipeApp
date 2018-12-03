@@ -314,13 +314,14 @@ app.post('/newRecipe', function(req, res) {
 // Search for Recipe by ID
 app.get('/recipes/:recipeID', function(req, res) {
     let recipeSearchID = Number(req.params.recipeID);
+    console.log(recipeSearchID);
     retRecipe = null;
 
     // Search the database for a recipe with matching ID
     recipeArray.map(RP => {
         if (RP.id == recipeSearchID) {
             retRecipe = RP;
-            res.send(JSON.stringify(retRecipes));
+            res.send(JSON.stringify(retRecipe));
         }
     });
 
