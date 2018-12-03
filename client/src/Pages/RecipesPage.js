@@ -14,11 +14,14 @@ class RecipesPage extends Component {
             // This will need to be changed to work with authorization
             userID: '4509',
             recipesLoaded: 'False',
-            recipes: []
+            recipes: [],
+            currentRecipe: ''
         }
     }
 
     getRecipes() {
+        console.log('Inside RecipesPage.js: ');
+        console.log(this.props);
         fetch(`/recipes/user/${this.state.userID}`, {
             method: 'GET',
             headers: {

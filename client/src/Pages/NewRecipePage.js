@@ -5,7 +5,6 @@ import NewRecipe from '../Components/NewRecipe/NewRecipe';
 import NavBar from '../Components/NavBar/NavBar';
 
 class NewRecipePage extends Component {
-
     handleNewRecipe(recipe) {
         let recipes = this.state.recipes;
         recipes.push(recipe);

@@ -9,12 +9,26 @@ class RecipeItem extends Component {
     }
 
     viewRecipe(id) {
-        this.props.push(`/recipes/${id}`);
+        console.log('Inside RecipeItem.js: ' + this.props);
+        fetch(`/recipes/${this.props.recipe.recipeID}`, {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json()).then((result) => {
+            console.log('Success: ' + result);
+            this.setState({
+                currentRecipe: result
+            })
+        }).catch((error) => {
+            console.log('Error: ' + error);
+        });
     }
 
     render() {
         return (<div className="flowContainer">
-            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow">
+            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={this.viewRecipe.bind(this, this.props.recipe.recipeID)}>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
                 <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
@@ -31,14 +45,8 @@ class RecipeItem extends Component {
                 <br/>
                 <br/>
             </div>
-
         </div>);
     }
 }
-
-// RecipeItem.propTypes = {
-//     recipe: React.PropTypes.object,
-//     onDelete: React.PropTypes.func
-// }
 
 export default RecipeItem;

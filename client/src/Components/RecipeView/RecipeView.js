@@ -4,6 +4,11 @@ import React, {
 import './RecipeView.css';
 
 class RecipeView extends Component {
+    constructor(props) {
+        super(props)
+        this.deleteRecipe = this.deleteRecipe.bind(this)
+    }
+
     deleteRecipe(id) {
         this.props.onDelete(id);
     }
@@ -15,7 +20,7 @@ class RecipeView extends Component {
             <img src="images/chickun.jpg" alt="ChickenSaladImage" width="500" height="500"/>
             <p>serves: 4 | cook time: 20 minutes</p>
             <h2>Ingredients</h2>
-            <ul style="list-style-type:disc">
+            <ul>
                 <li>4 chicken breasts</li>
                 <li>2 Granny Smith Apples</li>
                 <li>1 cup seedless grapes</li>
