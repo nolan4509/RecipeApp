@@ -12,24 +12,6 @@ class RecipeItem extends Component {
         this.props.onView(id);
     }
 
-    // viewRecipe(id) {
-    //     console.log('Inside RecipeItem.js: ' + this.props);
-    //     fetch(`/recipes/${this.props.recipe.recipeID}`, {
-    //         method: 'get',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }).then(res => res.json()).then((result) => {
-    //         console.log('Success: ' + result);
-    //         this.setState({
-    //             currentRecipe: result
-    //         })
-    //     }).catch((error) => {
-    //         console.log('Error: ' + error);
-    //     });
-    // }
-
     render() {
         return (<div className="flowContainer">
             <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={this.viewRecipe.bind(this, this.props.recipe.recipeID)}>
