@@ -9,22 +9,26 @@ class RecipeItem extends Component {
     }
 
     viewRecipe(id) {
-        console.log('Inside RecipeItem.js: ' + this.props);
-        fetch(`/recipes/${this.props.recipe.recipeID}`, {
-            method: 'get',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json()).then((result) => {
-            console.log('Success: ' + result);
-            this.setState({
-                currentRecipe: result
-            })
-        }).catch((error) => {
-            console.log('Error: ' + error);
-        });
+        this.props.onView(id);
     }
+
+    // viewRecipe(id) {
+    //     console.log('Inside RecipeItem.js: ' + this.props);
+    //     fetch(`/recipes/${this.props.recipe.recipeID}`, {
+    //         method: 'get',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json'
+    //         }
+    //     }).then(res => res.json()).then((result) => {
+    //         console.log('Success: ' + result);
+    //         this.setState({
+    //             currentRecipe: result
+    //         })
+    //     }).catch((error) => {
+    //         console.log('Error: ' + error);
+    //     });
+    // }
 
     render() {
         return (<div className="flowContainer">

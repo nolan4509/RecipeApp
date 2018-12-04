@@ -113,7 +113,7 @@ class Login extends Component {
                 {
                     this.state.user
                         ? <div className="backgroundStyle">
-                                <RecipesPage/>
+                                <RecipesPage history={this.props.history}/>
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
                         : <div>

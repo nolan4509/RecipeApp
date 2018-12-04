@@ -9,13 +9,17 @@ class Recipes extends Component {
         this.props.onDelete(id);
     }
 
+    viewRecipe(id) {
+        this.props.onView(id);
+    }
+
     render() {
         let recipeItems;
         console.log('Inside Recipes.js: ');
         console.log(this.props);
         if (this.props.recipes) {
             recipeItems = this.props.recipes.map(recipe => {
-                return (<RecipeItem onDelete={this.deleteRecipe.bind(this)} key={recipe.name} recipe={recipe}/>);
+                return (<RecipeItem onDelete={this.deleteRecipe.bind(this)} onView={this.viewRecipe.bind(this)} key={recipe.name} recipe={recipe}/>);
             });
         }
         return (<div className="container">
