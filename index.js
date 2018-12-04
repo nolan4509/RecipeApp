@@ -333,7 +333,7 @@ app.get('/recipes/:recipeID', function(req, res) {
 
 // Creator - view a user's recipes
 app.get('/recipes/user/:userID', function(req, res) {
-    let searchID = Number(req.params.userID);
+    let searchID = String(req.params.userID);
     let user = null;
     retRecipes = [];
     console.log('User ID: ' + searchID);

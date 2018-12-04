@@ -13,7 +13,7 @@ class RecipesPage extends Component {
         this.handleViewRecipe = this.handleViewRecipe.bind(this);
         this.state = {
             // This will need to be changed to work with authorization
-            userID: '4509',
+            userID: '',
             recipesLoaded: 'False',
             recipes: [],
             currentRecipe: 'Test'
@@ -22,8 +22,9 @@ class RecipesPage extends Component {
 
     getRecipes() {
         console.log('Inside RecipesPage.js: ');
-        console.log(this.props);
-        fetch(`/recipes/user/${this.state.userID}`, {
+        console.log(this.props.currentUserID);
+        console.log(this.state.userID);
+        fetch(`/recipes/user/${this.props.currentUserID}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -41,6 +42,11 @@ class RecipesPage extends Component {
     }
 
     componentDidMount() {
+        console.log('in recipespage.js: ');
+        console.log(this.props.currentUserID);
+        this.setState({
+            userID: this.props.currentUserID
+        })
         this.getRecipes();
     }
 

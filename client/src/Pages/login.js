@@ -16,6 +16,7 @@ class Login extends Component {
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.state = {
+            realUserID: '',
             userID: '',
             userName: '',
             userEmail: '',
@@ -59,6 +60,10 @@ class Login extends Component {
             console.log(user);
             console.log(this.state.user);
             console.log("logged in as id: " + firebase.auth().currentUser.uid);
+            this.setState({
+                realUserID: firebase.auth().currentUser.uid
+            })
+            console.log(this.state.realUserID);
             //      this.props.history.push('/Home');
         });
         /*
@@ -96,6 +101,7 @@ class Login extends Component {
     }
 
     componentDidMount() {
+        // console.log(firebase.auth().currentUser.uid);
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.setState({
@@ -113,7 +119,7 @@ class Login extends Component {
                 {
                     this.state.user
                         ? <div className="backgroundStyle">
-                                <RecipesPage history={this.props.history}/>
+                                <RecipesPage history={this.props.history} currentUserID={firebase.auth().currentUser.uid}/>
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
                         : <div>

@@ -2,6 +2,9 @@ import React, {
     Component
 } from 'react';
 import './NewRecipe.css';
+import firebase from 'firebase';
+
+require('firebase/auth');
 // import uuid from 'uuid';
 
 class NewRecipe extends Component {
@@ -32,10 +35,11 @@ class NewRecipe extends Component {
             vegetarian: false,
             vegan: false,
             glutenFree: false,
-            userID: '4509',
+            userID: '',
             authorID: '',
             complete: false,
-            submissionStatus: ''
+            submissionStatus: '',
+            user: null
         }
     }
 
@@ -166,6 +170,27 @@ class NewRecipe extends Component {
         })
     }
 
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({
+                    user
+                }); // When user signs in, checks the firebase database to see
+                // if they were already previously authenticated, if so, restore
+            }
+        });
+
+        console.log('in newrecipe.js: ');
+        console.log(this.state.realUserID);
+        // console.log(firebase.auth().currentUser.uid);
+        this.setState({
+            // userID: firebase.auth().currentUser.uid;
+            // authorID: firebase.auth().currentUser.uid;
+            userID: this.state.realUserID,
+            authorID: this.state.realUserID
+        })
+    }
+
     render() {
         let categoryOptions = this.props.categories.map(category => {
             return <option key={category} value={category}>{category}</option>
@@ -245,14 +270,6 @@ class NewRecipe extends Component {
                         <br/>
                         <h3>{this.state.submissionStatus}</h3>
                     </div>
-                </div>
-                <div className="newRecipeIDField">
-                    <label htmlFor="newRecipeIDField">Recipe ID</label> < br / >
-                    <input type="text" name="newRecipeIDField" value={this.state.recipeID} onChange={this.handleChangeRecipeID}/>
-                </div>
-                <div className="newRecipeAuthorIDField">
-                    <label htmlFor="newRecipeAuthorIDField">Author ID</label> < br / >
-                    <input type="text" name="newRecipeAuthorIDField" value={this.state.authorID} onChange={this.handleChangeAuthorID}/>
                 </div>
             </form>
             </div>);
