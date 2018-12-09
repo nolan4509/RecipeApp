@@ -33,10 +33,12 @@ class Login extends Component {
     */
     logout() {
         firebase.auth().signOut().then(() => {
+            localStorage.removeItem("uid");
             this.setState({
                 user: null
             });
         });
+
         this.props.history.push('/')
     }
 

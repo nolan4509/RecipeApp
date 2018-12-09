@@ -26,7 +26,7 @@ class NewRecipe extends Component {
         this.state = {
             newRecipe: {},
             name: '',
-            recipeID: '',
+            recipeID: '65',
             category: '',
             cuisine: '',
             difficulty: '',
@@ -36,7 +36,6 @@ class NewRecipe extends Component {
             vegetarian: false,
             vegan: false,
             glutenFree: false,
-            userID: '',
             authorID: '',
             complete: false,
             submissionStatus: '',
@@ -56,7 +55,12 @@ class NewRecipe extends Component {
 
     loginTest() {
         var uid = localStorage.getItem("uid");
-        console.log('in new recipe, uid: ' + uid);
+        if (uid) {
+            console.log('in new recipe, uid: ' + uid);
+        } else {
+            console.log("nobody's here my dude");
+        }
+
     }
 
     postRecipe = (e) => {
@@ -177,6 +181,7 @@ class NewRecipe extends Component {
     }
 
     componentDidMount() {
+        /*
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.setState({
@@ -184,18 +189,23 @@ class NewRecipe extends Component {
                 }); // When user signs in, checks the firebase database to see
                 // if they were already previously authenticated, if so, restore
             }
-        });
 
+        });
+        */
         console.log('in newrecipe.js: ');
         console.log(this.state.realUserID);
         // console.log(firebase.auth().currentUser.uid);
-        this.setState({
-            // userID: firebase.auth().currentUser.uid;
-            // authorID: firebase.auth().currentUser.uid;
-            userID: this.state.realUserID,
-            authorID: this.state.realUserID
-        })
+        var uid = localStorage.getItem("uid")
+        if (uid) {
+            console.log('success!  uid: ' + uid);
+            this.setState({
+                authorID: uid
+            });
+        } else {
+            console.log('nobody is signed in!');
+        }
     }
+
 
     render() {
         let categoryOptions = this.props.categories.map(category => {

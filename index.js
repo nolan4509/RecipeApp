@@ -248,8 +248,8 @@ app.get('/newRecipe', function(req, res) {
 // Creator - Create and post a Recipe
 app.post('/newRecipe', function(req, res) {
     let recipeTitle = String(req.body.name);
-    let recipeID = Number(req.body.recipeID);
-    let authorID = Number(req.body.authorID);
+    let recipeID = String(req.body.recipeID);
+    let authorID = String(req.body.authorID);
     let category = String(req.body.category);
     // apparently this is lacist. professor wakefield says this should be cuisine
     let cuisine = String(req.body.cuisine);
