@@ -10,26 +10,26 @@
     background-image: url('/images/OpenNotepadCropped.png');
     /* background-size: cover; */
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: 90% 75%;
     background-position: center 0px;
     /* background-blend-mode: color; */
     /* background-attachment: fixed; */
     position: relative;
     top: 25px;
-    left: 17.5%;
+    left: 5%;
     /* transform: translate(-80%, 10%); */
-    width: 1050px;
+    /* width: 1050px; */
     padding-left: 165px;
-    padding-top: 270px;
+    padding-top: 6%;
     padding-bottom: 20px;
-    box-sizing: border-box;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
-    border-radius: 10px;
+    /* box-sizing: border-box; */
+    /* box-shadow: 0 15px 25px rgba(0, 0, 0, .5); */
+    /* border-radius: 10px; */
 }
 
 .newRecipeFormContent {
     position: relative;
-    font-size: 42px;
+    font-size: 36px;
     font-family: 'Allura', cursive;
 }
 
