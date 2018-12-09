@@ -10,6 +10,7 @@ require('firebase/auth');
 class NewRecipe extends Component {
     constructor(props) {
         super(props);
+        this.loginTest = this.loginTest.bind(this);
         this.handleChangeName = this.handleChangeName.bind(this)
         this.handleChangeRecipeID = this.handleChangeRecipeID.bind(this)
         this.handleChangeAuthorID = this.handleChangeAuthorID.bind(this)
@@ -51,6 +52,11 @@ class NewRecipe extends Component {
             'American', 'Asian', 'Mexican', 'Other'
         ],
         difficulties: ['Easy', 'Medium', 'Difficult']
+    }
+
+    loginTest() {
+        var uid = localStorage.getItem("uid");
+        console.log('in new recipe, uid: ' + uid);
     }
 
     postRecipe = (e) => {
@@ -267,6 +273,8 @@ class NewRecipe extends Component {
                         </div>
                         <br/>
                         <button id="newRecipeButton" className="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
+                        <br/>
+                        <button id="testButton" className="testButton" onClick={this.loginTest}></button>
                         <br/>
                         <h3>{this.state.submissionStatus}</h3>
                     </div>

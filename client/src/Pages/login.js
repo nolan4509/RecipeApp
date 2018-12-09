@@ -37,7 +37,7 @@ class Login extends Component {
                 user: null
             });
         });
-        this.props.history.push('/Home')
+        this.props.history.push('/')
     }
 
     /*
@@ -63,8 +63,10 @@ class Login extends Component {
             this.setState({
                 realUserID: firebase.auth().currentUser.uid
             })
-            console.log(this.state.realUserID);
+            var uid = firebase.auth().currentUser.uid;
             //      this.props.history.push('/Home');
+        }).then(uid => {
+            localStorage.setItem("uid", this.state.realUserID);
         });
         /*
         .catch(function(error) {
