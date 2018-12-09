@@ -21,9 +21,9 @@ class RecipeItem extends Component {
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
                 <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
                 {/* <button className="recipeItemRemoveButton" onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}> */}
-                    <span className="forFlipButton front">Click</span>
+                    <span className="forFlipButton front">Delete</span>
                     <span className="forFlipButton center"></span>
-                    <span className="forFlipButton back">Here</span>
+                    <span className="forFlipButton back">Recipe</span>
                 </button>
                 <div className="coolCheckbox">
                     <input type="checkbox" name="Test"/>

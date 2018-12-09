@@ -73,7 +73,7 @@ class RecipesPage extends Component {
 
     handleViewRecipe(id) {
         fetch(`/recipes/${id}`, {
-            method: 'get',
+            method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
