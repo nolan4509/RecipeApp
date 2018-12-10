@@ -11,10 +11,7 @@ require('firebase/auth');
 class NewRecipe extends Component {
     constructor(props) {
         super(props);
-        // this.loginTest = this.loginTest.bind(this);
         this.handleChangeName = this.handleChangeName.bind(this)
-        this.handleChangeRecipeID = this.handleChangeRecipeID.bind(this)
-        this.handleChangeAuthorID = this.handleChangeAuthorID.bind(this)
         this.handleChangeCategory = this.handleChangeCategory.bind(this)
         this.handleChangeCuisine = this.handleChangeCuisine.bind(this)
         this.handleChangeDifficulty = this.handleChangeDifficulty.bind(this)
@@ -27,17 +24,16 @@ class NewRecipe extends Component {
         this.state = {
             newRecipe: {},
             name: '',
-            recipeID: '65',
-            category: '',
-            cuisine: '',
-            difficulty: '',
+            authorID: '',
+            category: 'Breakfast',
+            cuisine: 'American',
+            difficulty: 'Easy',
             ingredients: '',
             instructions: '',
             cookTime: '',
             vegetarian: false,
             vegan: false,
             glutenFree: false,
-            authorID: '',
             complete: false,
             submissionStatus: '',
             user: null,
@@ -58,15 +54,6 @@ class NewRecipe extends Component {
         difficulties: ['Easy', 'Medium', 'Difficult']
     }
 
-    // loginTest() {
-    //     var uid = localStorage.getItem("uid");
-    //     if (uid) {
-    //         console.log('in new recipe, uid: ' + uid);
-    //     } else {
-    //         console.log("nobody's here my dude");
-    //     }
-    //
-    // }
 
     postRecipe = (e) => {
         e.preventDefault()
@@ -76,7 +63,6 @@ class NewRecipe extends Component {
         })
         let reqBody = {
             name: this.state.name,
-            recipeID: this.state.recipeID,
             authorID: this.state.authorID,
             category: this.state.category,
             cuisine: this.state.cuisine,
@@ -116,18 +102,6 @@ class NewRecipe extends Component {
     handleChangeName(event) {
         this.setState({
             name: event.target.value
-        })
-    }
-
-    handleChangeRecipeID(event) {
-        this.setState({
-            recipeID: event.target.value
-        })
-    }
-
-    handleChangeAuthorID(event) {
-        this.setState({
-            authorID: event.target.value
         })
     }
 
@@ -186,37 +160,17 @@ class NewRecipe extends Component {
     }
 
     componentDidMount() {
-        /*
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({
-                    user
-                }); // When user signs in, checks the firebase database to see
-                // if they were already previously authenticated, if so, restore
-            }
-
-        });
-        */
-        console.log('in newrecipe.js: ');
-        console.log(this.state.realUserID);
-        // console.log(firebase.auth().currentUser.uid);
         var uid = localStorage.getItem("uid")
         if (uid) {
-            console.log('success!  uid: ' + uid);
+            console.log('Success!  uid: ' + uid);
             this.setState({
                 authorID: uid
             });
         } else {
-            console.log('nobody is signed in!');
+            console.log('Nobody is signed in!');
         }
     }
 
-    // handleUploadStart() {
-    //     this.setState({
-    //         isUploading: true,
-    //         progress: 0
-    //     })
-    // }
     handleUploadStart = () => this.setState({
         isUploading: true,
         progress: 0
@@ -335,9 +289,6 @@ class NewRecipe extends Component {
                         </div>
                         <br/>
                         <button id="newRecipeButton" className="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
-                        {/* <br/> */}
-                        {/* <button id="testButton" className="testButton" onClick={this.loginTest}></button> */}
-                        {/* <br/> */}
                         <h3>{this.state.submissionStatus}</h3>
                     </div>
                 </div>
