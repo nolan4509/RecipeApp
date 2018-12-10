@@ -15,25 +15,28 @@
     /* background-blend-mode: color; */
     /* background-attachment: fixed; */
     position: relative;
-    top: 25px;
-    left: 5%;
+    top: 10px;
+    left: 0%;
     /* transform: translate(-80%, 10%); */
-    /* width: 1050px; */
-    padding-left: 165px;
-    padding-top: 6%;
-    padding-bottom: 20px;
+    width: 1600px;
+    height: 1200px;
+    padding-left: 10%;
+    padding-top: 3.5%;
+    /* padding-bottom: 20px; */
     /* box-sizing: border-box; */
     /* box-shadow: 0 15px 25px rgba(0, 0, 0, .5); */
     /* border-radius: 10px; */
 }
 
 .newRecipeFormContent {
-    position: relative;
+    position: absolute;
     font-size: 36px;
     font-family: 'Allura', cursive;
 }
 
 .newRecipeTitleField {
+    position: relative;
+    top: 20px;
     text-align: left;
     font-size: 42px;
     padding-bottom: 15px;
@@ -50,8 +53,13 @@
     border-width: medium;
 }
 
+.newRecipeImageUpload {
+    padding-top: 8%;
+}
+
 .newRecipeDifficultyAndTimeLine {
-    padding-bottom: 15px;
+    padding-top: 65px;
+    padding-bottom: 12px;
 }
 
 .newRecipeDifficultyField {
@@ -69,7 +77,7 @@
 }
 
 .newRecipeCookTimeField {
-    padding-left: 300px;
+    padding-left: 175px;
 }
 
 .newRecipeCookTimeField label {
@@ -101,7 +109,7 @@
 }
 
 .newRecipeCuisineField {
-    padding-left: 300px;
+    padding-left: 175px;
 }
 
 .newRecipeCuisineField label {
@@ -114,45 +122,59 @@
     border-width: medium;
 }
 
+.newRecipeIngredientsField {
+    position: absolute;
+    top: -0.5%;
+    left: 87.5%;
+}
+
 .newRecipeIngredientsField textarea {
     background-color: transparent;
     border-radius: 3px;
     border-width: medium;
+    position: relative;
+    top: 70%;
+    /* left: 0%; */
 }
 
 .newRecipeInstructionsField {
-    padding-top: 15px;
+    position: absolute;
+    top: 40.5%;
+    left: 87.5%;
 }
 
 .newRecipeInstructionsField textarea {
     background-color: transparent;
     border-radius: 3px;
     border-width: medium;
+    position: relative;
+    top: 70%;
+    /* left: 0%; */
 }
 
 .newRecipeVegetarianField {
     float: left;
-    padding-top: 35px;
+    padding-top: 55px;
     padding-right: 70px;
 }
 
 .newRecipeVeganField {
     float: left;
-    padding-top: 35px;
+    padding-top: 55px;
     padding-right: 70px;
 }
 
 .newRecipeGlutenFreeField {
     /* float: left; */
-    /* padding-top: 35px; */
+    padding-top: 55px;
     padding-right: 100px;
 }
 
 .newRecipeButton {
     border-radius: 15px;
-    /* position: absolute; */
-    /* top: 105%; */
-    /* left: 10px; */
+    position: relative;
+    top: -70px;
+    left: 1000px;
 }
 
 .newRecipeIDField {

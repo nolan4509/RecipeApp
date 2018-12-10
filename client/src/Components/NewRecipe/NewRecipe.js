@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import './NewRecipe.css';
 import firebase from 'firebase';
+import FileUploader from 'react-firebase-file-uploader';
 
 require('firebase/auth');
 // import uuid from 'uuid';
@@ -10,7 +11,7 @@ require('firebase/auth');
 class NewRecipe extends Component {
     constructor(props) {
         super(props);
-        this.loginTest = this.loginTest.bind(this);
+        // this.loginTest = this.loginTest.bind(this);
         this.handleChangeName = this.handleChangeName.bind(this)
         this.handleChangeRecipeID = this.handleChangeRecipeID.bind(this)
         this.handleChangeAuthorID = this.handleChangeAuthorID.bind(this)
@@ -39,7 +40,11 @@ class NewRecipe extends Component {
             authorID: '',
             complete: false,
             submissionStatus: '',
-            user: null
+            user: null,
+            isUploading: false,
+            progress: 0,
+            recipeImage: '',
+            recipeImageURL: ''
         }
     }
 
@@ -53,15 +58,15 @@ class NewRecipe extends Component {
         difficulties: ['Easy', 'Medium', 'Difficult']
     }
 
-    loginTest() {
-        var uid = localStorage.getItem("uid");
-        if (uid) {
-            console.log('in new recipe, uid: ' + uid);
-        } else {
-            console.log("nobody's here my dude");
-        }
-
-    }
+    // loginTest() {
+    //     var uid = localStorage.getItem("uid");
+    //     if (uid) {
+    //         console.log('in new recipe, uid: ' + uid);
+    //     } else {
+    //         console.log("nobody's here my dude");
+    //     }
+    //
+    // }
 
     postRecipe = (e) => {
         e.preventDefault()
@@ -206,6 +211,40 @@ class NewRecipe extends Component {
         }
     }
 
+    // handleUploadStart() {
+    //     this.setState({
+    //         isUploading: true,
+    //         progress: 0
+    //     })
+    // }
+    handleUploadStart = () => this.setState({
+        isUploading: true,
+        progress: 0
+    });
+
+    handleProgress = (progress) => this.setState({
+        progress
+    });
+
+    handleUploadError = (error) => {
+        this.setState({
+            isUploading: false
+        })
+        console.error(error);
+    }
+
+    handleUploadSuccess = (filename) => {
+        this.setState({
+            recipeImage: filename,
+            progress: 100,
+            isUploading: false
+        });
+        firebase.storage().ref("images").child(filename).getDownloadURL()
+            .then(url => this.setState({
+                recipeImageURL: url
+            }));
+    };
+
 
     render() {
         let categoryOptions = this.props.categories.map(category => {
@@ -232,7 +271,20 @@ class NewRecipe extends Component {
                             <label htmlFor="newRecipeTitleField">Name:</label>
                             <input type="text" id="newRecipeTitleField" name="newRecipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
                         </div>
-
+                        <div className="newRecipeImageUpload">
+                            <label>Image: </label>
+                            {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
+                            {this.state.recipeImageURL && <img src={this.state.recipeImageURL} />}
+                            <FileUploader
+                                accept="image/*"
+                                name="recipeImage"
+                                randomizeFilename
+                                storageRef={firebase.storage().ref("images")}
+                                onUploadStart={this.handleUploadStart}
+                                onUploadError={this.handleUploadError}
+                                onUploadSuccess={this.handleUploadSuccess}
+                                onProgress={this.handleProgress}/>
+                        </div>
                         <div className="newRecipeDifficultyAndTimeLine">
                             <div className="newRecipeDifficultyField">
                                 <label htmlFor="newRecipeDifficultyField">Difficulty</label><br/>
@@ -261,11 +313,11 @@ class NewRecipe extends Component {
                         </div>
                         <div className="newRecipeIngredientsField">
                             <label htmlFor="newRecipeIngredientsField">Ingredients</label><br/>
-                            <textarea ref="ingredientArray" id="newRecipeIngredientsField" name="newRecipeIngredientsField" rows="4" cols="40" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
+                            <textarea ref="ingredientArray" id="newRecipeIngredientsField" name="newRecipeIngredientsField" rows="4" cols="30" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
                         </div>
                         <div className="newRecipeInstructionsField">
                             <label htmlFor="newRecipeInstructionsField">Instructions</label><br/>
-                            <textarea ref="instructions" id="newRecipeInstructionsField" name="newRecipeInstructionsField" rows="4" cols="40" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
+                            <textarea ref="instructions" id="newRecipeInstructionsField" name="newRecipeInstructionsField" rows="4" cols="30" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
                         </div>
                         <div className="newRecipeCheckBoxesLine">
                             <div className="newRecipeVegetarianField">
@@ -283,9 +335,9 @@ class NewRecipe extends Component {
                         </div>
                         <br/>
                         <button id="newRecipeButton" className="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
-                        <br/>
-                        <button id="testButton" className="testButton" onClick={this.loginTest}></button>
-                        <br/>
+                        {/* <br/> */}
+                        {/* <button id="testButton" className="testButton" onClick={this.loginTest}></button> */}
+                        {/* <br/> */}
                         <h3>{this.state.submissionStatus}</h3>
                     </div>
                 </div>
