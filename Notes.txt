@@ -1,0 +1,83 @@
+Roadmap/User Stories as of 12/9/18:
+- Expiring Login Tokens/Persisting Login
+- Authentication Run-Through
+- Styling of new Images for New Recipe, Popup View, and Full View of Recipe
+- Ability to mark and sort recipes by favorites
+- Ability to mark and sort recipes by other categories
+- Uploading Images for recipes
+- Searching in general (Long run)
+- Potential User info page
+- Styling works for Nolan (NavBar) however for Luke it is still plain
+- Sharing Recipes
+
+
+Deleted Comments within Files:
+
+    - index.js'
+        /*
+        Scenarios:
+            (Creators)
+                - View a users recipes
+                    GET /recipes/:userID
+                - Create and post a Recipe
+                    POST /newRecipe
+                - Update an existing recipe
+                    PUT /recipes/update/:recipeID
+                - Remove an existing recipe
+                    DELETE /recipes/remove/:recipeID
+            (Consumers)
+                - View a recipe
+                    GET /recipes/:recipeID
+                - View all reviews for a recipe
+                    GET /recipes/:recipeID/reviews
+                - Create a review
+                    POST /recipes/:recipeID/reviews/user/:userName/newReview
+                - Update an existing review
+                    PUT /recipes/:recipeID/reviews/user/:userName/update/:reviewID
+                - Remove an existing review
+                    DELETE /recipes/:recipeID/reviews/:reviewID
+            (Both)
+                - Create a new User account
+                    POST /add/user/:userName/:userID/:email
+            */
+
+        // contains information on one ingredient and the quantity required in the recipe
+        // class Ingredient {
+        //     constructor(ingredient, quantity, unit) {
+        //         this.ingredient = ingredient; string
+        //         this.quantity = quantity; integer
+        //         this.unit = unit; string (unit of measure)
+        //     }
+        // }
+
+        //object for comments/review section
+        // class Review {
+        //     constructor(id, author, rating, comment) {
+        //         this.id = id; integer
+        //         this.author = author; User object
+        //         this.rating = rating; integer (rating between 1 and 5 inclusive)
+        //         this.comment = comment; string
+        //     }
+        // }
+
+
+        // Return reviews of a recipe using the recipe ID as a search term
+        // app.get('/recipes/:postID/reviews', function(req, res) {
+        //     let recipeSearchID = Number(req.params.postID);
+        //     let itemFound = false;
+        //     retReviews = [];
+        //
+        //      Search the database for a post with matching ID
+        //     recipeArray.map(RP => {
+        //         if (RP.id == recipeSearchID) {
+        //             retReviews = RP.rating;
+        //             itemFound = true;
+        //         }
+        //     });
+        //
+        //     if (itemFound) {
+        //         res.send(JSON.stringify(retReviews));
+        //         return;
+        //     }
+        //     res.send('No recipes found with requested id');
+        // });

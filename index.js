@@ -5,85 +5,62 @@ const app = express();
 const path = require('path');
 let fetch = require('node-fetch');
 
-const generatePassword = require('password-generator'); //tutorial
+const generatePassword = require('password-generator');
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(path.join(__dirname, '/client/build')));
 
-/* New Comment
-Scenarios:
-	(Creators)
-		- View a users recipes
-			GET /recipes/:userID
-		- Create and post a Recipe
-			POST /newRecipe
-		- Update an existing recipe
-			PUT /recipes/update/:recipeID
-		- Remove an existing recipe
-			DELETE /recipes/remove/:recipeID
-	(Consumers)
-		- View a recipe
-			GET /recipes/:recipeID
-		- View all reviews for a recipe
-			GET /recipes/:recipeID/reviews
-		- Create a review
-			POST /recipes/:recipeID/reviews/user/:userName/newReview
-		- Update an existing review
-			PUT /recipes/:recipeID/reviews/user/:userName/update/:reviewID
-		- Remove an existing review
-			DELETE /recipes/:recipeID/reviews/:reviewID
-	(Both)
-		- Create a new User account
-			POST /add/user/:userName/:userID/:email
+
+/*
+    Contents:
+        ~30:  class Recipe
+        ~50:  class User
+        ~75:  function updateUsers()
+        ~100: function updateRecipes()
+        ~120: function removeRecipe(id)
+        ~140: function removeRecipeFromUser(userID, recipeID)
+
+        ~215: GET /newRecipe'
+        ~220: GET /recipes/:recipeID'
+        ~240: GET /recipes/user/:userID'
+        ~270: POST /add/user/:userName/:userID/:email'
+        ~285: POST /newRecipe'
+        ~355: PUT /recipes/update/:recipeID'
+        ~425: DELETE /recipes/remove/:recipeID'
 */
+
+
+
+
 
 //Primary recipe object
 class Recipe {
     constructor(recipeID, authorID, name, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating) {
-        this.recipeID = recipeID; //integer
-        this.authorID = authorID; //integer
-        this.name = name; //string
-        this.category = category; //string
-        this.cuisine = cuisine; //string
-        this.difficulty = difficulty; //string
+        this.recipeID = recipeID; //String
+        this.authorID = authorID; //String
+        this.name = name; //String
+        this.category = category; //String
+        this.cuisine = cuisine; //String
+        this.difficulty = difficulty; //String
         this.ingredients = ingredients; //String of ingredients (To be changed later)
-        this.instructions = instructions; //string (maybe array?)
-        this.cookTime = cookTime; //integer
-        this.vegetarian = vegetarian; //boolean
-        this.vegan = vegan; //boolean
-        this.glutenFree = glutenFree; //boolean
-        this.rating = rating; //object with ratings and comments
+        this.instructions = instructions; //String (maybe array?)
+        this.cookTime = cookTime; //String
+        this.vegetarian = vegetarian; //Boolean
+        this.vegan = vegan; //Boolean
+        this.glutenFree = glutenFree; //Boolean
+        // this.rating = rating; //Object with ratings and comments
     }
 }
 
 class User {
     constructor(id, name, email, recipePosts) {
-        this.id = id; //integer
-        this.name = name; //string
-        this.email = email; //string
-        this.recipePosts = recipePosts; //store integers of the post IDs they currently own
-        //this.recipes = []; array of RecipePost objects
+        this.id = id; //String
+        this.name = name; //String
+        this.email = email; //String
+        this.recipePosts = recipePosts; //Store integers of the post IDs they currently own
+        //this.recipes = []; //Array of RecipePost objects
     }
 }
-
-// contains information on one ingredient and the quantity required in the recipe
-// class Ingredient {
-//     constructor(ingredient, quantity, unit) {
-//         this.ingredient = ingredient; string
-//         this.quantity = quantity; integer
-//         this.unit = unit; string (unit of measure)
-//     }
-// }
-
-//object for comments/review section
-// class Review {
-//     constructor(id, author, rating, comment) {
-//         this.id = id; integer
-//         this.author = author; User object
-//         this.rating = rating; integer (rating between 1 and 5 inclusive)
-//         this.comment = comment; string
-//     }
-// }
 
 const firebase = require("firebase");
 // Initialize Firebase
@@ -149,16 +126,16 @@ function updateRecipes() { //load recipes from firebase into recipeArray
 
 // removes the recipe from recipeArray and returns the authorID
 function removeRecipe(id) {
-    console.log('Removing Recipe...');
+    // console.log('Removing Recipe...');
     let authorID = null;
     for (var index = 0; index < recipeArray.length; index++) {
         if (id == recipeArray[index].recipeID) {
-            console.log(recipeArray);
-            console.log('Found!  removing...');
+            // console.log(recipeArray);
+            // console.log('Found!  removing...');
             authorID = recipeArray[index].authorID;
             recipeArray.splice(index, 1);
-            console.log(recipeArray);
-            console.log('...done!');
+            // console.log(recipeArray);
+            // console.log('...done!');
             break;
         }
     }
@@ -168,29 +145,29 @@ function removeRecipe(id) {
 
 //Removes recipe from user's array of recipes on database and in recipeArray
 function removeRecipeFromUser(userID, recipeID) {
-    console.log('searching for user with id ' + userID + '...');
+    // console.log('searching for user with id ' + userID + '...');
     for (var usr = 0; usr < userArray.length; usr++) {
         if (userArray[usr].id == userID) {
-            console.log('...found!');
+            // console.log('...found!');
             let user = userArray[usr];
-            console.log('searching for recipe with id ' + recipeID + '...');
+            // console.log('searching for recipe with id ' + recipeID + '...');
             for (var rcp = 0; rcp < user.recipePosts.length; rcp++) {
                 if (user.recipePosts[rcp] == recipeID) {
-                    console.log('...found!');
-                    console.log('removing entry...');
+                    // console.log('...found!');
+                    // console.log('removing entry...');
                     user.recipePosts.splice(rcp, 1);
                     userDatabase.child(`${userID}`).update({
                         userinfo: user
                     });
-                    console.log('...done!');
+                    // console.log('...done!');
                     return;
                 }
             }
-            console.log('recipe not found!');
+            // console.log('recipe not found!');
             return;
         }
     }
-    console.log('user not found!');
+    // console.log('user not found!');
     return;
 }
 
@@ -227,7 +204,71 @@ https://github.com/expressjs/express/issues/699
 https://stackoverflow.com/questions/15134199/how-to-split-and-modify-a-string-in-nodejs
 ============================================= */
 
-//Both - Create new user account name id email bookpossts
+
+/*--------------------------------------------------------------------------*/
+/*------------------------------ GET REQUESTS ------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+//variable argument test
+app.get('/newRecipe', function(req, res) {
+    res.sendFile(__dirname + '/client/public/NewRecipe.html');
+});
+
+//  GET INDIVIDUAL RECIPE BY USING RECIPE ID
+app.get('/recipes/:recipeID', function(req, res) {
+    let recipeSearchID = Number(req.params.recipeID);
+    // console.log(recipeSearchID);
+    retRecipe = null;
+
+    // Search the database for a recipe with matching ID
+    recipeArray.map(RP => {
+        if (RP.recipeID == recipeSearchID) {
+            retRecipe = RP;
+            res.send(JSON.stringify(retRecipe));
+            return;
+        }
+    });
+
+    if (retRecipe === null) {
+        res.send('No recipes found with requested id');
+    }
+});
+
+//  GET ALL RECIPES FOR SPECIFIED USER BY USING USER ID
+app.get('/recipes/user/:userID', function(req, res) {
+    let searchID = String(req.params.userID);
+    let user = null;
+    retRecipes = [];
+    // console.log('User ID: ' + searchID);
+    //Search the recipe database for matching user ids
+    userArray.map(usr => {
+        if (usr.id == searchID) {
+            user = usr;
+        }
+    });
+    if (user === null) {
+        res.send("User Not Found.");
+        return;
+    }
+    recipeArray.map(recipe => {
+        if (recipe.authorID == searchID) {
+            retRecipes.push(recipe);
+        }
+    });
+
+    if (retRecipes === []) {
+        res.send('No recipes found for requested user id');
+        return;
+    }
+    res.send(JSON.stringify(retRecipes));
+});
+
+
+/*--------------------------------------------------------------------------*/
+/*----------------------------- POST REQUESTS ------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+//  CREATE NEW USER ACCOUNT WITH NAME ID EMAIL BOOKPOSTS
 app.post('/add/user/:userName/:userID/:email', function(req, res) {
     let id = String(req.params.userID);
     let name = String(req.params.userName);
@@ -240,18 +281,12 @@ app.post('/add/user/:userName/:userID/:email', function(req, res) {
     res.send(userArray[userArray.length - 1]);
 });
 
-//variable argument test
-app.get('/newRecipe', function(req, res) {
-    res.sendFile(__dirname + '/client/public/NewRecipe.html');
-});
-
-// Creator - Create and post a Recipe
+//  CREATE AND POST A NEW RECIPE
 app.post('/newRecipe', function(req, res) {
     let recipeTitle = String(req.body.name);
     let recipeID = String(req.body.recipeID);
     let authorID = String(req.body.authorID);
     let category = String(req.body.category);
-    // apparently this is lacist. professor wakefield says this should be cuisine
     let cuisine = String(req.body.cuisine);
     let difficulty = String(req.body.difficulty);
     let ingredients = String(req.body.ingredients);
@@ -294,7 +329,7 @@ app.post('/newRecipe', function(req, res) {
     } else {
         user.recipePosts[user.recipePosts.length] = recipeIndex;
     }
-    console.log(recipeIndex);
+    // console.log(recipeIndex);
     database.child('Recipes/' + `${recipeIndex}`).set({
         recipe: recipeArray[recipeArray.length - 1]
     });
@@ -304,62 +339,19 @@ app.post('/newRecipe', function(req, res) {
 
     updateUsers();
     updateRecipes();
-    console.log(userArray);
-    console.log(recipeArray);
+    // console.log(userArray);
+    // console.log(recipeArray);
     res.send(recipeArray[recipeArray.length - 1]);
 
     // res.sendFile(__dirname + '/client/public/NewRecipe.html')
 });
 
-// Search for Recipe by ID
-app.get('/recipes/:recipeID', function(req, res) {
-    let recipeSearchID = Number(req.params.recipeID);
-    // console.log(recipeSearchID);
-    retRecipe = null;
 
-    // Search the database for a recipe with matching ID
-    recipeArray.map(RP => {
-        if (RP.recipeID == recipeSearchID) {
-            retRecipe = RP;
-            res.send(JSON.stringify(retRecipe));
-            return;
-        }
-    });
+/*--------------------------------------------------------------------------*/
+/*------------------------------ PUT REQUESTS ------------------------------*/
+/*--------------------------------------------------------------------------*/
 
-    if (retRecipe === null) {
-        res.send('No recipes found with requested id');
-    }
-});
-
-// Creator - view a user's recipes
-app.get('/recipes/user/:userID', function(req, res) {
-    let searchID = String(req.params.userID);
-    let user = null;
-    retRecipes = [];
-    console.log('User ID: ' + searchID);
-    //Search the recipe database for matching user ids
-    userArray.map(usr => {
-        if (usr.id == searchID) {
-            user = usr;
-        }
-    });
-    if (user === null) {
-        res.send("User Not Found.");
-        return;
-    }
-    recipeArray.map(recipe => {
-        if (recipe.authorID == searchID) {
-            retRecipes.push(recipe);
-        }
-    });
-
-    if (retRecipes === []) {
-        res.send('No recipes found for requested user id');
-        return;
-    }
-    res.send(JSON.stringify(retRecipes));
-});
-
+// UPDATE INDIVIDUAL RECIPE BY USING RECIPE ID
 app.put('/recipes/update/:recipeID', function(req, res) {
     let selectedRecipe = null;
     recipeID = req.params.recipeID;
@@ -424,13 +416,19 @@ app.put('/recipes/update/:recipeID', function(req, res) {
     res.send(selectedRecipe);
 });
 
+
+/*--------------------------------------------------------------------------*/
+/*---------------------------- DELETE REQUESTS -----------------------------*/
+/*--------------------------------------------------------------------------*/
+
+//  DELETE RECIPE BY USING RECIPE ID
 app.delete('/recipes/remove/:recipeID', function(req, res) {
-    console.log(req.params);
+    // console.log(req.params);
     let recipeID = Number(req.params.recipeID)
-    console.log(recipeID);
+    // console.log(recipeID);
     let authorID = removeRecipe(recipeID);
-    console.log('Author ID: ' + authorID);
-    console.log('Recipe ID: ' + recipeID);
+    // console.log('Author ID: ' + authorID);
+    // console.log('Recipe ID: ' + recipeID);
     if (authorID != null) {
         database.child('Recipes/' + `${recipeID}`).remove();
         console.log('recipe removed from firebase!');
@@ -438,34 +436,13 @@ app.delete('/recipes/remove/:recipeID', function(req, res) {
         res.send("Done");
         // need to find a way to remove value from user's list of posts
     } else { //author ID is null...
-        console.log('recipe not found');
+        // console.log('recipe not found');
         res.send("YOU F*CKED UP");
     }
     return;
 
     // Removing the recipe from the user's recipePosts
 });
-
-// Return reviews of a recipe using the recipe ID as a search term
-// app.get('/recipes/:postID/reviews', function(req, res) {
-//     let recipeSearchID = Number(req.params.postID);
-//     let itemFound = false;
-//     retReviews = [];
-//
-//      Search the database for a post with matching ID
-//     recipeArray.map(RP => {
-//         if (RP.id == recipeSearchID) {
-//             retReviews = RP.rating;
-//             itemFound = true;
-//         }
-//     });
-//
-//     if (itemFound) {
-//         res.send(JSON.stringify(retReviews));
-//         return;
-//     }
-//     res.send('No recipes found with requested id');
-// });
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
