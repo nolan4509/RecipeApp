@@ -139,7 +139,7 @@ function removeRecipe(id) {
             break;
         }
     }
-    console.log('id:' + authorID);
+    // console.log('id:' + authorID);
     return authorID;
 }
 
@@ -239,7 +239,7 @@ app.get('/recipes/user/:userID', function(req, res) {
     let searchID = String(req.params.userID);
     let user = null;
     retRecipes = [];
-    // console.log('User ID: ' + searchID);
+    console.log('User ID: ' + searchID);
     //Search the recipe database for matching user ids
     userArray.map(usr => {
         if (usr.id == searchID) {
@@ -291,7 +291,7 @@ app.post('/newRecipe', function(req, res) {
     let difficulty = String(req.body.difficulty);
     let ingredients = String(req.body.ingredients);
     let instructions = String(req.body.instructions);
-    let cookTime = Number(req.body.cookTime);
+    let cookTime = String(req.body.cookTime);
     let vegetarian = false;
     let vegan = false;
     let glutenFree = false;

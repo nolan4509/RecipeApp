@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import './NewRecipe.css';
 import firebase from 'firebase';
-import FileUploader from 'react-firebase-file-uploader';
+import CustomUploadButton from 'react-firebase-file-uploader/lib/CustomUploadButton';
 
 require('firebase/auth');
 // import uuid from 'uuid';
@@ -241,18 +241,20 @@ class NewRecipe extends Component {
                             <input type="text" id="newRecipeTitleField" name="newRecipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
                         </div>
                         <div className="newRecipeImageUpload">
-                            <label>Image: </label>
-                            {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-                            {this.state.recipeImageURL && <img src={this.state.recipeImageURL} />}
-                            <FileUploader
+                            <CustomUploadButton
                                 accept="image/*"
                                 name="recipeImage"
                                 randomizeFilename
-                                storageRef={firebase.storage().ref("images")}
+                                // filename={file => this.state.name + file.name.split('.')[1]; }
+                                storageRef={firebase.storage().ref('images')}
                                 onUploadStart={this.handleUploadStart}
                                 onUploadError={this.handleUploadError}
                                 onUploadSuccess={this.handleUploadSuccess}
-                                onProgress={this.handleProgress}/>
+                                onProgress={this.handleProgress}
+                                style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4}}
+                            >
+                                Upload Recipe Image
+                            </CustomUploadButton>
                         </div>
                         <div className="newRecipeDifficultyAndTimeLine">
                             <div className="newRecipeDifficultyField">
