@@ -160,14 +160,29 @@ class NewRecipe extends Component {
     }
 
     componentDidMount() {
-        var uid = localStorage.getItem("uid")
+        var uid = sessionStorage.getItem("uid")
         if (uid) {
             console.log('Success!  uid: ' + uid);
             this.setState({
                 authorID: uid
             });
         } else {
-            console.log('Nobody is signed in!');
+            uid = localStorage.getItem("uid");
+            if (uid) {
+                var expiration = Date(localStorage.getItem("expires"))
+                if ((new Date).getTime() < expiration) {
+                    this.setState({
+                        authorID: uid
+                    });
+                } else {
+                    console.log("this token has expired.  removing...");
+                    localStorage.removeItem("uid");
+                    localStorage.removeItem("expires");
+                    console.log("...done!");
+                }
+            } else {
+                console.log("no token stored");
+            }
         }
     }
 
