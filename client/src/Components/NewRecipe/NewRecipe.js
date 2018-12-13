@@ -170,7 +170,7 @@ class NewRecipe extends Component {
             uid = localStorage.getItem("uid");
             if (uid) {
                 var expiration = Date(localStorage.getItem("expires"))
-                if ((new Date).getTime() < expiration) {
+                if ((new Date()).getTime() < expiration) {
                     this.setState({
                         authorID: uid
                     });
