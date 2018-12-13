@@ -55,6 +55,7 @@
 
 .newRecipeImageUpload {
     padding-top: 8%;
+    padding-left: 25%;
 }
 
 .newRecipeDifficultyAndTimeLine {
@@ -125,31 +126,25 @@
 .newRecipeIngredientsField {
     position: absolute;
     top: -0.5%;
-    left: 87.5%;
+    left: 130%;
 }
 
 .newRecipeIngredientsField textarea {
     background-color: transparent;
     border-radius: 3px;
     border-width: medium;
-    position: relative;
-    top: 70%;
-    /* left: 0%; */
 }
 
 .newRecipeInstructionsField {
     position: absolute;
-    top: 40.5%;
-    left: 87.5%;
+    top: 35%;
+    left: 130%;
 }
 
 .newRecipeInstructionsField textarea {
     background-color: transparent;
     border-radius: 3px;
     border-width: medium;
-    position: relative;
-    top: 70%;
-    /* left: 0%; */
 }
 
 .newRecipeVegetarianField {
@@ -173,7 +168,7 @@
 .newRecipeButton {
     border-radius: 15px;
     position: relative;
-    top: -70px;
+    top: -200px;
     left: 1000px;
 }
 
