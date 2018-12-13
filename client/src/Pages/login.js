@@ -13,6 +13,7 @@ class Login extends Component {
         this.handleChangeEmail = this.handleChangeEmail.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
         this.handleChangePassword = this.handleChangePassword.bind(this)
+        this.handleChangeRememberMe = this.handleChangeRememberMe.bind(this)
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.state = {
@@ -23,7 +24,8 @@ class Login extends Component {
             userPassword: '',
             userRecipes: [],
             user: null,
-            submissionStatus: ''
+            submissionStatus: '',
+            rememberMe: true
         }
     }
     /*
@@ -33,7 +35,7 @@ class Login extends Component {
     */
     logout() {
         firebase.auth().signOut().then(() => {
-            localStorage.removeItem("uid");
+            sessionStorage.removeItem("uid");
             this.setState({
                 user: null
             });
@@ -68,7 +70,11 @@ class Login extends Component {
             var uid = firebase.auth().currentUser.uid;
             //      this.props.history.push('/Home');
         }).then(uid => {
-            localStorage.setItem("uid", this.state.realUserID);
+            sessionStorage.setItem("uid", this.state.realUserID);
+            if (this.state.rememberMe) {
+                localStorage.setItem("uid", this.state.realUserID);
+                localStorage.setItem("expires", this.dateInOneWeek());
+            }
         });
         /*
         .catch(function(error) {
@@ -102,6 +108,19 @@ class Login extends Component {
         this.setState({
             userName: event.target.value
         })
+    }
+
+    handleChangeRememberMe(event) {
+        this.setState({
+            rememberMe: event.target.value
+        })
+        console.log(this.state.rememberMe);
+    }
+
+    dateInOneWeek() {
+        //the large number is how many milliseconds are in a week
+        var newDate = new Date(Date.setTime(Date.getTime() + 604800000));
+        return newDate;
     }
 
     componentDidMount() {
@@ -142,8 +161,7 @@ class Login extends Component {
                                     </div>
                                     <div className="checkbox">
                                         <label>
-                                            <input type="checkbox" value="remember-me"/>
-                                            Remember me (Todo)
+                                            <input type="checkbox" ref="rememberMe" id="rememberMeField" name="rememberMeField" value={this.state.rememberMe} onChange={this.handleChangeRememberMe}/>
                                         </label>
                                     </div>
                                     <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
