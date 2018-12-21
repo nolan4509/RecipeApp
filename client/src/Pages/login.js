@@ -56,10 +56,11 @@ class Login extends Component {
     store this inside of the state using 'setState'
     */
     login() {
+        console.log('email: ' + this.state.userEmail + ' password: ' + this.state.userPassword);
         firebase.auth().signInWithEmailAndPassword(this.state.userEmail, this.state.userPassword).then((result) => {
             const user = result.user;
             this.setState({
-                user
+                user: user
             });
             console.log(user);
             console.log(this.state.user);
@@ -119,7 +120,9 @@ class Login extends Component {
 
     dateInOneWeek() {
         //the large number is how many milliseconds are in a week
-        var newDate = new Date(Date.setTime(Date.getTime() + 604800000));
+        var newDate = (new Date()).getTime();
+        newDate.setTime(newDate + 604800000);
+
         return newDate;
     }
 
