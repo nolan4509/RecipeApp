@@ -15,24 +15,23 @@ class RecipeView extends Component {
 
     render() {
         return (<div className="flowContainer">
-            <div className="border border-warning rounded homepage-recipe-tile" onClick={this.viewRecipe.bind(this, this.props.recipe.recipeID)}>
-                <h1 className="recipeName">{this.props.recipe.name}</h1>
-                <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
-                <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
-                <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
-                <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
-                {/* <button className="recipeItemRemoveButton" onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}> */}
-                    <span className="forFlipButton front">Delete</span>
-                    <span className="forFlipButton center"></span>
-                    <span className="forFlipButton back">Recipe</span>
-                </button>
-                <div className="coolCheckbox">
-                    <input type="checkbox" name="Test"/>
+                <div className="notebookPage">
+                    <div className="newRecipeFormContent">
+                        <div className="newRecipeTitleField">
+                            <h1>{this.props.recipe.name}</h1>
+                        </div>
+                        <p>{this.props.recipe.cookTime}</p>
+                        <p>{this.props.recipe.difficulty}</p>
+                        <p>{this.props.recipe.cuisine}</p>
+                        <p>{this.props.recipe.category}</p>
+                        <p>{this.props.recipe.vegetarian}</p>
+                        <p>{this.props.recipe.vegan}</p>
+                        <p>{this.props.recipe.glutenFree}</p>
+                        <p>{this.props.recipe.instructions}</p>
+                        <p>{this.props.recipe.ingredients}</p>
+                    </div>
                 </div>
-                <br/>
-                <br/>
-            </div>
-        </div>);
+            </div>);
     }
 }
 
