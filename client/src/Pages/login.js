@@ -62,8 +62,7 @@ class Login extends Component {
             this.setState({
                 user: user
             });
-            console.log(user);
-            console.log(this.state.user);
+
             console.log("logged in as id: " + firebase.auth().currentUser.uid);
             this.setState({
                 realUserID: firebase.auth().currentUser.uid
@@ -76,6 +75,16 @@ class Login extends Component {
                 localStorage.setItem("uid", this.state.realUserID);
                 localStorage.setItem("expires", this.dateInOneWeek());
             }
+        }).catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode === 'auth/wrong-password') {
+                alert('Wrong password.');
+            } else {
+                alert(errorMessage);
+            }
+            console.log('caught error');
+            console.log(error);
         });
         /*
         .catch(function(error) {
@@ -120,13 +129,14 @@ class Login extends Component {
 
     dateInOneWeek() {
         //the large number is how many milliseconds are in a week
-        var newDate = (new Date()).getTime();
-        newDate.setTime(newDate + 604800000);
+        var newDate = (new Date()).getTime() + 604800000;
+        //        newDate.setTime(newDate + 604800000);
 
         return newDate;
     }
 
     componentDidMount() {
+        console.log('session storage: ' + sessionStorage.getItem("uid"));
         // console.log(firebase.auth().currentUser.uid);
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
