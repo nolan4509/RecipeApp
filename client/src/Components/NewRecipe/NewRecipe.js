@@ -1,18 +1,17 @@
 import React, {
     Component
 } from 'react';
-import {
-    Prompt
-} from 'react-router-dom';
-import './styles.css';
-import uuid from 'uuid';
+import './NewRecipe.css';
+import firebase from 'firebase';
+import CustomUploadButton from 'react-firebase-file-uploader/lib/CustomUploadButton';
+
+require('firebase/auth');
+// import uuid from 'uuid';
 
 class NewRecipe extends Component {
     constructor(props) {
         super(props);
         this.handleChangeName = this.handleChangeName.bind(this)
-        this.handleChangeRecipeID = this.handleChangeRecipeID.bind(this)
-        this.handleChangeAuthorID = this.handleChangeAuthorID.bind(this)
         this.handleChangeCategory = this.handleChangeCategory.bind(this)
         this.handleChangeCuisine = this.handleChangeCuisine.bind(this)
         this.handleChangeDifficulty = this.handleChangeDifficulty.bind(this)
@@ -24,21 +23,24 @@ class NewRecipe extends Component {
         this.handleChangeGlutenFree = this.handleChangeGlutenFree.bind(this)
         this.state = {
             newRecipe: {},
-            name: 'Please',
-            recipeID: '777',
-            category: '',
-            cuisine: '',
-            difficulty: '',
-            ingredients: 'FOR',
-            instructions: 'FUCK',
-            cookTime: '30',
+            name: '',
+            authorID: '',
+            category: 'Breakfast',
+            cuisine: 'American',
+            difficulty: 'Easy',
+            ingredients: '',
+            instructions: '',
+            cookTime: '',
             vegetarian: false,
             vegan: false,
             glutenFree: false,
-            userID: '4509',
-            authorID: '4509',
             complete: false,
-            submissionStatus: ''
+            submissionStatus: '',
+            user: null,
+            isUploading: false,
+            progress: 0,
+            recipeImage: '',
+            recipeImageURL: ''
         }
     }
 
@@ -52,6 +54,7 @@ class NewRecipe extends Component {
         difficulties: ['Easy', 'Medium', 'Difficult']
     }
 
+
     postRecipe = (e) => {
         e.preventDefault()
         //this.target.reset()
@@ -60,7 +63,6 @@ class NewRecipe extends Component {
         })
         let reqBody = {
             name: this.state.name,
-            recipeID: this.state.recipeID,
             authorID: this.state.authorID,
             category: this.state.category,
             cuisine: this.state.cuisine,
@@ -94,49 +96,12 @@ class NewRecipe extends Component {
         //this.props.history.push("/home")
     }
 
-    handleSubmit(e) {
-        if (this.refs.name.value === '') {
-            alert('Title is required');
-        } else {
-            this.setState({
-                newRecipe: {
-                    id: uuid.v4(),
-                    name: this.refs.name.value,
-                    recipeID: this.refs.recipeID.value,
-                    authorID: this.refs.authorID.value,
-                    category: this.refs.category.value,
-                    cuisine: this.refs.cuisine.value,
-                    difficulty: this.refs.difficulty.value,
-                    ingredientArray: this.refs.ingredientArray.value,
-                    instructions: this.refs.instructions.value,
-                    cookTime: this.refs.cookTime.value,
-                    vegetarian: this.refs.vegetarian.value,
-                    vegan: this.refs.vegan.value,
-                    glutenFree: this.refs.glutenFree.value
-                }
-            }, function() {
-                //console.log(this.state);
-                this.props.newRecipe(this.state.newRecipe);
-            });
-        }
-        e.preventDefault();
-    }
 
+    //See about making the JSX below not require these functions...
+    //onChange={this.handleChangeName} --> onChange={this.setState({name: event.target.value})}
     handleChangeName(event) {
         this.setState({
             name: event.target.value
-        })
-    }
-
-    handleChangeRecipeID(event) {
-        this.setState({
-            recipeID: event.target.value
-        })
-    }
-
-    handleChangeAuthorID(event) {
-        this.setState({
-            authorID: event.target.value
         })
     }
 
@@ -194,6 +159,62 @@ class NewRecipe extends Component {
         })
     }
 
+    componentDidMount() {
+        var uid = sessionStorage.getItem("uid")
+        if (uid) {
+            console.log('Success!  uid: ' + uid);
+            this.setState({
+                authorID: uid
+            });
+        } else {
+            uid = localStorage.getItem("uid");
+            if (uid) {
+                var expiration = Date(localStorage.getItem("expires"))
+                if ((new Date()).getTime() < expiration) {
+                    this.setState({
+                        authorID: uid
+                    });
+                } else {
+                    console.log("this token has expired.  removing...");
+                    localStorage.removeItem("uid");
+                    localStorage.removeItem("expires");
+                    console.log("...done!");
+                }
+            } else {
+                console.log("no token stored");
+            }
+        }
+    }
+
+    handleUploadStart = () => this.setState({
+        isUploading: true,
+        progress: 0
+    });
+
+    handleProgress = (progress) => this.setState({
+        progress
+    });
+
+    handleUploadError = (error) => {
+        this.setState({
+            isUploading: false
+        })
+        console.error(error);
+    }
+
+    handleUploadSuccess = (filename) => {
+        this.setState({
+            recipeImage: filename,
+            progress: 100,
+            isUploading: false
+        });
+        firebase.storage().ref("images").child(filename).getDownloadURL()
+            .then(url => this.setState({
+                recipeImageURL: url
+            }));
+    };
+
+
     render() {
         let categoryOptions = this.props.categories.map(category => {
             return <option key={category} value={category}>{category}</option>
@@ -205,74 +226,91 @@ class NewRecipe extends Component {
             return <option key={difficulty} value={difficulty}>{difficulty}</option>
         });
 
-        const {
-            complete
-        } = this.state
+        // const {
+        //     complete
+        // } = this.state
 
         return (<div className="backgroundStyle">
-            <h3>New Recipe</h3>
+            <div className="newRecipeHeader">Add a New Recipe!</div>
             <form id="newRecipeForm" onSubmit={this.postRecipe}>
-                <Prompt when={!complete} message={location => (`Are you sure you want to go to ${location.pathname} before finishing your recipe post?`)}/>
-                <div>
-                    <label>Recipe Name</label><br/>
-                    <input type="text" name="recipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
+                <div className="notebookPage">
+                    {/* <Prompt when={!complete} message={location => (`Are you sure you want to go to ${location.pathname} before finishing your recipe post?`)}/> */}
+                    <div className="newRecipeFormContent">
+                        <div className="newRecipeTitleField">
+                            <label htmlFor="newRecipeTitleField">Name:</label>
+                            <input type="text" id="newRecipeTitleField" name="newRecipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
+                        </div>
+                        <div className="newRecipeImageUpload">
+                            <CustomUploadButton
+                                accept="image/*"
+                                name="recipeImage"
+                                randomizeFilename
+                                // filename={file => this.state.name + file.name.split('.')[1]; }
+                                storageRef={firebase.storage().ref('images')}
+                                onUploadStart={this.handleUploadStart}
+                                onUploadError={this.handleUploadError}
+                                onUploadSuccess={this.handleUploadSuccess}
+                                onProgress={this.handleProgress}
+                                style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4}}
+                            >
+                                Upload Recipe Image
+                            </CustomUploadButton>
+                        </div>
+                        <div className="newRecipeDifficultyAndTimeLine">
+                            <div className="newRecipeDifficultyField">
+                                <label htmlFor="newRecipeDifficultyField">Difficulty</label><br/>
+                                <select ref="difficulty" id="newRecipeDifficultyField" name="newRecipeDifficultyField" value={this.state.difficulty} onChange={this.handleChangeDifficulty}>
+                                    {difficultyOptions}
+                                </select>
+                            </div>
+                            <div className="newRecipeCookTimeField">
+                                <label htmlFor="newRecipeCookTimeField">Cook Time</label><br/>
+                                <input type="text" ref="cookTime" id="newRecipeCookTimeField" name="newRecipeCookTimeField" value={this.state.cookTime} onChange={this.handleChangeCookTime}/>
+                            </div>
+                        </div>
+                        <div className="newRecipeCategoryAndCuisineLine">
+                            <div className="newRecipeCategoryField">
+                                <label htmlFor="newRecipeCategoryField">Category</label><br/>
+                                <select ref="category" id="newRecipeCategoryField" name="newRecipeCategoryField" value={this.state.category} onChange={this.handleChangeCategory}>
+                                    {categoryOptions}
+                                </select>
+                            </div>
+                            <div className="newRecipeCuisineField">
+                                <label htmlFor="newRecipeCuisineField">Cuisine</label><br/>
+                                <select ref="cuisine" id="newRecipeCuisineField" name="newRecipeCuisineField" value={this.state.cuisine} onChange={this.handleChangeCuisine}>
+                                    {cuisineOptions}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="newRecipeIngredientsField">
+                            <label htmlFor="newRecipeIngredientsField">Ingredients</label><br/>
+                            <textarea ref="ingredientArray" id="newRecipeIngredientsField" name="newRecipeIngredientsField" rows="4" cols="30" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
+                        </div>
+                        <div className="newRecipeInstructionsField">
+                            <label htmlFor="newRecipeInstructionsField">Instructions</label><br/>
+                            <textarea ref="instructions" id="newRecipeInstructionsField" name="newRecipeInstructionsField" rows="4" cols="30" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
+                        </div>
+                        <div className="newRecipeCheckBoxesLine">
+                            <div className="newRecipeVegetarianField">
+                                <label htmlFor="newRecipeVegetarianField">Vegetarian</label><br/>
+                                <input type="checkbox" ref="vegetarian" id="newRecipeVegetarianField" name="newRecipeVegetarianField" value={this.state.vegetarian} onChange={this.handleChangeVegetarian}/>
+                            </div>
+                            <div className="newRecipeVeganField">
+                                <label htmlFor="newRecipeVeganField">Vegan</label><br/>
+                                <input type="checkbox" ref="vegan" id="newRecipeVeganField" name="newRecipeVeganField" value={this.state.vegan} onChange={this.handleChangeVegan}/>
+                            </div>
+                            <div className="newRecipeGlutenFreeField">
+                                <label htmlFor="newRecipeGlutenFreeField">Gluten Free</label><br/>
+                                <input type="checkbox" ref="glutenFree" id="newRecipeGlutenFreeField" name="newRecipeGlutenFreeField" value={this.state.glutenFree} onChange={this.handleChangeGlutenFree}/>
+                            </div>
+                        </div>
+                        <br/>
+                        <button id="newRecipeButton" className="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
+                        <h3>{this.state.submissionStatus}</h3>
+                    </div>
                 </div>
-                <div>
-                    <label>Recipe ID</label><br/>
-                    <input type="text" name="recipeIDField" value={this.state.recipeID} onChange={this.handleChangeRecipeID}/>
-                </div>
-                <div>
-                    <label>Author ID</label><br/>
-                    <input type="text" name="authorIDField" value={this.state.authorID} onChange={this.handleChangeAuthorID}/>
-                </div>
-                <div>
-                    <label>Category</label><br/>
-                    <select ref="category" name="categoryField" value={this.state.category} onChange={this.handleChangeCategory}>
-                        {categoryOptions}
-                    </select>
-                </div>
-                <div>
-                    <label>Cuisine</label><br/>
-                    <select ref="cuisine" name="ethnicityField" value={this.state.cuisine} onChange={this.handleChangeEthnicity}>
-                        {cuisineOptions}
-                    </select>
-                </div>
-                <div>
-                    <label>Difficulty</label><br/>
-                    <select ref="difficulty" name="difficultyField" value={this.state.difficulty} onChange={this.handleChangeDifficulty}>
-                        {difficultyOptions}
-                    </select>
-                </div>
-                <div>
-                    <label>Ingredients</label><br/>
-                    <input type="text" ref="ingredientArray" name="ingredientsField" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
-                </div>
-                <div>
-                    <label>Instructions</label><br/>
-                    <input type="text" ref="instructions" name="instructionsField" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
-                </div>
-                <div>
-                    <label>Cook Time</label><br/>
-                    <input type="text" ref="cookTime" name="cookTimeField" value={this.state.cookTime} onChange={this.handleChangeCookTime}/>
-                </div>
-                <div>
-                    <label>Vegetarian</label><br/>
-                    <input type="checkbox" ref="vegetarian" name="vegetarianCheck" value={this.state.vegetarian} onChange={this.handleChangeVegetarian}/>
-                </div>
-                <div>
-                    <label>Vegan</label><br/>
-                    <input type="checkbox" ref="vegan" name="veganCheck" value={this.state.vegan} onChange={this.handleChangeVegan}/>
-                </div>
-                <div>
-                    <label>Gluten Free</label><br/>
-                    <input type="checkbox" ref="glutenFree" name="glutenCheck" value={this.state.glutenFree} onChange={this.handleChangeGlutenFree}/>
-                </div>
-                <br/>
-                <button id="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
-                <br/>
-                <h3>{this.state.submissionStatus}</h3>
             </form>
-        </div>);
+            </div>);
     }
 }
 
