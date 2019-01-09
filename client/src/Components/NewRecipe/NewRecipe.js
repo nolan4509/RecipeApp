@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import './NewRecipe.css';
 import firebase from 'firebase';
-import CustomUploadButton from 'react-firebase-file-uploader/lib/CustomUploadButton';
+import FileUploader from 'react-firebase-file-uploader';
 
 require('firebase/auth');
 // import uuid from 'uuid';
@@ -160,29 +160,14 @@ class NewRecipe extends Component {
     }
 
     componentDidMount() {
-        var uid = sessionStorage.getItem("uid")
+        var uid = localStorage.getItem("uid")
         if (uid) {
             console.log('Success!  uid: ' + uid);
             this.setState({
                 authorID: uid
             });
         } else {
-            uid = localStorage.getItem("uid");
-            if (uid) {
-                var expiration = Date(localStorage.getItem("expires"))
-                if ((new Date()).getTime() < expiration) {
-                    this.setState({
-                        authorID: uid
-                    });
-                } else {
-                    console.log("this token has expired.  removing...");
-                    localStorage.removeItem("uid");
-                    localStorage.removeItem("expires");
-                    console.log("...done!");
-                }
-            } else {
-                console.log("no token stored");
-            }
+            console.log('Nobody is signed in!');
         }
     }
 
@@ -241,20 +226,18 @@ class NewRecipe extends Component {
                             <input type="text" id="newRecipeTitleField" name="newRecipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
                         </div>
                         <div className="newRecipeImageUpload">
-                            <CustomUploadButton
+                            <label>Image: </label>
+                            {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
+                            {this.state.recipeImageURL && <img src={this.state.recipeImageURL} />}
+                            <FileUploader
                                 accept="image/*"
                                 name="recipeImage"
                                 randomizeFilename
-                                // filename={file => this.state.name + file.name.split('.')[1]; }
-                                storageRef={firebase.storage().ref('images')}
+                                storageRef={firebase.storage().ref("images")}
                                 onUploadStart={this.handleUploadStart}
                                 onUploadError={this.handleUploadError}
                                 onUploadSuccess={this.handleUploadSuccess}
-                                onProgress={this.handleProgress}
-                                style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4}}
-                            >
-                                Upload Recipe Image
-                            </CustomUploadButton>
+                                onProgress={this.handleProgress}/>
                         </div>
                         <div className="newRecipeDifficultyAndTimeLine">
                             <div className="newRecipeDifficultyField">

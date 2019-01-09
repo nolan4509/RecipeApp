@@ -21,9 +21,9 @@ class RecipesPage extends Component {
     }
 
     getRecipes() {
-        console.log('Inside RecipesPage.js: ');
-        console.log(this.props.currentUserID);
-        console.log(this.state.userID);
+        // console.log('Inside RecipesPage.js: ');
+        // console.log(this.props.currentUserID);
+        // console.log(this.state.userID);
         fetch(`/recipes/user/${this.props.currentUserID}`, {
             method: 'GET',
             headers: {
@@ -42,8 +42,8 @@ class RecipesPage extends Component {
     }
 
     componentDidMount() {
-        console.log('in recipespage.js: ');
-        console.log(this.props.currentUserID);
+        // console.log('in recipespage.js: ');
+        // console.log(this.props.currentUserID);
         this.setState({
             userID: this.props.currentUserID
         })
