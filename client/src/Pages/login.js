@@ -2,7 +2,10 @@ import React, {
     Component
 } from 'react';
 import './login.css';
-import firebase from '../firebase.js';
+import {
+    auth,
+    provider
+} from '../firebase.js';
 import NavBar from '../Components/NavBar/NavBar';
 import RecipesPage from './RecipesPage';
 require('firebase/auth');
@@ -10,10 +13,9 @@ require('firebase/auth');
 class Login extends Component {
     constructor(props) {
         super(props)
-        this.handleChangeEmail = this.handleChangeEmail.bind(this)
-        this.handleChangeName = this.handleChangeName.bind(this)
-        this.handleChangePassword = this.handleChangePassword.bind(this)
-        this.handleChangeRememberMe = this.handleChangeRememberMe.bind(this)
+        this.handleChangeEmail = this.handleChangeEmail.bind(this);
+        this.handleChangeName = this.handleChangeName.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.state = {
@@ -25,7 +27,6 @@ class Login extends Component {
             userRecipes: [],
             user: null,
             submissionStatus: '',
-            rememberMe: true
         }
     }
     /*
@@ -34,8 +35,8 @@ class Login extends Component {
     now equal to null, the user will see the Log In button instead of the Log Out button.
     */
     logout() {
-        firebase.auth().signOut().then(() => {
-            sessionStorage.removeItem("uid");
+        auth.signOut().then(() => {
+            // sessionStorage.removeItem("uid");
             this.setState({
                 user: null
             });
@@ -56,6 +57,15 @@ class Login extends Component {
     store this inside of the state using 'setState'
     */
     login() {
+        auth.signInWithPopup(provider).then((result) => {
+            const user = result.user;
+            this.setState({
+                user
+            });
+            this.props.history.push('/')
+        });
+
+        /*
         console.log('email: ' + this.state.userEmail + ' password: ' + this.state.userPassword);
         firebase.auth().signInWithEmailAndPassword(this.state.userEmail, this.state.userPassword).then((result) => {
             const user = result.user;
@@ -86,19 +96,7 @@ class Login extends Component {
             console.log('caught error');
             console.log(error);
         });
-        /*
-        .catch(function(error) {
-                console.log(error.code);
-                console.log(error.message);
-            }
-              auth.signInWithPopup(provider).then((result) => {
-                  const user = result.user;
-                  this.setState({
-                      user
-                  });
-                  this.props.history.push('/Home')
-              });
-              */
+        */
     };
 
     handleChangeEmail(event) {
@@ -120,25 +118,10 @@ class Login extends Component {
         })
     }
 
-    handleChangeRememberMe(event) {
-        this.setState({
-            rememberMe: event.target.value
-        })
-        console.log(this.state.rememberMe);
-    }
-
-    dateInOneWeek() {
-        //the large number is how many milliseconds are in a week
-        var newDate = (new Date()).getTime() + 604800000;
-        //        newDate.setTime(newDate + 604800000);
-
-        return newDate;
-    }
-
     componentDidMount() {
-        console.log('session storage: ' + sessionStorage.getItem("uid"));
+        // console.log('session storage: ' + sessionStorage.getItem("uid"));
         // console.log(firebase.auth().currentUser.uid);
-        firebase.auth().onAuthStateChanged((user) => {
+        auth.onAuthStateChanged((user) => {
             if (user) {
                 this.setState({
                     user
@@ -155,7 +138,7 @@ class Login extends Component {
                 {
                     this.state.user
                         ? <div className="backgroundStyle">
-                                <RecipesPage history={this.props.history} currentUserID={firebase.auth().currentUser.uid}/>
+                                <RecipesPage history={this.props.history} currentUserID={auth.currentUser.uid}/>
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
                         : <div>
