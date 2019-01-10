@@ -27,6 +27,7 @@ app.use(express.static(path.join(__dirname, '/client/build')));
         ~285: POST /newRecipe'
         ~355: PUT /recipes/update/:recipeID'
         ~425: DELETE /recipes/remove/:recipeID'
+        ~450  GET /recipes'
 */
 
 
@@ -58,7 +59,7 @@ class User {
         this.name = name; //String
         this.email = email; //String
         this.recipePosts = recipePosts; //Store integers of the post IDs they currently own
-        //this.recipes = []; //Array of RecipePost objects
+        this.favoriteRecipes = []; //Array of RecipePost objects
     }
 }
 
@@ -209,10 +210,6 @@ https://stackoverflow.com/questions/15134199/how-to-split-and-modify-a-string-in
 /*------------------------------ GET REQUESTS ------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-//variable argument test
-app.get('/newRecipe', function(req, res) {
-    res.sendFile(__dirname + '/client/public/NewRecipe.html');
-});
 
 //  GET INDIVIDUAL RECIPE BY USING RECIPE ID
 app.get('/recipes/:recipeID', function(req, res) {
@@ -443,6 +440,27 @@ app.delete('/recipes/remove/:recipeID', function(req, res) {
 
     // Removing the recipe from the user's recipePosts
 });
+
+/*--------------------------------------------------------------------------*/
+/*------------------------------ TO BE SORTED ------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+
+//GET ALL RECIPES
+app.get('/recipes', function(req, res) {
+    retRecipes = [];
+    recipeArray.map(rcp => {
+        retRecipes.push(rcp);
+    });
+    res.send(JSON.stringify(retRecipes));
+});
+//   TODO
+//ADD RECIPE TO USERS FAVORITES
+//app.put('users/favorites/:userID/:recipeID', function(req, res) {});
+//REMOVE RECIPE FROM USERS FAVORITES
+//app.delete('users/favorites/remove/:userID/:recipeID', function(req, res) {});
+//VIEW ALL FAVORITES FOR A USER
+//app.get('recipes/favorites/:userID' ,function(req, res) {});
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
