@@ -2,7 +2,6 @@ import React, {
     Component
 } from 'react';
 import Recipes from '../Components/Recipes/Recipes';
-// import NavBar from '../Components/NavBar/NavBar';
 import './styles.css';
 // import uuid from 'uuid';
 
@@ -92,7 +91,6 @@ class RecipesPage extends Component {
 
     render() {
         return (<div className = "bodyStyle">
-            {/* <NavBar/> */}
             <br/>
             <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)}/>
         </div>);

@@ -1,7 +1,6 @@
 Roadmap/User Stories as of 1/10/19:
 
 FOR 1.0 Release:
-- Quickly Update Login page styling
 - Recipes Homepage Displays ALL recipes
     - Backend code for this to get all recipes (be careful with ALL recipes, could be a lot)
     - Frontend code for this

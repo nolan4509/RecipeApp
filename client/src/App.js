@@ -7,8 +7,10 @@ import Login from './Pages/login';
 import NewRecipe from './Pages/NewRecipePage';
 import Recipes from './Pages/RecipesPage';
 import RecipeView from './Components/RecipeView/RecipeView';
+import NavBar from './Components/NavBar/NavBar';
 
 const App = () => (<main>
+    <NavBar/>
     <Switch>
         <Route exact={true} path='/' component={Login}/>
         <Route path='/NewRecipe' component={NewRecipe}/>

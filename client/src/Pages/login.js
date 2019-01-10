@@ -6,7 +6,6 @@ import {
     auth,
     provider
 } from '../firebase.js';
-import NavBar from '../Components/NavBar/NavBar';
 import RecipesPage from './RecipesPage';
 require('firebase/auth');
 
@@ -86,7 +85,6 @@ class Login extends Component {
     render() {
         return (<div>
             <div>
-                <NavBar/>
                 {
                     this.state.user
                         ? <div className="backgroundStyle">
@@ -94,7 +92,6 @@ class Login extends Component {
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
                         : <div>
-                            {/* <NavBar/> */}
                         <div className="backgroundStyle">
                             <div className="container">
                                 <form className="box">
