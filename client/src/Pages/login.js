@@ -29,11 +29,7 @@ class Login extends Component {
             submissionStatus: '',
         }
     }
-    /*
-    call the 'signOut' method on auth, and then using the Promise API
-    we remove the user from our application's state. With 'this.state.user'
-    now equal to null, the user will see the Log In button instead of the Log Out button.
-    */
+
     logout() {
         auth.signOut().then(() => {
             // sessionStorage.removeItem("uid");
@@ -45,17 +41,6 @@ class Login extends Component {
         this.props.history.push('/')
     }
 
-    /*
-    Here call the 'signInWithPopup' method from the auth module,
-    and pass in our 'provider' Now when you click the 'login'
-    button, it will trigger a popup that gives up the option to
-    sign in with a google account
-
-    'signInWithPopup' has a promise API that allows us to call '.then' on it and pass in a callback.
-    This callback will be provided with a 'result' object that contains, among other things, a
-    property called '.user' that has all the information about the user who just signed in, we then
-    store this inside of the state using 'setState'
-    */
     login() {
         auth.signInWithPopup(provider).then((result) => {
             const user = result.user;
@@ -64,39 +49,6 @@ class Login extends Component {
             });
             this.props.history.push('/')
         });
-
-        /*
-        console.log('email: ' + this.state.userEmail + ' password: ' + this.state.userPassword);
-        firebase.auth().signInWithEmailAndPassword(this.state.userEmail, this.state.userPassword).then((result) => {
-            const user = result.user;
-            this.setState({
-                user: user
-            });
-
-            console.log("logged in as id: " + firebase.auth().currentUser.uid);
-            this.setState({
-                realUserID: firebase.auth().currentUser.uid
-            })
-            var uid = firebase.auth().currentUser.uid;
-            //      this.props.history.push('/Home');
-        }).then(uid => {
-            sessionStorage.setItem("uid", this.state.realUserID);
-            if (this.state.rememberMe) {
-                localStorage.setItem("uid", this.state.realUserID);
-                localStorage.setItem("expires", this.dateInOneWeek());
-            }
-        }).catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if (errorCode === 'auth/wrong-password') {
-                alert('Wrong password.');
-            } else {
-                alert(errorMessage);
-            }
-            console.log('caught error');
-            console.log(error);
-        });
-        */
     };
 
     handleChangeEmail(event) {
@@ -148,19 +100,19 @@ class Login extends Component {
                                 <form className="box">
                                     <h2 className="big">Please Login</h2>
                                     <div className="inputBox">
-                                        <label htmlFor="inputEmail" className="sr-only inputBox">Email address</label>
-                                        <input type="email" id="inputEmail" placeholder="Email address" required="required" autoFocus="autofocus" value={this.state.userEmail} onChange={this.handleChangeEmail}/>
+                                        <label htmlFor="inputEmail" className="sr-only inputBox">fix this</label>
+                                        <input type="email" id="inputEmail" placeholder="Email address (WIP)" required="required" autoFocus="autofocus" value={this.state.userEmail} onChange={this.handleChangeEmail}/>
                                     </div>
                                     <div className="inputBox">
-                                        <label htmlFor="inputPassword" className="sr-only">Password</label>
-                                        <input type="password" id="inputPassword" placeholder="Password" required="required" value={this.state.userPassword} onChange={this.handleChangePassword}/>
+                                        <label htmlFor="inputPassword" className="sr-only">fix this</label>
+                                        <input type="password" id="inputPassword" placeholder="Password (WIP)" required="required" value={this.state.userPassword} onChange={this.handleChangePassword}/>
                                     </div>
                                     <div className="checkbox">
                                         <label>
-                                            <input type="checkbox" ref="rememberMe" id="rememberMeField" name="rememberMeField" value={this.state.rememberMe} onChange={this.handleChangeRememberMe}/>
+                                            <input type="checkbox" ref="rememberMe" id="rememberMeField" name="rememberMeField"/>
                                         </label>
                                     </div>
-                                    <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In</button>
+                                    <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In with Google Account</button>
                                 </form>
                             </div>
                                 {/* Add another form here, consisting of just a button(?) that onClick -> googleLogin, and make 'login' for user&password */}
