@@ -6,7 +6,7 @@ import {
 import Login from './Pages/login';
 import NewRecipe from './Pages/NewRecipePage';
 import Recipes from './Pages/RecipesPage';
-import RecipeView from './Components/RecipeView/RecipeView';
+import RecipePopUpView from './Components/RecipePopUpView/RecipePopUpView';
 import NavBar from './Components/NavBar/NavBar';
 
 const App = () => (<main>
@@ -15,7 +15,7 @@ const App = () => (<main>
         <Route exact={true} path='/' component={Login}/>
         <Route path='/NewRecipe' component={NewRecipe}/>
         <Route path='/Recipes' component={Recipes}/>
-        <Route path='/Recipes/view' component={RecipeView}/>
+        <Route path='/Recipes/view' component={RecipePopUpView}/>
     </Switch>
 </main>)
 

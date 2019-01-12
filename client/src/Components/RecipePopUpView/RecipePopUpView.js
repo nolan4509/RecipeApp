@@ -1,7 +1,7 @@
 import React, {
     Component
 } from 'react';
-import './RecipeView.css';
+import './RecipePopUpView.css';
 
 class RecipeView extends Component {
     constructor(props) {
