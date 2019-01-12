@@ -457,15 +457,15 @@ app.get('/recipes', function(req, res) {
 });
 
 app.get('/user/:userID', function(req, res) {
-    console.log('in index...');
+    // console.log('in index...' + req.params.userID);
     userArray.map(usr => {
         if (usr.id == req.params.userID) {
             res.send(JSON.stringify(usr));
             return;
         }
     });
-    console.log('sending NULL...');
-    res.send('NULL');
+    // console.log('sending NULL...');
+    res.send('User Not Found');
 });
 //   TODO
 //ADD RECIPE TO USERS FAVORITES
