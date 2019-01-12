@@ -24,7 +24,7 @@ class NewRecipe extends Component {
         this.state = {
             newRecipe: {},
             name: '',
-            authorID: '',
+            authorID: '', // NEEDS TO BE FIXED
             category: 'Breakfast',
             cuisine: 'American',
             difficulty: 'Easy',
@@ -161,6 +161,7 @@ class NewRecipe extends Component {
     }
 
     componentDidMount() {
+        /*
         var uid = localStorage.getItem("uid");
         // var uid = firebase.auth().currentUser.uid;
         if (uid) {
@@ -171,6 +172,7 @@ class NewRecipe extends Component {
         } else {
             console.log('Nobody is signed in!');
         }
+        */
     }
 
     handleUploadStart = () => this.setState({
