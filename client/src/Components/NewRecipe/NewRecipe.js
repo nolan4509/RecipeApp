@@ -160,7 +160,8 @@ class NewRecipe extends Component {
     }
 
     componentDidMount() {
-        var uid = localStorage.getItem("uid")
+        var uid = localStorage.getItem("uid");
+        // var uid = firebase.auth().currentUser.uid;
         if (uid) {
             console.log('Success!  uid: ' + uid);
             this.setState({
