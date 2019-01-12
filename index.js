@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 //Primary recipe object
 class Recipe {
-    constructor(recipeID, authorID, name, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating) {
+    constructor(recipeID, authorID, name, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, imageURL) {
         this.recipeID = recipeID; //String
         this.authorID = authorID; //String
         this.name = name; //String
@@ -49,6 +49,7 @@ class Recipe {
         this.vegetarian = vegetarian; //Boolean
         this.vegan = vegan; //Boolean
         this.glutenFree = glutenFree; //Boolean
+        this.imageURL = imageURL; //string address of image
         // this.rating = rating; //Object with ratings and comments
     }
 }
@@ -292,9 +293,10 @@ app.post('/newRecipe', function(req, res) {
     let vegetarian = false;
     let vegan = false;
     let glutenFree = false;
+    let imageURL = String(req.body.imageURL);
 
     // dummy placeholder
-    let rating = 5;
+    //    let rating = 5;
     if (req.body.vegetarian == "TRUE") {
         vegetarian = true;
     };
@@ -319,7 +321,7 @@ app.post('/newRecipe', function(req, res) {
     //Careful with below...might prove to contain an error if recipeArray empty
 
     let recipeIndex = recipeArray[recipeArray.length - 1].recipeID + 1; //add 1 to most recent recipe so all recipeIds are unique
-    recipeArray[recipeArray.length] = new Recipe(recipeIndex, authorID, recipeTitle, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating);
+    recipeArray[recipeArray.length] = new Recipe(recipeIndex, authorID, recipeTitle, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, imageURL);
 
     if (user.recipePosts == null) {
         user.recipePosts = [recipeIndex];
