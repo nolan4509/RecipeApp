@@ -28,7 +28,7 @@ class NewRecipe extends Component {
         this.state = {
             newRecipe: {},
             name: '',
-            authorID: 'oLcsMT5GTRXQE39vL6NZkFADDRF2', // NEEDS TO BE FIXED
+            authorID: 'XaqTtVP0DlbTkj3365BFbzWYqcd2', // NEEDS TO BE FIXED
             category: 'Breakfast',
             cuisine: 'American',
             difficulty: 'Easy',
