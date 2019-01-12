@@ -16,7 +16,7 @@ class RecipeItem extends Component {
         return (<div className="flowContainer">
             <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={this.viewRecipe.bind(this, this.props.recipe.recipeID)}>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
-                <img src="images/eeffreef.jpg" alt="HoneyPotGarlicImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                <img src={this.props.recipe.ImageURL} alt="recipeImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
                 <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>

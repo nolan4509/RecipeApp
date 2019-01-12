@@ -72,7 +72,8 @@ class NewRecipe extends Component {
             cookTime: this.state.cookTime,
             vegetarian: this.state.vegetarian,
             vegan: this.state.vegan,
-            glutenFree: this.state.glutenFree
+            glutenFree: this.state.glutenFree,
+            imageURL: this.state.recipeImageURL
         }
         console.log('Recipe Name: ' + this.state.name)
         fetch('/newRecipe', {
