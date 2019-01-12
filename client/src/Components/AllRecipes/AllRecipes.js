@@ -1,8 +1,8 @@
 import React, {
     Component
 } from 'react';
-import Recipes from '../Components/Recipes/Recipes';
-import './styles.css';
+import Recipes from '../Recipes/Recipes';
+import './AllRecipes.css';
 // import uuid from 'uuid';
 
 class AllRecipes extends Component {
@@ -25,17 +25,18 @@ class AllRecipes extends Component {
                 'Content-Type': 'application/json'
             }
         }).then(res => res.json()).then((result) => {
-            // console.log('Success: ' + result);
+            console.log('Success: ' + result);
             this.setState({
                 recipesLoaded: 'True',
                 recipes: result
             })
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In AllRecipes.js -- Error: ' + error);
         });
     }
 
     componentDidMount() {
+        console.log('AllRecipes.js mounted-- pre getRecipes call --');
         this.getRecipes();
     }
 

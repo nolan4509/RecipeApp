@@ -6,7 +6,7 @@ import {
 import Login from './Pages/login';
 import NewRecipe from './Pages/NewRecipePage';
 import Recipes from './Pages/RecipesPage';
-import AllRecipes from './Pages/AllRecipes';
+import AllRecipes from './Pages/AllRecipesPage';
 import RecipePopUpView from './Components/RecipePopUpView/RecipePopUpView';
 import NavBar from './Components/NavBar/NavBar';
 

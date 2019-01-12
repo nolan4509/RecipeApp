@@ -448,6 +448,7 @@ app.delete('/recipes/remove/:recipeID', function(req, res) {
 
 //GET ALL RECIPES
 app.get('/recipes', function(req, res) {
+    console.log('Inside app.get(/recipes) --');
     retRecipes = [];
     recipeArray.map(rcp => {
         retRecipes.push(rcp);
