@@ -24,28 +24,26 @@ class RecipesPage extends Component {
         // console.log('Inside RecipesPage.js: ');
         // console.log(this.props.currentUserID);
         // console.log(this.state.userID);
-
-
-        // fetch(`/recipes/user/${this.props.currentUserID}`, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     }
-        // }).then(res => res.json()).then((result) => {
-        //     // console.log('Success: ' + result);
-        //     this.setState({
-        //         recipesLoaded: 'True',
-        //         recipes: result
-        //     })
-        // }).catch((error) => {
-        //     console.log('Error: ' + error);
-        // });
+        fetch(`/recipes/user/${this.props.currentUserID}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json()).then((result) => {
+            // console.log('Success: ' + result);
+            this.setState({
+                recipesLoaded: 'True',
+                recipes: result
+            })
+        }).catch((error) => {
+            console.log('Error: ' + error);
+        });
     }
 
     componentDidMount() {
-        // console.log('in recipespage.js: ');
-        // console.log(this.props.currentUserID);
+        console.log('in recipespage.js: ');
+        console.log(this.props.currentUserID);
         this.setState({
             userID: this.props.currentUserID
         })

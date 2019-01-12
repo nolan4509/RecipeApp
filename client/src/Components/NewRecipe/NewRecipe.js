@@ -2,7 +2,11 @@ import React, {
     Component
 } from 'react';
 import './NewRecipe.css';
-import firebase from 'firebase';
+import {
+    auth,
+    storage,
+    provider
+} from '../../firebase.js';
 import FileUploader from 'react-firebase-file-uploader';
 
 require('firebase/auth');
@@ -24,7 +28,7 @@ class NewRecipe extends Component {
         this.state = {
             newRecipe: {},
             name: '',
-            authorID: '', // NEEDS TO BE FIXED
+            authorID: 'oLcsMT5GTRXQE39vL6NZkFADDRF2', // NEEDS TO BE FIXED
             category: 'Breakfast',
             cuisine: 'American',
             difficulty: 'Easy',
@@ -162,14 +166,22 @@ class NewRecipe extends Component {
 
     componentDidMount() {
         // var uid = localStorage.getItem("uid");
-        var uid = firebase.auth().currentUser.uid;
-        if (uid) {
-            console.log('Success!  uid: ' + uid);
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({
+                    user
+                }); // When user signs in, checks the firebase database to see
+                // if they were already previously authenticated, if so, restore
+            }
+        });
+        if (this.state.user) {
+            console.log('Success!  uid: ' + this.state.user.id);
             this.setState({
-                authorID: uid
+                authorID: this.state.user.id
             });
         } else {
             console.log('Nobody is signed in!');
+            // this.props.history.push('/');
         }
     }
 
@@ -195,7 +207,7 @@ class NewRecipe extends Component {
             progress: 100,
             isUploading: false
         });
-        firebase.storage().ref("images").child(filename).getDownloadURL()
+        storage.ref("images").child(filename).getDownloadURL()
             .then(url => this.setState({
                 recipeImageURL: url
             }));
@@ -235,7 +247,7 @@ class NewRecipe extends Component {
                                 accept="image/*"
                                 name="recipeImage"
                                 randomizeFilename
-                                storageRef={firebase.storage().ref("images")}
+                                storageRef={storage.ref("images")}
                                 onUploadStart={this.handleUploadStart}
                                 onUploadError={this.handleUploadError}
                                 onUploadSuccess={this.handleUploadSuccess}
