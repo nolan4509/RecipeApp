@@ -42,9 +42,28 @@ class Login extends Component {
 
     login() {
         auth.signInWithPopup(provider).then((result) => {
-            const user = result.user;
+            var newUser = auth.currentUser;
+            fetch(`/user/${newUser.uid}`, {
+                method: 'GET',
+            }).then((res) => {
+                console.log(res);
+                if (res === 'NULL') {
+                    console.log('resource was null');
+                    fetch(`/add/user/${newUser.displayName}/${newUser.uid}/${newUser.email}`, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        'method': 'POST'
+                    }).then(res => {
+                        console.log('Success: ' + JSON.stringify(res));
+                    }).catch((error) => {
+                        console.log('Error: ' + error);
+                    });
+                }
+            });
             this.setState({
-                user
+                user: newUser
             });
             this.props.history.push('/')
         });

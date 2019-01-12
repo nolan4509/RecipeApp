@@ -455,6 +455,18 @@ app.get('/recipes', function(req, res) {
     });
     res.send(JSON.stringify(retRecipes));
 });
+
+app.get('/user/:userID', function(req, res) {
+    console.log('in index...');
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            res.send(JSON.stringify(usr));
+            return;
+        }
+    });
+    console.log('sending NULL...');
+    res.send('NULL');
+});
 //   TODO
 //ADD RECIPE TO USERS FAVORITES
 //app.put('users/favorites/:userID/:recipeID', function(req, res) {});
