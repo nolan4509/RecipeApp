@@ -10,23 +10,24 @@ import {
 import './RecipeItem.css';
 
 class RecipeItem extends Component {
-    /*
+
     constructor(props) {
         super(props)
         this.state = {
             image: ''
         }
-        this.getImage();
+        this.getImage('image');
     }
-*/
-    constructor(props) {
-        super(props);
+
+
+    getImage(image) {
+        let { state } = this;
+        console.log(JSON.stringify(this.props.recipe));
         let storageRef = storage.ref();
-        let spaceRef = storageRef.child('images/' + this.props.recipe.ImageURL);
-        storageRef.child('images/' + this.props.recipe.ImageURL).getDownloadURL().then((url) => {
-            let image = url;
-            console.log(image);
-            document.querySelector('img').src = image;
+        this.props.recipe.ImageURL.getDownloadURL().then((url) => {
+            this.state[image] = url
+            console.log(this.state[image]);
+            this.setState(state)
         }).catch((error) => {
             console.log('Error: ' + JSON.stringify(error));
         })
@@ -44,7 +45,7 @@ class RecipeItem extends Component {
         return (<div className="flowContainer">
             <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={this.viewRecipe.bind(this, this.props.recipe.recipeID)}>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
-                <img src="image" alt="recipeImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                <img src={ this.state.image } alt="recipeImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
                 <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
