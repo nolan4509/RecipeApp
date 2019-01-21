@@ -21,16 +21,11 @@ class RecipeItem extends Component {
 
 
     getImage(image) {
-        let { state } = this;
-        console.log(JSON.stringify(this.props.recipe));
-        let storageRef = storage.ref();
-        this.props.recipe.ImageURL.getDownloadURL().then((url) => {
-            this.state[image] = url
-            console.log(this.state[image]);
-            this.setState(state)
-        }).catch((error) => {
-            console.log('Error: ' + JSON.stringify(error));
-        })
+        let {
+            state
+        } = this;
+        this.state[image] = this.props.recipe.imageURL;
+        this.setState(state);
     }
 
     deleteRecipe(id) {
