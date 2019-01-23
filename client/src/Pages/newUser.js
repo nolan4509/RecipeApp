@@ -62,6 +62,7 @@ class newUser extends Component {
       <div className="backgroundStyle">
                 <SafeNavBar/>
                 <h3> New User </h3>
+
                 <form id = "newUserForm" onSubmit = {this.createUser}>
                     <div>
                         <label>User Email</label><br/>
@@ -74,8 +75,6 @@ class newUser extends Component {
                     <div>
                         <label>Username</label> <br/>
                         <input type="text" name="userNameField" value={this.state.username} onChange={this.handleChangeUsername}/>
-                    </div>
-                    <br/>
                         <button id="newUserButton" form="newUserForm" type="submit">Submit</button>
                     <br/>
                 </form>
