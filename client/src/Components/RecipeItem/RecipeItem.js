@@ -1,12 +1,6 @@
 import React, {
     Component
 } from 'react';
-import {
-    auth,
-    storage,
-    child,
-    provider
-} from '../../firebase.js';
 import './RecipeItem.css';
 
 class RecipeItem extends Component {
@@ -26,6 +20,9 @@ class RecipeItem extends Component {
         } = this;
         this.state[image] = this.props.recipe.imageURL;
         this.setState(state);
+        // this.setState({
+        //     image: this.props.recipe.imageURL
+        // });
     }
 
     deleteRecipe(id) {

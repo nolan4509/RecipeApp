@@ -4,8 +4,7 @@ import React, {
 import './NewRecipe.css';
 import {
     auth,
-    storage,
-    provider
+    storage
 } from '../../firebase.js';
 import FileUploader from 'react-firebase-file-uploader';
 
@@ -28,7 +27,7 @@ class NewRecipe extends Component {
         this.state = {
             newRecipe: {},
             name: '',
-            authorID: 'XaqTtVP0DlbTkj3365BFbzWYqcd2', // NEEDS TO BE FIXED
+            authorID: '',
             category: 'Breakfast',
             cuisine: 'American',
             difficulty: 'Easy',
@@ -67,7 +66,7 @@ class NewRecipe extends Component {
         })
         let reqBody = {
             name: this.state.name,
-            authorID: this.state.authorID,
+            authorID: auth.currentUser.uid,
             category: this.state.category,
             cuisine: this.state.cuisine,
             difficulty: this.state.difficulty,
@@ -164,27 +163,6 @@ class NewRecipe extends Component {
         })
     }
 
-    componentDidMount() {
-        // var uid = localStorage.getItem("uid");
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({
-                    user
-                }); // When user signs in, checks the firebase database to see
-                // if they were already previously authenticated, if so, restore
-            }
-        });
-        if (this.state.user) {
-            console.log('Success!  uid: ' + this.state.user.id);
-            this.setState({
-                authorID: this.state.user.id
-            });
-        } else {
-            console.log('Nobody is signed in!');
-            // this.props.history.push('/');
-        }
-    }
-
     handleUploadStart = () => this.setState({
         isUploading: true,
         progress: 0
@@ -242,7 +220,7 @@ class NewRecipe extends Component {
                         <div className="newRecipeImageUpload">
                             <label>Image: </label>
                             {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-                            {this.state.recipeImageURL && <img src={this.state.recipeImageURL} />}
+                            {this.state.recipeImageURL && <img src={this.state.recipeImageURL} alt="Recipe"/>}
                             <FileUploader
                                 accept="image/*"
                                 name="recipeImage"
@@ -317,29 +295,3 @@ class NewRecipe extends Component {
 // }
 
 export default NewRecipe;
-
-/*  From Textbook App
-postBook = () => {
-    this.preventDefault()
-    this.target.reset()
-    this.setState({
-        complete: false
-    })
-    console.log('courseCode = ' + this.state.courseCode)
-    console.log('courseLevel = ' + this.state.courseLevel)
-    console.log('course = ' + this.state.course)
-    fetch(`/user/${this.state.userID}/books/newBook/${this.state.isbn}/${this.state.condition}/${this.state.teacher}/${this.state.courseCode}/${this.state.course.substr(-3)}/${this.state.price}`, {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }).then(this.setState({
-        submissionStatus: `Post successfully created`
-    }))
-        .catch((ex) => {
-        console.log('parsing failed', ex)
-    })
-    this.props.history.push("/sellerHub")
-}
-*/
