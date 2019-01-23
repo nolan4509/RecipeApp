@@ -6,6 +6,7 @@ import {
     auth,
     provider
 } from '../firebase.js';
+import firebase from '../firebase.js';
 import RecipesPage from './RecipesPage';
 require('firebase/auth');
 
@@ -92,6 +93,15 @@ class Login extends Component {
         })
     }
 
+    rememberUser() {
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+            });
+    }
+
     componentDidMount() {
         // console.log('session storage: ' + sessionStorage.getItem("uid"));
         // console.log(firebase.auth().currentUser.uid);
@@ -129,7 +139,7 @@ class Login extends Component {
                                     </div>
                                     <div className="checkbox">
                                         <label>
-                                            <input type="checkbox" ref="rememberMe" id="rememberMeField" name="rememberMeField"/>
+                                            <input type="checkbox" ref="rememberMe" id="rememberMeField" name="rememberMeField" onClick={this.rememberUser}/>
                                         </label>
                                     </div>
                                     <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In with Google Account</button>
