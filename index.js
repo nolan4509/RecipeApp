@@ -408,6 +408,9 @@ app.put('/recipes/update/:recipeID', function(req, res) {
             selectedRecipe.glutenFree = false;
         }
     }
+    if (req.body.recipeImageURL != null) {
+        selectedRecipe.imageURL = req.body.recipeImageURL;
+    }
     recipeArray[rcp] = selectedRecipe;
     database.child('Recipes/' + `${selectedRecipe.recipeID}`).update({
         recipe: selectedRecipe
