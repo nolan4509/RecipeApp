@@ -408,9 +408,6 @@ app.put('/recipes/update/:recipeID', function(req, res) {
             selectedRecipe.glutenFree = false;
         }
     }
-    if (req.body.recipeImageURL != null) {
-        selectedRecipe.imageURL = req.body.recipeImageURL;
-    }
     recipeArray[rcp] = selectedRecipe;
     database.child('Recipes/' + `${selectedRecipe.recipeID}`).update({
         recipe: selectedRecipe
@@ -474,9 +471,37 @@ app.get('/user/:userID', function(req, res) {
 });
 //   TODO
 //ADD RECIPE TO USERS FAVORITES
-//app.put('users/favorites/:userID/:recipeID', function(req, res) {});
+app.put('/users/favorites/:userID/:recipeID', function(req, res) {
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            usr.favoriteRecipes.push(req.params.recipeID);
+            userDatabase.child(`${usr.id}`).update({
+                userinfo: usr
+            });
+            res.send('recipe id: ' + req.params.recipeID + ' added to favorites!');
+            return;
+        }
+    });
+    res.send('User not found');
+});
 //REMOVE RECIPE FROM USERS FAVORITES
-//app.delete('users/favorites/remove/:userID/:recipeID', function(req, res) {});
+app.delete('/users/favorites/remove/:userID/:recipeID', function(req, res) {
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            for (var i = 0; i < usr.favoriteRecipes.length; i++) {
+                if (usr.favoriteRecipes[i] == req.params.recipeID) {
+                    usr.favoriteRecipes.splice(i, 1);
+                    userDatabase.child(`${usr.id}`).update({
+                        userinfo: usr
+                    });
+                    res.send('Done!');
+                    return;
+                }
+            }
+        }
+    });
+    res.send('User not found');
+});
 //VIEW ALL FAVORITES FOR A USER
 //app.get('recipes/favorites/:userID' ,function(req, res) {});
 
