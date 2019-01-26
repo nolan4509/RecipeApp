@@ -1,34 +1,8 @@
-/*
 import React, {
     Component
 } from 'react';
-import AllRecipes from '../Components/AllRecipes/AllRecipes';
-
-class AllRecipesPage extends Component {
-    viewRecipe(id) {
-        this.props.onView(id);
-    }
-
-    componentDidMount() {
-        console.log('AllRecipesPage component mounted --');
-    }
-
-    render() {
-        return (<div className = "bodyStyle">
-            <br/>
-            <AllRecipes recipes={this.state.recipes} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)}/>
-        </div>);
-    }
-}
-
-export default AllRecipesPage;
-*/
-
-import React, {
-    Component
-} from 'react';
-// import AllRecipes from '../Components/AllRecipes/AllRecipes';
 import Recipes from '../Components/Recipes/Recipes';
+import './login.css';
 
 class AllRecipesPage extends Component {
 
@@ -43,6 +17,7 @@ class AllRecipesPage extends Component {
     }
 
     getRecipes() {
+        console.log("please");
         fetch(`/recipes`, {
             method: 'GET',
             headers: {
@@ -75,19 +50,17 @@ class AllRecipesPage extends Component {
         }).catch((error) => {
             console.log('Error: ' + error);
         });
-        // console.log(this);
-        this.props.history.push('/recipes/view');
     }
 
     componentDidMount() {
-        console.log('AllRecipesPage component mounted --');
         this.getRecipes();
     }
 
     render() {
-        return (<div className = "bodyStyle">
+        return (<div className = "bodyStyle backgroundStyle">
             <br/>
             <Recipes recipes={this.state.recipes} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)}/>
+            {/* <Recipes recipes={this.state.recipes} /> */}
         </div>);
     }
 }

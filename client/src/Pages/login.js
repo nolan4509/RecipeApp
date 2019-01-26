@@ -96,9 +96,7 @@ class Login extends Component {
     rememberUser() {
         auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
             .catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
+                console.log('Error inside login.js-rememberUser(): ' + error.code + ' ' + error.message);
             });
     }
 
@@ -124,7 +122,7 @@ class Login extends Component {
                                 <RecipesPage history={this.props.history} currentUserID={auth.currentUser.uid}/>
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
-                        : <div>
+                        : 
                         <div className="backgroundStyle">
                             <div className="container">
                                 <form className="box">
@@ -144,8 +142,6 @@ class Login extends Component {
                                     </div>
                                     <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In with Google Account</button>
                                 </form>
-                            </div>
-                                {/* Add another form here, consisting of just a button(?) that onClick -> googleLogin, and make 'login' for user&password */}
                             </div>
                         </div>
                 }</div>
