@@ -13,7 +13,6 @@ class RecipesPage extends Component {
         this.handleDeleteRecipe = this.handleDeleteRecipe.bind(this);
         this.state = {
             userID: '',
-            recipesLoaded: 'False',
             recipes: [],
             currentRecipe: false
         }
@@ -29,7 +28,6 @@ class RecipesPage extends Component {
         }).then(res => res.json()).then((result) => {
             // console.log('Success: ' + result);
             this.setState({
-                recipesLoaded: 'True',
                 recipes: result
             })
         }).catch((error) => {
