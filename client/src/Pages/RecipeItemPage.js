@@ -4,7 +4,7 @@ import React, {
 import Recipes from '../Components/Recipes/Recipes';
 import './styles.css';
 
-class SingleRecipePage extends Component {
+class RecipeItemPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,4 +32,4 @@ class SingleRecipePage extends Component {
 
 }
 
-export default SingleRecipePage;
+export default RecipeItemPage;

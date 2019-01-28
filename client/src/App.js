@@ -7,8 +7,7 @@ import Login from './Pages/login';
 import NewRecipePage from './Pages/NewRecipePage';
 // import RecipesPage from './Pages/RecipesPage';
 import AllRecipesPage from './Pages/AllRecipesPage';
-import SingleRecipePage from './Pages/SingleRecipePage';
-import RecipePopUpView from './Components/RecipePopUpView/RecipePopUpView';
+import RecipeItemPage from './Pages/RecipeItemPage';
 import NavBar from './Components/NavBar/NavBar';
 
 const App = () => (<main>
@@ -17,9 +16,8 @@ const App = () => (<main>
         <Route exact={true} path='/' component={Login}/>
         <Route path='/NewRecipe' component={NewRecipePage}/>
         {/* <Route path='/Recipes' component={RecipesPage}/> */}
-        <Route path='/Recipe' component={SingleRecipePage}/>
+        <Route path='/Recipe' component={RecipeItemPage}/>
         <Route path='/Recipes/all' component={AllRecipesPage}/>
-        <Route path='/Recipes/view' component={RecipePopUpView}/>
     </Switch>
 </main>)
 
