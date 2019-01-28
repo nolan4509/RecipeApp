@@ -9,10 +9,8 @@ class RecipeItem extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            image: '',
             visible: false
         }
-        this.getImage('image');
     }
 
     openModal() {
@@ -27,34 +25,31 @@ class RecipeItem extends Component {
         });
     }
 
-    getImage(image) {
-        let {
-            state
-        } = this;
-        this.state[image] = this.props.recipe.imageURL;
-        this.setState(state);
-        // this.setState({
-        //     image: this.props.recipe.imageURL
-        // });
-    }
-
     deleteRecipe(id) {
         this.props.onDelete(id);
+    }
+
+    viewRecipe(id) {
+        this.props.onView(id);
+    }
+
+    viewFullRecipePage() {
+        this.props.history.push('/Recipe');
     }
 
     render() {
         return (<div className="flowContainer">
             <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
-                <img src={ this.state.image } alt="recipeImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                <img src={ this.props.recipe.imageURL } alt="recipeImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
-                <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
-                {/* <button className="recipeItemRemoveButton" onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}> */}
-                    <span className="forFlipButton front">Delete</span>
-                    <span className="forFlipButton center"></span>
-                    <span className="forFlipButton back">Recipe</span>
-                </button>
+                {/* <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}> */}
+                {/* <button className="recipeItemRemoveButton" onClick=c}> */}
+                    {/* <span className="forFlipButton front">Delete</span> */}
+                    {/* <span className="forFlipButton center"></span> */}
+                    {/* <span className="forFlipButton back">Recipe</span> */}
+                {/* </button> */}
                 <div className="coolCheckbox">
                     <input type="checkbox" name="Test"/>
                 </div>
@@ -98,9 +93,11 @@ class RecipeItem extends Component {
                                         <p>{this.props.recipe.ingredients}</p>
                                     </div>
                                 </div>
+                                <button onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}>
+                                    Full View of Recipe
+                                </button>
                             </div>
                         </div>
-                        <a href="javascript:void(0);" onClick={() => this.closeModal()}>Close</a>
                     </div>
                 </Modal>
             </section>

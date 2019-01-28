@@ -12,7 +12,6 @@ class AllRecipesPage extends Component {
         this.state = {
             recipesLoaded: 'False',
             recipes: [],
-            currentRecipe: 'Test'
         }
     }
 
@@ -36,20 +35,7 @@ class AllRecipesPage extends Component {
     }
 
     handleViewRecipe(id) {
-        fetch(`/recipes/${id}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json()).then((result) => {
-            console.log('Success: ' + result);
-            // this.setState({
-            //     currentRecipe: result
-            // })
-        }).catch((error) => {
-            console.log('Error: ' + error);
-        });
+        this.props.history.replace(`/Recipe/${id}`);
     }
 
     componentDidMount() {
@@ -60,7 +46,6 @@ class AllRecipesPage extends Component {
         return (<div className = "bodyStyle backgroundStyle">
             <br/>
             <Recipes recipes={this.state.recipes} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)}/>
-            {/* <Recipes recipes={this.state.recipes} /> */}
         </div>);
     }
 }

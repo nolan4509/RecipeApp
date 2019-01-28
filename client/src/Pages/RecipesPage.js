@@ -2,13 +2,13 @@ import React, {
     Component
 } from 'react';
 import Recipes from '../Components/Recipes/Recipes';
-import RecipePopUpView from '../Components/RecipePopUpView/RecipePopUpView';
 import './styles.css';
 
 class RecipesPage extends Component {
 
     constructor(props) {
         super(props)
+        this.handleViewRecipe = this.handleViewRecipe.bind(this);
         this.handleDeleteRecipe = this.handleDeleteRecipe.bind(this);
         this.state = {
             userID: '',
@@ -24,7 +24,7 @@ class RecipesPage extends Component {
                 'Content-Type': 'application/json'
             }
         }).then(res => res.json()).then((result) => {
-            // console.log('Success: ' + result);
+            console.log('Success: ' + result);
             this.setState({
                 recipes: result
             })
@@ -34,8 +34,6 @@ class RecipesPage extends Component {
     }
 
     componentDidMount() {
-        // console.log('in recipespage.js: ');
-        // console.log(this.props.currentUserID);
         this.setState({
             userID: this.props.currentUserID
         })
@@ -63,10 +61,14 @@ class RecipesPage extends Component {
         });
     }
 
+    handleViewRecipe(id) {
+        this.props.history.push(`/Recipe/${id}`);
+    }
+
     render() {
         return (<div className = "bodyStyle">
             <br/>
-            <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)} currentUserID={this.props.currentUserID}/>
+            <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)} currentUserID={this.props.currentUserID}/>
         </div>);
     }
 }
