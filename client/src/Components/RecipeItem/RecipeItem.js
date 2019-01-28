@@ -1,6 +1,7 @@
 import React, {
     Component
 } from 'react';
+import Modal from 'react-awesome-modal';
 import './RecipeItem.css';
 
 class RecipeItem extends Component {
@@ -8,11 +9,23 @@ class RecipeItem extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            image: ''
+            image: '',
+            visible: false
         }
         this.getImage('image');
     }
 
+    openModal() {
+        this.setState({
+            visible: true
+        });
+    }
+
+    closeModal() {
+        this.setState({
+            visible: false
+        });
+    }
 
     getImage(image) {
         let {
@@ -29,13 +42,9 @@ class RecipeItem extends Component {
         this.props.onDelete(id);
     }
 
-    viewRecipe(id) {
-        this.props.onView(id);
-    }
-
     render() {
         return (<div className="flowContainer">
-            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={this.viewRecipe.bind(this, this.props.recipe.recipeID)}>
+            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
                 <img src={ this.state.image } alt="recipeImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
@@ -52,6 +61,49 @@ class RecipeItem extends Component {
                 <br/>
                 <br/>
             </div>
+            <section>
+                <Modal visible={this.state.visible} width="800" height="600" effect="fadeInUp" onClickAway={() => this.closeModal()}>
+                    <div>
+                        <div className="flowContainer">
+                            <div className="notebookPage">
+                                <div className="popupRecipeFormContent">
+                                    <div className="popupRecipeTitleField">
+                                        <h1>{this.props.recipe.name}</h1>
+                                    </div>
+                                    <div className="popupRecipeCookTimeField">
+                                        <p>{this.props.recipe.cookTime}</p>
+                                    </div>
+                                    <div className="popupRecipeDifficultyField">
+                                        <p>{this.props.recipe.difficulty}</p>
+                                    </div>
+                                    <div className="popupRecipeCuisineField">
+                                        <p>{this.props.recipe.cuisine}</p>
+                                    </div>
+                                    <div className="popupRecipeCategoryField">
+                                        <p>{this.props.recipe.category}</p>
+                                    </div>
+                                    <div className="popupRecipeVegetarianField">
+                                        <p>{this.props.recipe.vegetarian}</p>
+                                    </div>
+                                    <div className="popupRecipeVeganField">
+                                        <p>{this.props.recipe.vegan}</p>
+                                    </div>
+                                    <div className="popupRecipeGlutenFreeField">
+                                        <p>{this.props.recipe.glutenFree}</p>
+                                    </div>
+                                    <div className="popupRecipeInstructionsField">
+                                        <p>{this.props.recipe.instructions}</p>
+                                    </div>
+                                    <div className="popupRecipeIngredientsField">
+                                        <p>{this.props.recipe.ingredients}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" onClick={() => this.closeModal()}>Close</a>
+                    </div>
+                </Modal>
+            </section>
         </div>);
     }
 }

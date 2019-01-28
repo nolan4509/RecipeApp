@@ -9,12 +9,10 @@ class RecipesPage extends Component {
 
     constructor(props) {
         super(props)
-        this.handleViewRecipe = this.handleViewRecipe.bind(this);
         this.handleDeleteRecipe = this.handleDeleteRecipe.bind(this);
         this.state = {
             userID: '',
             recipes: [],
-            currentRecipe: false
         }
     }
 
@@ -65,36 +63,10 @@ class RecipesPage extends Component {
         });
     }
 
-    handleViewRecipe(id) {
-        fetch(`/recipes/${id}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json()).then((result) => {
-            console.log('Success: ' + result);
-            this.setState({
-                currentRecipe: true
-            })
-        }).catch((error) => {
-            console.log('Error: ' + error);
-        });
-    }
-
     render() {
-        let recipeItems;
-        if (this.state.recipes) {
-            recipeItems = this.state.recipes.map(recipe => {
-                return (<RecipePopUpView key={recipe.name} recipe={recipe}/>);
-            });
-        }
         return (<div className = "bodyStyle">
             <br/>
-            <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)} currentUserID={this.props.currentUserID}/>
-            {
-                this.state.currentRecipe ? <div className="row rowSpacing">{recipeItems}</div> : <div/>
-            }
+            <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)} currentUserID={this.props.currentUserID}/>
         </div>);
     }
 }
