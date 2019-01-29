@@ -128,6 +128,7 @@ class RecipeItem extends Component {
                                     <div className="popupRecipeTitleField">
                                         <h1>{this.props.recipe.name}</h1>
                                     </div>
+                                    <img src={this.props.recipe.imageURL} alt={this.props.recipe.name} width='200' height='200'/>
                                     <div className="popupRecipeCookTimeField">
                                         <p>{this.props.recipe.cookTime}</p>
                                     </div>
