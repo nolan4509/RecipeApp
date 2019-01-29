@@ -8,9 +8,61 @@ class RecipeItem extends Component {
 
     constructor(props) {
         super(props)
+        this.handleCheckbox = this.handleCheckbox.bind(this);
         this.state = {
+            isFavorite: true,
             visible: false
         }
+        this.setState({
+            isFavorite: this.checkIfFavorite(this.props.recipe.recipeID)
+        });
+    }
+
+    checkIfFavorite(recipeID) {
+        fetch(`/users/favorites/check/${this.props.currentUserID}/${recipeID}`, {}).then(res => res.json()).then((result) => {
+            console.log('checkIfFavorite success! response: ' + result);
+            if (result == true) {
+                this.setState({
+                    isFavorite: true
+                });
+            }
+            return result;
+        }).catch((error) => {
+            console.log('Error: ' + error);
+            return false;
+        });
+    }
+
+    addFavorite() {
+        fetch(`/users/favorites/${this.props.currentUserID}/${this.props.recipe.recipeID}`, {
+            method: 'put',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            this.setState({
+                isFavorite: true
+            });
+        }).catch((error) => {
+            console.log('Error: ' + error);
+        });
+    }
+
+    removeFavorite() {
+        fetch(`/users/favorites/remove/${this.props.currentUserID}/${this.props.recipe.recipeID}`, {
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            this.setState({
+                isFavorite: false
+            });
+        }).catch((error) => {
+            console.log('Error: ' + error);
+        });
     }
 
     openModal() {
@@ -25,6 +77,12 @@ class RecipeItem extends Component {
         });
     }
 
+    handleCheckbox(e) {
+        console.log('checkbox state: ' + this.state.isFavorite);
+        this.addFavorite();
+
+    }
+
     deleteRecipe(id) {
         this.props.onDelete(id);
     }
@@ -35,6 +93,11 @@ class RecipeItem extends Component {
 
     viewFullRecipePage() {
         this.props.history.push('/Recipe');
+    }
+
+    componentDidMount() {
+
+        console.log('in componentDidMount state: ' + this.state.isFavorite);
     }
 
     render() {
@@ -50,8 +113,8 @@ class RecipeItem extends Component {
                     {/* <span className="forFlipButton center"></span> */}
                     {/* <span className="forFlipButton back">Recipe</span> */}
                 {/* </button> */}
-                <div className="coolCheckbox">
-                    <input type="checkbox" name="Test"/>
+                <div className="coolCheckboxiug">
+                    <input type="checkbox" name="FavoriteButton" value={this.state.isFavorite} onChange={this.handleCheckbox}/>
                 </div>
                 <br/>
                 <br/>

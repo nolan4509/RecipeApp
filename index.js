@@ -474,6 +474,12 @@ app.get('/user/:userID', function(req, res) {
 app.put('/users/favorites/:userID/:recipeID', function(req, res) {
     userArray.map(usr => {
         if (usr.id == req.params.userID) {
+            usr.favoriteRecipes.map(rcp => {
+                if (rcp == req.params.recipeID) {
+                    res.send('Recipe ' + req.params.recipeID + ' is already in favorites');
+                    return;
+                }
+            });
             usr.favoriteRecipes.push(req.params.recipeID);
             userDatabase.child(`${usr.id}`).update({
                 userinfo: usr
@@ -505,6 +511,20 @@ app.delete('/users/favorites/remove/:userID/:recipeID', function(req, res) {
 //VIEW ALL FAVORITES FOR A USER
 //app.get('recipes/favorites/:userID' ,function(req, res) {});
 
+//CHECK IF A GIVEN ID IS IN A USER'S FAVORITES
+app.get('/users/favorites/check/:userID/:recipeID', function(req, res) {
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            for (var i = 0; i < usr.favoriteRecipes.length; i++) {
+                if (usr.favoriteRecipes[i] == req.params.recipeID) {
+                    res.send(true);
+                    return;
+                }
+            }
+        }
+    });
+    res.send(false);
+});
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('/', (req, res) => {
