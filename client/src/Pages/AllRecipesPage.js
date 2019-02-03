@@ -30,7 +30,7 @@ class AllRecipesPage extends Component {
                 recipes: result
             })
         }).catch((error) => {
-            console.log('In AllRecipes.js -- Error: ' + error);
+            console.log('In AllRecipesPage.js -- Error: ' + error);
         });
     }
 

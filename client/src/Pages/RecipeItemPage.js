@@ -1,7 +1,7 @@
 import React, {
     Component
 } from 'react';
-import Recipes from '../Components/Recipes/Recipes';
+// import Recipes from '../Components/Recipes/Recipes';
 import './styles.css';
 
 class RecipeItemPage extends Component {

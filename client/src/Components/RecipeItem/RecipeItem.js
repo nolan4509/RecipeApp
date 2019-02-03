@@ -18,7 +18,7 @@ class RecipeItem extends Component {
     checkIfFavorite(recipeID) {
         fetch(`/users/favorites/check/${this.props.currentUserID}/${recipeID}`, {}).then(res => res.json()).then((result) => {
             console.log('checkIfFavorite success! response: ' + result);
-            if (result == true) {
+            if (result === true) {
                 this.setState({
                     isFavorite: true
                 });
