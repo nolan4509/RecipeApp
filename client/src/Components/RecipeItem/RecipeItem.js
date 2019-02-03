@@ -10,7 +10,7 @@ class RecipeItem extends Component {
         super(props)
         this.handleCheckbox = this.handleCheckbox.bind(this);
         this.state = {
-            isFavorite: true,
+            isFavorite: false,
             visible: false
         }
     }
