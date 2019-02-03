@@ -88,7 +88,7 @@ let recipeDatabase = database.child('Recipes');
 
 function findRecipeById(id) {
     recipeArray.map(rcp => {
-        if (id == rcp.recipeID) {
+        if (id === rcp.recipeID) {
             return rcp;
         }
     });
@@ -329,18 +329,22 @@ app.get('/recipes/favorites/:userID', function(req, res) {
     }
     console.log(user.favoriteRecipes);
     user.favoriteRecipes.map(favoriteID => {
-            let frcp = findRecipeById(favoriteID);
-            console.log(favoriteID);
-            console.log('found!');
-            retFavoriteRecipes.push(frcp);
-        }
+        console.log(favoriteID);
+        recipeArray.map(rcp => {
+            if (favoriteID == rcp.recipeID) {
+                console.log('found!');
+                console.log(rcp);
+                retFavoriteRecipes.push(rcp);
+            }
+        });
     });
 
-if (retFavoriteRecipes === []) {
-    res.send('No favorites found for requested user id');
-    return;
-}
-res.send(JSON.stringify(retFavoriteRecipes));
+
+    if (retFavoriteRecipes === []) {
+        res.send('No favorites found for requested user id');
+        return;
+    }
+    res.send(JSON.stringify(retFavoriteRecipes));
 });
 
 
