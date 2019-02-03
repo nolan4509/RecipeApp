@@ -23,11 +23,18 @@ app.use(express.static(path.join(__dirname, '/client/build')));
         ~215: GET /newRecipe'
         ~220: GET /recipes/:recipeID'
         ~240: GET /recipes/user/:userID'
-        ~270: POST /add/user/:userName/:userID/:email'
-        ~285: POST /newRecipe'
-        ~355: PUT /recipes/update/:recipeID'
-        ~425: DELETE /recipes/remove/:recipeID'
-        ~450  GET /recipes'
+        ~270: GET /recipes'
+        ~280: GET /user/:userID'
+        ~290: GET /users/favorites/check/:userID/:recipeID
+        ~305: GET /recipes/favorites/:userID
+        ~315: POST /add/user/:userName/:userID/:email'
+        ~330: POST /newRecipe'
+        ~400: PUT /recipes/update/:recipeID'
+        ~465: PUT /users/favorites/:userID/:recipeID
+        ~490: DELETE /recipes/remove/:recipeID'
+        ~515: DELETE /users/favorites/remove/:userID/:recipeID
+
+        ~545  GET /recipes'
 */
 
 
@@ -261,6 +268,47 @@ app.get('/recipes/user/:userID', function(req, res) {
     res.send(JSON.stringify(retRecipes));
 });
 
+//GET ALL RECIPES
+app.get('/recipes', function(req, res) {
+    console.log('Inside app.get(/recipes) --');
+    retRecipes = [];
+    recipeArray.map(rcp => {
+        retRecipes.push(rcp);
+    });
+    res.send(JSON.stringify(retRecipes));
+});
+
+// GET USER BY USERID
+app.get('/user/:userID', function(req, res) {
+    // console.log('in index...' + req.params.userID);
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            res.send(JSON.stringify(usr));
+            return;
+        }
+    });
+    // console.log('sending NULL...');
+    res.send('User Not Found');
+});
+
+//CHECK IF A GIVEN ID IS IN A USER'S FAVORITES
+app.get('/users/favorites/check/:userID/:recipeID', function(req, res) {
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            for (var i = 0; i < usr.favoriteRecipes.length; i++) {
+                if (usr.favoriteRecipes[i] == req.params.recipeID) {
+                    res.send(true);
+                    return;
+                }
+            }
+        }
+    });
+    res.send(false);
+});
+
+//VIEW ALL FAVORITES FOR A USER
+//app.get('recipes/favorites/:userID' ,function(req, res) {});
+
 
 /*--------------------------------------------------------------------------*/
 /*----------------------------- POST REQUESTS ------------------------------*/
@@ -415,6 +463,28 @@ app.put('/recipes/update/:recipeID', function(req, res) {
     res.send(selectedRecipe);
 });
 
+//   TODO
+//ADD RECIPE TO USERS FAVORITES
+app.put('/users/favorites/:userID/:recipeID', function(req, res) {
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            usr.favoriteRecipes.map(rcp => {
+                if (rcp == req.params.recipeID) {
+                    res.send('Recipe ' + req.params.recipeID + ' is already in favorites');
+                    return;
+                }
+            });
+            usr.favoriteRecipes.push(req.params.recipeID);
+            userDatabase.child(`${usr.id}`).update({
+                userinfo: usr
+            });
+            res.send('recipe id: ' + req.params.recipeID + ' added to favorites!');
+            return;
+        }
+    });
+    res.send('User not found');
+});
+
 
 /*--------------------------------------------------------------------------*/
 /*---------------------------- DELETE REQUESTS -----------------------------*/
@@ -443,53 +513,6 @@ app.delete('/recipes/remove/:recipeID', function(req, res) {
     // Removing the recipe from the user's recipePosts
 });
 
-/*--------------------------------------------------------------------------*/
-/*------------------------------ TO BE SORTED ------------------------------*/
-/*--------------------------------------------------------------------------*/
-
-
-//GET ALL RECIPES
-app.get('/recipes', function(req, res) {
-    console.log('Inside app.get(/recipes) --');
-    retRecipes = [];
-    recipeArray.map(rcp => {
-        retRecipes.push(rcp);
-    });
-    res.send(JSON.stringify(retRecipes));
-});
-
-app.get('/user/:userID', function(req, res) {
-    // console.log('in index...' + req.params.userID);
-    userArray.map(usr => {
-        if (usr.id == req.params.userID) {
-            res.send(JSON.stringify(usr));
-            return;
-        }
-    });
-    // console.log('sending NULL...');
-    res.send('User Not Found');
-});
-//   TODO
-//ADD RECIPE TO USERS FAVORITES
-app.put('/users/favorites/:userID/:recipeID', function(req, res) {
-    userArray.map(usr => {
-        if (usr.id == req.params.userID) {
-            usr.favoriteRecipes.map(rcp => {
-                if (rcp == req.params.recipeID) {
-                    res.send('Recipe ' + req.params.recipeID + ' is already in favorites');
-                    return;
-                }
-            });
-            usr.favoriteRecipes.push(req.params.recipeID);
-            userDatabase.child(`${usr.id}`).update({
-                userinfo: usr
-            });
-            res.send('recipe id: ' + req.params.recipeID + ' added to favorites!');
-            return;
-        }
-    });
-    res.send('User not found');
-});
 //REMOVE RECIPE FROM USERS FAVORITES
 app.delete('/users/favorites/remove/:userID/:recipeID', function(req, res) {
     userArray.map(usr => {
@@ -508,23 +531,14 @@ app.delete('/users/favorites/remove/:userID/:recipeID', function(req, res) {
     });
     res.send('User not found');
 });
-//VIEW ALL FAVORITES FOR A USER
-//app.get('recipes/favorites/:userID' ,function(req, res) {});
 
-//CHECK IF A GIVEN ID IS IN A USER'S FAVORITES
-app.get('/users/favorites/check/:userID/:recipeID', function(req, res) {
-    userArray.map(usr => {
-        if (usr.id == req.params.userID) {
-            for (var i = 0; i < usr.favoriteRecipes.length; i++) {
-                if (usr.favoriteRecipes[i] == req.params.recipeID) {
-                    res.send(true);
-                    return;
-                }
-            }
-        }
-    });
-    res.send(false);
-});
+
+
+/*--------------------------------------------------------------------------*/
+/*------------------------------ TO BE SORTED ------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('/', (req, res) => {
