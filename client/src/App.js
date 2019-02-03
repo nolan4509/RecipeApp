@@ -6,6 +6,7 @@ import {
 import Login from './Pages/login';
 import NewRecipePage from './Pages/NewRecipePage';
 import AllRecipesPage from './Pages/AllRecipesPage';
+import FavoriteRecipesPage from './Pages/FavoriteRecipesPage';
 import RecipeItemPage from './Pages/RecipeItemPage';
 import NavBar from './Components/NavBar/NavBar';
 
@@ -16,6 +17,7 @@ const App = () => (<main>
         <Route path='/NewRecipe' component={NewRecipePage}/>
         <Route path='/Recipe/:recipeID' component={RecipeItemPage}/>
         <Route path='/Recipes/all' component={AllRecipesPage}/>
+        <Route path='/Recipes/favorites' component={FavoriteRecipesPage}/>
     </Switch>
 </main>)
 
