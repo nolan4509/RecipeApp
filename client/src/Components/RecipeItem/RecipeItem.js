@@ -112,18 +112,17 @@ class RecipeItem extends Component {
 
     render() {
             return (<div className="flowContainer">
-            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow">
-            {/* <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}> */}
+            {/* <div className="border border-warning rounded homepage-recipe-tile rainbowShadow"> */}
+            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
                 <img src={ this.props.recipe.imageURL } alt="recipeImage" className="img-thumbnail mx-auto d-block recipeImage" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
-                {/* <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}> */}
-                {/* <button className="recipeItemRemoveButton" onClick=c}> */}
-                    {/* <span className="forFlipButton front">Delete</span> */}
-                    {/* <span className="forFlipButton center"></span> */}
-                    {/* <span className="forFlipButton back">Recipe</span> */}
-                {/* </button> */}
+                <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
+                    <span className="forFlipButton front">Delete</span>
+                    <span className="forFlipButton center"></span>
+                    <span className="forFlipButton back">Recipe</span>
+                </button>
                 <div className="coolCheckboxiug">
                     <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>
                 </div>

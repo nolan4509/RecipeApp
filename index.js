@@ -194,7 +194,7 @@ app.use(myParser.urlencoded({ // to support URL-encoded bodies
 }));
 app.use(myParser.json());
 //test data
-let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net', []);
+let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net', [], []);
 let userArray = [];
 userArray[0] = testUser;
 let testRecipe = new Recipe(1, 'John Smith', 'Spaghetti and Meatballs', 'Dinner', 'Italian', 'Beginner', 'Here are a bunch of ingredients', '(1) Form meat into balls\n(2) Cook spaghetti\n(3) Slap it all together', 30, false, false, false, 5);
@@ -302,10 +302,12 @@ app.get('/user/:userID', function(req, res) {
 app.get('/users/favorites/check/:userID/:recipeID', function(req, res) {
     userArray.map(usr => {
         if (usr.id == req.params.userID) {
-            for (var i = 0; i < usr.favoriteRecipes.length; i++) {
-                if (usr.favoriteRecipes[i] == req.params.recipeID) {
-                    res.send(true);
-                    return;
+            if (usr.favoriteRecipes) {
+                for (var i = 0; i < usr.favoriteRecipes.length; i++) {
+                    if (usr.favoriteRecipes[i] == req.params.recipeID) {
+                        res.send(true);
+                        return;
+                    }
                 }
             }
         }
@@ -358,7 +360,7 @@ app.post('/add/user/:userName/:userID/:email', function(req, res) {
     let name = String(req.params.userName);
     let email = String(req.params.email);
 
-    userArray[userArray.length] = new User(id, name, email, [], []);
+    userArray[userArray.length] = new User(id, name, email, [], [0]);
     database.child('Users/' + `${id}`).set({ //store into firebase
         userinfo: userArray[userArray.length - 1]
     });
@@ -405,7 +407,7 @@ app.post('/newRecipe', function(req, res) {
     // console.log(recipeArray[recipeArray.length - 1].recipeID);
     // console.log(recipeArray + ' ' + recipeArray.length);
     //Careful with below...might prove to contain an error if recipeArray empty
-
+    console.log(user);
     let recipeIndex = recipeArray[recipeArray.length - 1].recipeID + 1; //add 1 to most recent recipe so all recipeIds are unique
     recipeArray[recipeArray.length] = new Recipe(recipeIndex, authorID, recipeTitle, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, imageURL);
 
@@ -418,6 +420,7 @@ app.post('/newRecipe', function(req, res) {
     database.child('Recipes/' + `${recipeIndex}`).set({
         recipe: recipeArray[recipeArray.length - 1]
     });
+    console.log(user);
     database.child('Users/' + `${user.id}`).update({
         userinfo: user
     });
