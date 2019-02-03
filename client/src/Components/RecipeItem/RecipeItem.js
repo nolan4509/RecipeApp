@@ -79,8 +79,11 @@ class RecipeItem extends Component {
 
     handleCheckbox(e) {
         console.log('checkbox state: ' + this.state.isFavorite);
-        this.addFavorite();
-
+        if (this.state.isFavorite) {
+            this.removeFavorite();
+        } else {
+            this.addFavorite();
+        }
     }
 
     deleteRecipe(id) {
@@ -104,7 +107,7 @@ class RecipeItem extends Component {
         return (<div className="flowContainer">
             <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
-                <img src={ this.props.recipe.imageURL } alt="recipeImage" className="img-thumbnail mx-auto d-block" width="200" height="200"/>
+                <img src={ this.props.recipe.imageURL } alt="recipeImage" className="img-thumbnail mx-auto d-block recipeImage" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
                 {/* <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}> */}
