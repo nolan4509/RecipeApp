@@ -13,9 +13,6 @@ class RecipeItem extends Component {
             isFavorite: true,
             visible: false
         }
-        this.setState({
-            isFavorite: this.checkIfFavorite(this.props.recipe.recipeID)
-        });
     }
 
     checkIfFavorite(recipeID) {
@@ -80,9 +77,12 @@ class RecipeItem extends Component {
     handleCheckbox(e) {
         console.log('checkbox state: ' + this.state.isFavorite);
         if (this.state.isFavorite) {
+            console.log('removing');
             this.removeFavorite();
         } else {
+            console.log('adding');
             this.addFavorite();
+
         }
     }
 
@@ -98,14 +98,22 @@ class RecipeItem extends Component {
         this.props.history.push('/Recipe');
     }
 
+    componentWillMount() {
+        this.setState({
+            isFavorite: this.checkIfFavorite(this.props.recipe.recipeID)
+        });
+        console.log('in componentWillMount state: ' + this.state.isFavorite);
+    }
+
     componentDidMount() {
 
         console.log('in componentDidMount state: ' + this.state.isFavorite);
     }
 
     render() {
-        return (<div className="flowContainer">
-            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
+            return (<div className="flowContainer">
+            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow">
+            {/* <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}> */}
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
                 <img src={ this.props.recipe.imageURL } alt="recipeImage" className="img-thumbnail mx-auto d-block recipeImage" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
@@ -117,7 +125,7 @@ class RecipeItem extends Component {
                     {/* <span className="forFlipButton back">Recipe</span> */}
                 {/* </button> */}
                 <div className="coolCheckboxiug">
-                    <input type="checkbox" name="FavoriteButton" value={this.state.isFavorite} onChange={this.handleCheckbox}/>
+                    <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>
                 </div>
                 <br/>
                 <br/>
