@@ -13,28 +13,27 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 /*
     Contents:
-        ~30:  class Recipe
-        ~50:  class User
-        ~75:  function updateUsers()
-        ~100: function updateRecipes()
-        ~120: function removeRecipe(id)
-        ~140: function removeRecipeFromUser(userID, recipeID)
+        ~45:  class Recipe
+        ~65:  class User
+        ~90:  function findRecipeById()
+        ~100: function updateUsers()
+        ~120: function updateRecipes()
+        ~145: function removeRecipe(id)
+        ~165: function removeRecipeFromUser(userID, recipeID)
 
-        ~215: GET /newRecipe'
-        ~220: GET /recipes/:recipeID'
-        ~240: GET /recipes/user/:userID'
-        ~270: GET /recipes'
-        ~280: GET /user/:userID'
-        ~290: GET /users/favorites/check/:userID/:recipeID
-        ~305: GET /recipes/favorites/:userID
-        ~315: POST /add/user/:userName/:userID/:email'
-        ~330: POST /newRecipe'
-        ~400: PUT /recipes/update/:recipeID'
-        ~465: PUT /users/favorites/:userID/:recipeID
-        ~490: DELETE /recipes/remove/:recipeID'
-        ~515: DELETE /users/favorites/remove/:userID/:recipeID
+        ~230: GET /recipes/:recipeID'
+        ~250: GET /recipes/user/:userID'
+        ~280: GET /recipes'
+        ~290: GET /user/:userID'
+        ~305: GET /users/favorites/check/:userID/:recipeID
+        ~320: GET /recipes/favorites/:userID
+        ~355: POST /add/user/:userName/:userID/:email'
+        ~365: POST /newRecipe'
+        ~435: PUT /recipes/update/:recipeID'
+        ~500: PUT /users/favorites/:userID/:recipeID
+        ~530: DELETE /recipes/remove/:recipeID'
+        ~550: DELETE /users/favorites/remove/:userID/:recipeID
 
-        ~545  GET /recipes'
 */
 
 
@@ -87,6 +86,15 @@ let database = firebase.app().database().ref();
 let userDatabase = database.child('Users');
 let recipeDatabase = database.child('Recipes');
 
+function findRecipeById(id) {
+    recipeArray.map(rcp => {
+        if (id == rcp.recipeID) {
+            return rcp;
+        }
+    });
+    return null;
+}
+
 function updateUsers() { //load users from firebase to userArray
     // console.log('updating users from database...')
     userDatabase.once('value', function(snap) {
@@ -108,15 +116,6 @@ function updateUsers() { //load users from firebase to userArray
         });
     });
     // console.log('done!');
-}
-
-function findRecipeById(id) {
-    recipeArray.map(rcp => {
-        if (id == rcp.recipeID) {
-            return rcp;
-        }
-    });
-    return null;
 }
 
 function updateRecipes() { //load recipes from firebase into recipeArray
@@ -498,7 +497,6 @@ app.put('/recipes/update/:recipeID', function(req, res) {
     res.send(selectedRecipe);
 });
 
-//   TODO
 //ADD RECIPE TO USERS FAVORITES
 app.put('/users/favorites/:userID/:recipeID', function(req, res) {
     userArray.map(usr => {
