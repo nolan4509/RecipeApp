@@ -329,19 +329,18 @@ app.get('/recipes/favorites/:userID', function(req, res) {
     }
     console.log(user.favoriteRecipes);
     user.favoriteRecipes.map(favoriteID => {
-        let frcp = findRecipeById(favoriteID);
-        console.log(favoriteID);
-        if (!frcp === null) {
+            let frcp = findRecipeById(favoriteID);
+            console.log(favoriteID);
             console.log('found!');
             retFavoriteRecipes.push(frcp);
         }
     });
 
-    if (retFavoriteRecipes === []) {
-        res.send('No favorites found for requested user id');
-        return;
-    }
-    res.send(JSON.stringify(retFavoriteRecipes));
+if (retFavoriteRecipes === []) {
+    res.send('No favorites found for requested user id');
+    return;
+}
+res.send(JSON.stringify(retFavoriteRecipes));
 });
 
 
