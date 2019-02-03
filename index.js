@@ -61,12 +61,12 @@ class Recipe {
 }
 
 class User {
-    constructor(id, name, email, recipePosts) {
+    constructor(id, name, email, recipePosts, favoriteRecipes) {
         this.id = id; //String
         this.name = name; //String
         this.email = email; //String
         this.recipePosts = recipePosts; //Store integers of the post IDs they currently own
-        this.favoriteRecipes = []; //Array of RecipePost objects
+        this.favoriteRecipes = favoriteRecipes; //Array of RecipePost objects
     }
 }
 
@@ -99,7 +99,7 @@ function updateUsers() { //load users from firebase to userArray
     // console.log('updating users from database...')
     userDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
-            let userNode = new User(childSnap.val().userinfo.id, childSnap.val().userinfo.name, childSnap.val().userinfo.email, childSnap.val().userinfo.recipePosts);
+            let userNode = new User(childSnap.val().userinfo.id, childSnap.val().userinfo.name, childSnap.val().userinfo.email, childSnap.val().userinfo.recipePosts, childSnap.val().userinfo.favoriteRecipes);
             let newEntry = true;
             for (var usrIndex = 0; usrIndex < userArray.length; usrIndex++) {
                 if (userArray[usrIndex].id == userNode.id) {
@@ -252,7 +252,6 @@ app.get('/recipes/user/:userID', function(req, res) {
     let searchID = String(req.params.userID);
     let user = null;
     retRecipes = [];
-    console.log('User ID: ' + searchID);
     //Search the recipe database for matching user ids
     userArray.map(usr => {
         if (usr.id == searchID) {
@@ -315,7 +314,7 @@ app.get('/users/favorites/check/:userID/:recipeID', function(req, res) {
 });
 
 //VIEW ALL FAVORITES FOR A USER
-app.get('recipes/favorites/:userID', function(req, res) {
+app.get('/recipes/favorites/:userID', function(req, res) {
     let searchID = String(req.params.userID);
     let user = null;
     retFavoriteRecipes = [];
@@ -328,10 +327,12 @@ app.get('recipes/favorites/:userID', function(req, res) {
         res.send("User Not Found.");
         return;
     }
-
+    console.log(user.favoriteRecipes);
     user.favoriteRecipes.map(favoriteID => {
         let frcp = findRecipeById(favoriteID);
-        if (frcp) {
+        console.log(favoriteID);
+        if (!frcp === null) {
+            console.log('found!');
             retFavoriteRecipes.push(frcp);
         }
     });
@@ -354,7 +355,7 @@ app.post('/add/user/:userName/:userID/:email', function(req, res) {
     let name = String(req.params.userName);
     let email = String(req.params.email);
 
-    userArray[userArray.length] = new User(id, name, email, []);
+    userArray[userArray.length] = new User(id, name, email, [], []);
     database.child('Users/' + `${id}`).set({ //store into firebase
         userinfo: userArray[userArray.length - 1]
     });
