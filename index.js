@@ -110,6 +110,15 @@ function updateUsers() { //load users from firebase to userArray
     // console.log('done!');
 }
 
+function findRecipeById(id) {
+    recipeArray.map(rcp => {
+        if (id == rcp.recipeID) {
+            return rcp;
+        }
+    });
+    return null;
+}
+
 function updateRecipes() { //load recipes from firebase into recipeArray
     // console.log('updating recipes from database...');
     recipeDatabase.once('value', function(snap) {
@@ -307,7 +316,33 @@ app.get('/users/favorites/check/:userID/:recipeID', function(req, res) {
 });
 
 //VIEW ALL FAVORITES FOR A USER
-//app.get('recipes/favorites/:userID' ,function(req, res) {});
+app.get('recipes/favorites/:userID', function(req, res) {
+    let searchID = String(req.params.userID);
+    let user = null;
+    retFavoriteRecipes = [];
+    userArray.map(usr => {
+        if (usr.id == searchID) {
+            user = usr;
+        }
+    });
+    if (user === null) {
+        res.send("User Not Found.");
+        return;
+    }
+
+    user.favoriteRecipes.map(favoriteID => {
+        let frcp = findRecipeById(favoriteID);
+        if (frcp) {
+            retFavoriteRecipes.push(frcp);
+        }
+    });
+
+    if (retFavoriteRecipes === []) {
+        res.send('No favorites found for requested user id');
+        return;
+    }
+    res.send(JSON.stringify(retFavoriteRecipes));
+});
 
 
 /*--------------------------------------------------------------------------*/
