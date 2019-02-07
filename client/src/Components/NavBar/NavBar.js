@@ -24,39 +24,28 @@ class NavBar extends Component {
                         <a className="nav-link" href="/NewRecipe">New Recipe</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/Recipes">Favorites</a>
+                        <a className="nav-link" href="/Recipes/favorites">Favorites</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/Recipes">Quick Fix</a>
+                        <a className="nav-link" href="/Recipes/all">All Recipes</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/Recipes">Breakfast</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/Recipes">Lunch</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/Recipes">Dinner</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/Recipes">Desserts</a>
+                        <a className="nav-link" href="/Recipes/quick">Quick Fix</a>
                     </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="/Recipes" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Dropdown
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="/Recipes">Action</a>
-                            <a className="dropdown-item" href="/Recipes">Another action</a>
+                            <a className="dropdown-item" href="/Recipes/breakfast">Breakfast</a>
+                            <a className="dropdown-item" href="/Recipes/lunch">Lunch</a>
+                            <a className="dropdown-item" href="/Recipes/dinner">Dinner</a>
+                            <a className="dropdown-item" href="/Recipes/desserts">Desserts</a>
                             <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="/Recipes">Something else here</a>
+                            <a className="dropdown-item" href="/Recipes/easy">Easy</a>
+                            <a className="dropdown-item" href="/Recipes/medium">Medium</a>
+                            <a className="dropdown-item" href="/Recipes/hard">Hard</a>
                         </div>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/">Login</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/Recipes">Recipes</a>
                     </li>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">

@@ -27,6 +27,11 @@
     text-align: center;
 }
 
+.recipeImage {
+    height: 200px;
+    width: 200px;
+}
+
 .homepage-recipe-tile {
     background-color: #ffc57e;
     position: relative;

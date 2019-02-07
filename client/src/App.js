@@ -3,21 +3,21 @@ import {
     Switch,
     Route
 } from 'react-router-dom';
-import Home from './Pages/home';
 import Login from './Pages/login';
-import newUser from './Pages/newUser';
-import NewRecipe from './Pages/NewRecipePage';
-import Recipes from './Pages/RecipesPage';
-import RecipeView from './Components/RecipeView/RecipeView';
+import NewRecipePage from './Pages/NewRecipePage';
+import AllRecipesPage from './Pages/AllRecipesPage';
+import FavoriteRecipesPage from './Pages/FavoriteRecipesPage';
+import RecipeItemPage from './Pages/RecipeItemPage';
+import NavBar from './Components/NavBar/NavBar';
 
 const App = () => (<main>
+    <NavBar/>
     <Switch>
         <Route exact={true} path='/' component={Login}/>
-        <Route path='/home' component={Home}/>
-        <Route path='/newUser' component={newUser}/>
-        <Route path='/NewRecipe' component={NewRecipe}/>
-        <Route path='/Recipes' component={Recipes}/>
-        <Route path='/Recipes/view' component={RecipeView}/>
+        <Route path='/NewRecipe' component={NewRecipePage}/>
+        <Route path='/Recipe/:recipeID' component={RecipeItemPage}/>
+        <Route path='/Recipes/all' component={AllRecipesPage}/>
+        <Route path='/Recipes/favorites' component={FavoriteRecipesPage}/>
     </Switch>
 </main>)
 

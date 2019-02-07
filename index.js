@@ -13,20 +13,27 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 /*
     Contents:
-        ~30:  class Recipe
-        ~50:  class User
-        ~75:  function updateUsers()
-        ~100: function updateRecipes()
-        ~120: function removeRecipe(id)
-        ~140: function removeRecipeFromUser(userID, recipeID)
+        ~45:  class Recipe
+        ~65:  class User
+        ~90:  function findRecipeById()
+        ~100: function updateUsers()
+        ~120: function updateRecipes()
+        ~145: function removeRecipe(id)
+        ~165: function removeRecipeFromUser(userID, recipeID)
 
-        ~215: GET /newRecipe'
-        ~220: GET /recipes/:recipeID'
-        ~240: GET /recipes/user/:userID'
-        ~270: POST /add/user/:userName/:userID/:email'
-        ~285: POST /newRecipe'
-        ~355: PUT /recipes/update/:recipeID'
-        ~425: DELETE /recipes/remove/:recipeID'
+        ~230: GET /recipes/:recipeID'
+        ~250: GET /recipes/user/:userID'
+        ~280: GET /recipes'
+        ~290: GET /user/:userID'
+        ~305: GET /users/favorites/check/:userID/:recipeID
+        ~320: GET /recipes/favorites/:userID
+        ~355: POST /add/user/:userName/:userID/:email'
+        ~365: POST /newRecipe'
+        ~435: PUT /recipes/update/:recipeID'
+        ~500: PUT /users/favorites/:userID/:recipeID
+        ~530: DELETE /recipes/remove/:recipeID'
+        ~550: DELETE /users/favorites/remove/:userID/:recipeID
+
 */
 
 
@@ -35,7 +42,7 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 //Primary recipe object
 class Recipe {
-    constructor(recipeID, authorID, name, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating) {
+    constructor(recipeID, authorID, name, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, imageURL) {
         this.recipeID = recipeID; //String
         this.authorID = authorID; //String
         this.name = name; //String
@@ -48,17 +55,18 @@ class Recipe {
         this.vegetarian = vegetarian; //Boolean
         this.vegan = vegan; //Boolean
         this.glutenFree = glutenFree; //Boolean
+        this.imageURL = imageURL; //string address of image
         // this.rating = rating; //Object with ratings and comments
     }
 }
 
 class User {
-    constructor(id, name, email, recipePosts) {
+    constructor(id, name, email, recipePosts, favoriteRecipes) {
         this.id = id; //String
         this.name = name; //String
         this.email = email; //String
         this.recipePosts = recipePosts; //Store integers of the post IDs they currently own
-        //this.recipes = []; //Array of RecipePost objects
+        this.favoriteRecipes = favoriteRecipes; //Array of RecipePost objects
     }
 }
 
@@ -78,11 +86,20 @@ let database = firebase.app().database().ref();
 let userDatabase = database.child('Users');
 let recipeDatabase = database.child('Recipes');
 
+function findRecipeById(id) {
+    recipeArray.map(rcp => {
+        if (id === rcp.recipeID) {
+            return rcp;
+        }
+    });
+    return null;
+}
+
 function updateUsers() { //load users from firebase to userArray
     // console.log('updating users from database...')
     userDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
-            let userNode = new User(childSnap.val().userinfo.id, childSnap.val().userinfo.name, childSnap.val().userinfo.email, childSnap.val().userinfo.recipePosts);
+            let userNode = new User(childSnap.val().userinfo.id, childSnap.val().userinfo.name, childSnap.val().userinfo.email, childSnap.val().userinfo.recipePosts, childSnap.val().userinfo.favoriteRecipes);
             let newEntry = true;
             for (var usrIndex = 0; usrIndex < userArray.length; usrIndex++) {
                 if (userArray[usrIndex].id == userNode.id) {
@@ -105,7 +122,7 @@ function updateRecipes() { //load recipes from firebase into recipeArray
     // console.log('updating recipes from database...');
     recipeDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
-            let recipeNode = new Recipe(childSnap.val().recipe.recipeID, childSnap.val().recipe.authorID, childSnap.val().recipe.name, childSnap.val().recipe.category, childSnap.val().recipe.cuisine, childSnap.val().recipe.difficulty, childSnap.val().recipe.ingredients, childSnap.val().recipe.instructions, childSnap.val().recipe.cookTime, childSnap.val().recipe.vegetarian, childSnap.val().recipe.vegan, childSnap.val().recipe.glutenFree, childSnap.val().recipe.rating);
+            let recipeNode = new Recipe(childSnap.val().recipe.recipeID, childSnap.val().recipe.authorID, childSnap.val().recipe.name, childSnap.val().recipe.category, childSnap.val().recipe.cuisine, childSnap.val().recipe.difficulty, childSnap.val().recipe.ingredients, childSnap.val().recipe.instructions, childSnap.val().recipe.cookTime, childSnap.val().recipe.vegetarian, childSnap.val().recipe.vegan, childSnap.val().recipe.glutenFree, childSnap.val().recipe.imageURL);
             let newEntry = true;
             for (var rcpIndex = 0; rcpIndex < recipeArray.length; rcpIndex++) {
                 if (recipeArray[rcpIndex].recipeID == recipeNode.recipeID) {
@@ -177,7 +194,7 @@ app.use(myParser.urlencoded({ // to support URL-encoded bodies
 }));
 app.use(myParser.json());
 //test data
-let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net', []);
+let testUser = new User(8675309, 'Jenny27', 'tommy.tutone@hotmail.net', [], []);
 let userArray = [];
 userArray[0] = testUser;
 let testRecipe = new Recipe(1, 'John Smith', 'Spaghetti and Meatballs', 'Dinner', 'Italian', 'Beginner', 'Here are a bunch of ingredients', '(1) Form meat into balls\n(2) Cook spaghetti\n(3) Slap it all together', 30, false, false, false, 5);
@@ -209,10 +226,6 @@ https://stackoverflow.com/questions/15134199/how-to-split-and-modify-a-string-in
 /*------------------------------ GET REQUESTS ------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-//variable argument test
-app.get('/newRecipe', function(req, res) {
-    res.sendFile(__dirname + '/client/public/NewRecipe.html');
-});
 
 //  GET INDIVIDUAL RECIPE BY USING RECIPE ID
 app.get('/recipes/:recipeID', function(req, res) {
@@ -239,7 +252,6 @@ app.get('/recipes/user/:userID', function(req, res) {
     let searchID = String(req.params.userID);
     let user = null;
     retRecipes = [];
-    console.log('User ID: ' + searchID);
     //Search the recipe database for matching user ids
     userArray.map(usr => {
         if (usr.id == searchID) {
@@ -263,6 +275,80 @@ app.get('/recipes/user/:userID', function(req, res) {
     res.send(JSON.stringify(retRecipes));
 });
 
+//GET ALL RECIPES
+app.get('/recipes', function(req, res) {
+    console.log('Inside app.get(/recipes) --');
+    retRecipes = [];
+    recipeArray.map(rcp => {
+        retRecipes.push(rcp);
+    });
+    res.send(JSON.stringify(retRecipes));
+});
+
+// GET USER BY USERID
+app.get('/user/:userID', function(req, res) {
+    // console.log('in index...' + req.params.userID);
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            res.send(JSON.stringify(usr));
+            return;
+        }
+    });
+    // console.log('sending NULL...');
+    res.send('User Not Found');
+});
+
+//CHECK IF A GIVEN ID IS IN A USER'S FAVORITES
+app.get('/users/favorites/check/:userID/:recipeID', function(req, res) {
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            if (usr.favoriteRecipes) {
+                for (var i = 0; i < usr.favoriteRecipes.length; i++) {
+                    if (usr.favoriteRecipes[i] == req.params.recipeID) {
+                        res.send(true);
+                        return;
+                    }
+                }
+            }
+        }
+    });
+    res.send(false);
+});
+
+//VIEW ALL FAVORITES FOR A USER
+app.get('/recipes/favorites/:userID', function(req, res) {
+    let searchID = String(req.params.userID);
+    let user = null;
+    retFavoriteRecipes = [];
+    userArray.map(usr => {
+        if (usr.id == searchID) {
+            user = usr;
+        }
+    });
+    if (user === null) {
+        res.send("User Not Found.");
+        return;
+    }
+    console.log(user.favoriteRecipes);
+    user.favoriteRecipes.map(favoriteID => {
+        console.log(favoriteID);
+        recipeArray.map(rcp => {
+            if (favoriteID == rcp.recipeID) {
+                console.log('found!');
+                console.log(rcp);
+                retFavoriteRecipes.push(rcp);
+            }
+        });
+    });
+
+
+    if (retFavoriteRecipes === []) {
+        res.send('No favorites found for requested user id');
+        return;
+    }
+    res.send(JSON.stringify(retFavoriteRecipes));
+});
+
 
 /*--------------------------------------------------------------------------*/
 /*----------------------------- POST REQUESTS ------------------------------*/
@@ -274,7 +360,7 @@ app.post('/add/user/:userName/:userID/:email', function(req, res) {
     let name = String(req.params.userName);
     let email = String(req.params.email);
 
-    userArray[userArray.length] = new User(id, name, email, []);
+    userArray[userArray.length] = new User(id, name, email, [], [0]);
     database.child('Users/' + `${id}`).set({ //store into firebase
         userinfo: userArray[userArray.length - 1]
     });
@@ -295,9 +381,10 @@ app.post('/newRecipe', function(req, res) {
     let vegetarian = false;
     let vegan = false;
     let glutenFree = false;
+    let imageURL = String(req.body.imageURL);
 
     // dummy placeholder
-    let rating = 5;
+    //    let rating = 5;
     if (req.body.vegetarian == "TRUE") {
         vegetarian = true;
     };
@@ -320,9 +407,9 @@ app.post('/newRecipe', function(req, res) {
     // console.log(recipeArray[recipeArray.length - 1].recipeID);
     // console.log(recipeArray + ' ' + recipeArray.length);
     //Careful with below...might prove to contain an error if recipeArray empty
-
+    console.log(user);
     let recipeIndex = recipeArray[recipeArray.length - 1].recipeID + 1; //add 1 to most recent recipe so all recipeIds are unique
-    recipeArray[recipeArray.length] = new Recipe(recipeIndex, authorID, recipeTitle, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, rating);
+    recipeArray[recipeArray.length] = new Recipe(recipeIndex, authorID, recipeTitle, category, cuisine, difficulty, ingredients, instructions, cookTime, vegetarian, vegan, glutenFree, imageURL);
 
     if (user.recipePosts == null) {
         user.recipePosts = [recipeIndex];
@@ -333,6 +420,7 @@ app.post('/newRecipe', function(req, res) {
     database.child('Recipes/' + `${recipeIndex}`).set({
         recipe: recipeArray[recipeArray.length - 1]
     });
+    console.log(user);
     database.child('Users/' + `${user.id}`).update({
         userinfo: user
     });
@@ -416,6 +504,27 @@ app.put('/recipes/update/:recipeID', function(req, res) {
     res.send(selectedRecipe);
 });
 
+//ADD RECIPE TO USERS FAVORITES
+app.put('/users/favorites/:userID/:recipeID', function(req, res) {
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            usr.favoriteRecipes.map(rcp => {
+                if (rcp == req.params.recipeID) {
+                    res.send('Recipe ' + req.params.recipeID + ' is already in favorites');
+                    return;
+                }
+            });
+            usr.favoriteRecipes.push(req.params.recipeID);
+            userDatabase.child(`${usr.id}`).update({
+                userinfo: usr
+            });
+            res.send('recipe id: ' + req.params.recipeID + ' added to favorites!');
+            return;
+        }
+    });
+    res.send('User not found');
+});
+
 
 /*--------------------------------------------------------------------------*/
 /*---------------------------- DELETE REQUESTS -----------------------------*/
@@ -443,6 +552,32 @@ app.delete('/recipes/remove/:recipeID', function(req, res) {
 
     // Removing the recipe from the user's recipePosts
 });
+
+//REMOVE RECIPE FROM USERS FAVORITES
+app.delete('/users/favorites/remove/:userID/:recipeID', function(req, res) {
+    userArray.map(usr => {
+        if (usr.id == req.params.userID) {
+            for (var i = 0; i < usr.favoriteRecipes.length; i++) {
+                if (usr.favoriteRecipes[i] == req.params.recipeID) {
+                    usr.favoriteRecipes.splice(i, 1);
+                    userDatabase.child(`${usr.id}`).update({
+                        userinfo: usr
+                    });
+                    res.send('Done!');
+                    return;
+                }
+            }
+        }
+    });
+    res.send('User not found');
+});
+
+
+
+/*--------------------------------------------------------------------------*/
+/*------------------------------ TO BE SORTED ------------------------------*/
+/*--------------------------------------------------------------------------*/
+
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

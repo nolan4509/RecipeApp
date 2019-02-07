@@ -2,28 +2,21 @@ import React, {
     Component
 } from 'react';
 import Recipes from '../Components/Recipes/Recipes';
-// import NavBar from '../Components/NavBar/NavBar';
 import './styles.css';
-// import uuid from 'uuid';
 
 class RecipesPage extends Component {
 
     constructor(props) {
         super(props)
         this.handleViewRecipe = this.handleViewRecipe.bind(this);
+        this.handleDeleteRecipe = this.handleDeleteRecipe.bind(this);
         this.state = {
-            // This will need to be changed to work with authorization
             userID: '',
-            recipesLoaded: 'False',
             recipes: [],
-            currentRecipe: 'Test'
         }
     }
 
     getRecipes() {
-        // console.log('Inside RecipesPage.js: ');
-        // console.log(this.props.currentUserID);
-        // console.log(this.state.userID);
         fetch(`/recipes/user/${this.props.currentUserID}`, {
             method: 'GET',
             headers: {
@@ -31,9 +24,8 @@ class RecipesPage extends Component {
                 'Content-Type': 'application/json'
             }
         }).then(res => res.json()).then((result) => {
-            // console.log('Success: ' + result);
+            console.log('Success: ' + result);
             this.setState({
-                recipesLoaded: 'True',
                 recipes: result
             })
         }).catch((error) => {
@@ -42,8 +34,6 @@ class RecipesPage extends Component {
     }
 
     componentDidMount() {
-        // console.log('in recipespage.js: ');
-        // console.log(this.props.currentUserID);
         this.setState({
             userID: this.props.currentUserID
         })
@@ -72,29 +62,13 @@ class RecipesPage extends Component {
     }
 
     handleViewRecipe(id) {
-        fetch(`/recipes/${id}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json()).then((result) => {
-            console.log('Success: ' + result);
-            // this.setState({
-            //     currentRecipe: result
-            // })
-        }).catch((error) => {
-            console.log('Error: ' + error);
-        });
-        // console.log(this);
-        this.props.history.push('/recipes/view');
+        this.props.history.push(`/Recipe/${id}`);
     }
 
     render() {
         return (<div className = "bodyStyle">
-            {/* <NavBar/> */}
             <br/>
-            <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)}/>
+            <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)} currentUserID={this.props.currentUserID}/>
         </div>);
     }
 }

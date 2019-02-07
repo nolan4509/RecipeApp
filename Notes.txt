@@ -1,14 +1,31 @@
-Roadmap/User Stories as of 12/9/18:
+Roadmap/User Stories as of 1/10/19:
+
+FOR 1.0 Release:
+- Recipes Homepage Displays ALL recipes
+    - Backend code for this to get all recipes (be careful with ALL recipes, could be a lot)
+    - Frontend code for this
+- Ability to mark and sort recipes by favorites
+- Ability to sort recipes by your own recipes
+- Uploading Images for recipes
+- Pop-up view of Recipe Component
+- Full-view of Recipe Component
+- Styling of new Images for New Recipe, Popup View, and Full View of Recipe
+- Fix styling for Luke?
+
+POST 1.0 Release:
+- Username/Password Login
 - Expiring Login Tokens/Persisting Login
 - Authentication Run-Through
-- Styling of new Images for New Recipe, Popup View, and Full View of Recipe
-- Ability to mark and sort recipes by favorites
 - Ability to mark and sort recipes by other categories
-- Uploading Images for recipes
 - Searching in general (Long run)
-- Potential User info page
-- Styling works for Nolan (NavBar) however for Luke it is still plain
+- User info page
 - Sharing Recipes
+- Ratings and Comments on Recipes
+- Archive Page for all Recipes
+- 'Sticky' Notes for Recipes (option to make them personal notes or global notes)
+
+
+
 
 
 Deleted Comments within Files:

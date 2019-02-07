@@ -2,7 +2,10 @@ import React, {
     Component
 } from 'react';
 import './NewRecipe.css';
-import firebase from 'firebase';
+import {
+    auth,
+    storage
+} from '../../firebase.js';
 import FileUploader from 'react-firebase-file-uploader';
 
 require('firebase/auth');
@@ -63,7 +66,7 @@ class NewRecipe extends Component {
         })
         let reqBody = {
             name: this.state.name,
-            authorID: this.state.authorID,
+            authorID: auth.currentUser.uid,
             category: this.state.category,
             cuisine: this.state.cuisine,
             difficulty: this.state.difficulty,
@@ -72,7 +75,8 @@ class NewRecipe extends Component {
             cookTime: this.state.cookTime,
             vegetarian: this.state.vegetarian,
             vegan: this.state.vegan,
-            glutenFree: this.state.glutenFree
+            glutenFree: this.state.glutenFree,
+            imageURL: this.state.recipeImageURL
         }
         console.log('Recipe Name: ' + this.state.name)
         fetch('/newRecipe', {
@@ -159,18 +163,6 @@ class NewRecipe extends Component {
         })
     }
 
-    componentDidMount() {
-        var uid = localStorage.getItem("uid")
-        if (uid) {
-            console.log('Success!  uid: ' + uid);
-            this.setState({
-                authorID: uid
-            });
-        } else {
-            console.log('Nobody is signed in!');
-        }
-    }
-
     handleUploadStart = () => this.setState({
         isUploading: true,
         progress: 0
@@ -193,7 +185,7 @@ class NewRecipe extends Component {
             progress: 100,
             isUploading: false
         });
-        firebase.storage().ref("images").child(filename).getDownloadURL()
+        storage.ref("images").child(filename).getDownloadURL()
             .then(url => this.setState({
                 recipeImageURL: url
             }));
@@ -228,12 +220,12 @@ class NewRecipe extends Component {
                         <div className="newRecipeImageUpload">
                             <label>Image: </label>
                             {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-                            {this.state.recipeImageURL && <img src={this.state.recipeImageURL} />}
+                            {this.state.recipeImageURL && <img src={this.state.recipeImageURL} alt="Recipe"/>}
                             <FileUploader
                                 accept="image/*"
                                 name="recipeImage"
                                 randomizeFilename
-                                storageRef={firebase.storage().ref("images")}
+                                storageRef={storage.ref("images")}
                                 onUploadStart={this.handleUploadStart}
                                 onUploadError={this.handleUploadError}
                                 onUploadSuccess={this.handleUploadSuccess}
@@ -303,29 +295,3 @@ class NewRecipe extends Component {
 // }
 
 export default NewRecipe;
-
-/*  From Textbook App
-postBook = () => {
-    this.preventDefault()
-    this.target.reset()
-    this.setState({
-        complete: false
-    })
-    console.log('courseCode = ' + this.state.courseCode)
-    console.log('courseLevel = ' + this.state.courseLevel)
-    console.log('course = ' + this.state.course)
-    fetch(`/user/${this.state.userID}/books/newBook/${this.state.isbn}/${this.state.condition}/${this.state.teacher}/${this.state.courseCode}/${this.state.course.substr(-3)}/${this.state.price}`, {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }).then(this.setState({
-        submissionStatus: `Post successfully created`
-    }))
-        .catch((ex) => {
-        console.log('parsing failed', ex)
-    })
-    this.props.history.push("/sellerHub")
-}
-*/

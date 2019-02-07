@@ -55,7 +55,7 @@
 
 .newRecipeImageUpload {
     padding-top: 8%;
-    padding-left: 25%;
+    padding-left: 0%;
 }
 
 .newRecipeDifficultyAndTimeLine {
@@ -126,7 +126,7 @@
 .newRecipeIngredientsField {
     position: absolute;
     top: -0.5%;
-    left: 130%;
+    left: 90%;
 }
 
 .newRecipeIngredientsField textarea {
@@ -138,7 +138,7 @@
 .newRecipeInstructionsField {
     position: absolute;
     top: 35%;
-    left: 130%;
+    left: 90%;
 }
 
 .newRecipeInstructionsField textarea {
@@ -168,7 +168,7 @@
 .newRecipeButton {
     border-radius: 15px;
     position: relative;
-    top: -200px;
+    top: -150px;
     left: 1000px;
 }
 
