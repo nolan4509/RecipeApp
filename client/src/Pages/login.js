@@ -44,35 +44,45 @@ class Login extends Component {
     login() {
         auth.signInWithPopup(provider).then((result) => {
             var newUser = auth.currentUser;
-            // console.log(JSON.stringify(newUser.uid));
-            fetch(`/user/${newUser.uid}`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            }).then((result) => {
-                let res = JSON.stringify(result);
-                if (res.length === 2) {
-                    fetch(`/add/user/${newUser.displayName}/${newUser.uid}/${newUser.email}`, {
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        'method': 'POST'
-                    }).catch((error) => {
-                        console.log('Error: ' + error);
-                    });
-                }
-            }).catch((error) => {
-                console.log('Error: ' + error);
-            });
             this.setState({
                 user: newUser
             });
-            this.props.history.push('/')
+            this.checkIfFirstLogin(newUser);
         });
-    };
+    }
+
+    //Uses backend call to check if user is already in the database
+    checkIfFirstLogin(newUser) {
+        fetch(`/user/${newUser.uid}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'method': 'GET'
+        }).then(res => res.json()).then((result) => {
+            if (result === false) {
+                console.log('first time logging in');
+                this.createUserEntryOnFirebase(newUser);
+            } else {
+                console.log('user found');
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    //called if user is not found in the database
+    createUserEntryOnFirebase(newUser) {
+        fetch(`/add/user/${newUser.displayName}/${newUser.uid}/${newUser.email}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'method': 'POST'
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
     handleChangeEmail(event) {
         this.setState({
@@ -122,7 +132,7 @@ class Login extends Component {
                                 <RecipesPage history={this.props.history} currentUserID={auth.currentUser.uid}/>
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
-                        : 
+                        :
                         <div className="backgroundStyle">
                             <div className="container">
                                 <form className="box">
