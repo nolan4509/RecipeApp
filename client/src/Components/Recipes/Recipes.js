@@ -20,11 +20,9 @@ class Recipes extends Component {
                 return (<RecipeItem onDelete={this.deleteRecipe.bind(this)} onView={this.viewRecipe.bind(this)} key={recipe.name} recipe={recipe} currentUserID={this.props.currentUserID}/>);
             });
         }
-        return (<div className="container">
-            <div className="row rowSpacing">
+        return (<div className="recipesContainer">
                 {recipeItems}
-            </div>
-        </div>);
+            </div>);
     }
 }
 

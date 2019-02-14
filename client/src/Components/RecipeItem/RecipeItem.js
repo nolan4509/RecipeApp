@@ -111,9 +111,8 @@ class RecipeItem extends Component {
     }
 
     render() {
-            return (<div className="flowContainer">
-            {/* <div className="border border-warning rounded homepage-recipe-tile rainbowShadow"> */}
-            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
+        return (<div className="recipeItemContainer">
+            <div className="homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
                 <img src={ this.props.recipe.imageURL } alt="recipeImage" className="img-thumbnail mx-auto d-block recipeImage" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>

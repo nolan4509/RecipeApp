@@ -2,7 +2,6 @@ import React, {
     Component
 } from 'react';
 import Recipes from '../Components/Recipes/Recipes';
-import './styles.css';
 
 class RecipesPage extends Component {
 
@@ -66,8 +65,7 @@ class RecipesPage extends Component {
     }
 
     render() {
-        return (<div className = "bodyStyle">
-            <br/>
+        return (<div>
             <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)} currentUserID={this.props.currentUserID}/>
         </div>);
     }

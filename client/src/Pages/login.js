@@ -68,6 +68,40 @@ class Login extends Component {
             }
         }).catch((error) => {
             console.log(error);
+
+        });
+    }
+
+    //called if user is not found in the database
+    createUserEntryOnFirebase(newUser) {
+        fetch(`/add/user/${newUser.displayName}/${newUser.uid}/${newUser.email}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'method': 'POST'
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    //Uses backend call to check if user is already in the database
+    checkIfFirstLogin(newUser) {
+        fetch(`/user/${newUser.uid}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'method': 'GET'
+        }).then(res => res.json()).then((result) => {
+            if (result === false) {
+                console.log('first time logging in');
+                this.createUserEntryOnFirebase(newUser);
+            } else {
+                console.log('user found');
+            }
+        }).catch((error) => {
+            console.log(error);
         });
     }
 
@@ -124,38 +158,36 @@ class Login extends Component {
     }
 
     render() {
-        return (<div>
-            <div>
+        return (
+            <div className="backgroundStyle">
                 {
                     this.state.user
-                        ? <div className="backgroundStyle">
+                        ? <div className="row">
                                 <RecipesPage history={this.props.history} currentUserID={auth.currentUser.uid}/>
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>
                         :
-                        <div className="backgroundStyle">
-                            <div className="container">
-                                <form className="box">
-                                    <h2 className="big">Please Login</h2>
-                                    <div className="inputBox">
-                                        <label htmlFor="inputEmail" className="sr-only inputBox">fix this</label>
-                                        <input type="email" id="inputEmail" placeholder="Email address (WIP)" required="required" autoFocus="autofocus" value={this.state.userEmail} onChange={this.handleChangeEmail}/>
-                                    </div>
-                                    <div className="inputBox">
-                                        <label htmlFor="inputPassword" className="sr-only">fix this</label>
-                                        <input type="password" id="inputPassword" placeholder="Password (WIP)" required="required" value={this.state.userPassword} onChange={this.handleChangePassword}/>
-                                    </div>
-                                    <div className="checkbox">
-                                        <label>
-                                            <input type="checkbox" ref="rememberMe" id="rememberMeField" name="rememberMeField" onClick={this.rememberUser}/>
-                                        </label>
-                                    </div>
-                                    <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In with Google Account</button>
-                                </form>
-                            </div>
+                        <div className="container ">
+                            <form className="box">
+                                <h2 className="big">Please Login</h2>
+                                <div className="inputBox">
+                                    <label htmlFor="inputEmail" className="sr-only inputBox">fix this</label>
+                                    <input type="email" id="inputEmail" placeholder="Email address (WIP)" required="required" autoFocus="autofocus" value={this.state.userEmail} onChange={this.handleChangeEmail}/>
+                                </div>
+                                <div className="inputBox">
+                                    <label htmlFor="inputPassword" className="sr-only">fix this</label>
+                                    <input type="password" id="inputPassword" placeholder="Password (WIP)" required="required" value={this.state.userPassword} onChange={this.handleChangePassword}/>
+                                </div>
+                                <div className="checkbox">
+                                    <label>
+                                        <input type="checkbox" ref="rememberMe" id="rememberMeField" name="rememberMeField" onClick={this.rememberUser}/>
+                                    </label>
+                                </div>
+                                <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.login}>Log In with Google Account</button>
+                            </form>
                         </div>
                 }</div>
-        </div>);
+        );
     }
 }
 
