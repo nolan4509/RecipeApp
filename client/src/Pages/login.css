@@ -1,12 +1,5 @@
-/*
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
-}
-*/
 .backgroundStyle {
-    background-image: url('/images/RestaurantMenuTheme.jpg');
+    background-image: url('/images/CuttingBoard.png');
     background-size: cover;
     /* background-size: 100% 100%; */
     /* background-position: center center; */
@@ -15,6 +8,12 @@ body {
     padding-bottom: 400px;
 }
 
+/* .container {
+    display: grid;
+    grid-template-columns: 5% 28% 3% 28% 3% 28% 5%;
+    margin: 0;
+    padding: 0;
+} */
 .box {
     position: relative;
     top: 100px;

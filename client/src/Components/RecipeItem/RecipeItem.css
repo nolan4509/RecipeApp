@@ -1,18 +1,9 @@
 /* Recipe Item Styles */
-.flowContainer {
-    position: relative;
-    /* We first create a flex layout context */
+/* This will make sure that the tile expands fully even
+if the content is smaller than the max space. */
+.recipeItemContainer {
     display: flex;
-    /* Then we define the flow direction
-     and if we allow the items to wrap
-   * Remember this is the same as:
-   * flex-direction: row;
-   * flex-wrap: wrap;
-   */
-    flex-flow: row wrap;
     align-items: stretch;
-    /* Then we define how is distributed the remaining space */
-    justify-content: space-evenly;
 }
 
 .recipeName {
@@ -34,6 +25,8 @@
 
 .homepage-recipe-tile {
     background-color: #ffc57e;
+    border: 2px solid #eaa856;
+    border-radius: 0.75rem;
     position: relative;
     width: 100%;
     min-height: 1px;
