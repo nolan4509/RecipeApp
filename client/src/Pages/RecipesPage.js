@@ -65,7 +65,7 @@ class RecipesPage extends Component {
     }
 
     render() {
-        return (<div className="recipesContainer1">
+        return (<div>
             <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)} currentUserID={this.props.currentUserID}/>
         </div>);
     }
