@@ -6,3 +6,11 @@
     justify-content: space-evenly;
     margin: 15px 12.5% 100px 12.5%;
 }
+
+.recipesContainer1 {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+    margin: 15px 12.5% 100px 12.5%;
+}
