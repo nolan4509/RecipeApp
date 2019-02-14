@@ -295,7 +295,7 @@ app.get('/user/:userID', function(req, res) {
         }
     });
     // console.log('sending NULL...');
-    res.send('User Not Found');
+    res.send(false);
 });
 
 //CHECK IF A GIVEN ID IS IN A USER'S FAVORITES

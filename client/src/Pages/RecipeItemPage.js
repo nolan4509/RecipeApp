@@ -1,6 +1,7 @@
 import React, {
     Component
 } from 'react';
+import firebase from '../firebase.js';
 // import Recipes from '../Components/Recipes/Recipes';
 import './styles.css';
 
@@ -8,6 +9,7 @@ class RecipeItemPage extends Component {
     constructor(props) {
         super(props);
         this.getRecipe = this.getRecipe.bind(this);
+        this.deleteRecipe = this.deleteRecipe.bind(this);
         this.state = {
             recipe: []
         }
@@ -31,6 +33,24 @@ class RecipeItemPage extends Component {
         }).catch((error) => {
             console.log('Error: ' + error);
         });
+    }
+
+    deleteRecipe() {
+        const recipeID = this.state.recipe.recipeID;
+        if (this.state.recipe.authorID === firebase.auth().currentUser.uid) {
+            console.log('w00t');
+            fetch(`/recipes/remove/${recipeID}`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }).then((result) => {
+                this.props.history.push('/');
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
     }
 
     componentDidMount() {
@@ -76,6 +96,11 @@ class RecipeItemPage extends Component {
                     </div>
                 </div>
             </div>
+            <button className="recipeItemRemoveButton" onClick={this.deleteRecipe}>
+                <span className="forFlipButton front">Delete</span>
+                <span className="forFlipButton center"></span>
+                <span className="forFlipButton back">Recipe</span>
+            </button>
         </div>
         );
     }
