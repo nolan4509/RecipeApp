@@ -118,11 +118,6 @@ class RecipeItem extends Component {
                 <img src={ this.props.recipe.imageURL } alt="recipeImage" className="img-thumbnail mx-auto d-block recipeImage" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
-                <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
-                    <span className="forFlipButton front">Delete</span>
-                    <span className="forFlipButton center"></span>
-                    <span className="forFlipButton back">Recipe</span>
-                </button>
                 <div className="coolCheckboxiug">
                     <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>
                 </div>
