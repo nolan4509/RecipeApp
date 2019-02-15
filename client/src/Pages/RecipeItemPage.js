@@ -38,7 +38,6 @@ class RecipeItemPage extends Component {
     deleteRecipe() {
         const recipeID = this.state.recipe.recipeID;
         if (this.state.recipe.authorID === firebase.auth().currentUser.uid) {
-            console.log('w00t');
             fetch(`/recipes/remove/${recipeID}`, {
                 method: 'DELETE',
                 headers: {

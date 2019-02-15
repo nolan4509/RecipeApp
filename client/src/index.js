@@ -4,12 +4,13 @@ import {
     render
 } from 'react-dom';
 import {
-    BrowserRouter
+    Router
 } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
+import history from './history';
 import 'bootstrap/dist/css/bootstrap.css';
 
-render((<BrowserRouter>
+render((<Router history={history}>
     <App/>
-</BrowserRouter>), document.getElementById('root'));
+</Router>), document.getElementById('root'));
 registerServiceWorker(); //Could this be affecting login?
