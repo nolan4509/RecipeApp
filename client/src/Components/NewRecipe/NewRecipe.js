@@ -7,9 +7,9 @@ import {
     storage
 } from '../../firebase.js';
 import FileUploader from 'react-firebase-file-uploader';
+import history from '../../history';
 
 require('firebase/auth');
-// import uuid from 'uuid';
 
 class NewRecipe extends Component {
     constructor(props) {
@@ -97,7 +97,7 @@ class NewRecipe extends Component {
             console.log('Error: ' + error);
         });
         // e.preventDefault()
-        //this.props.history.push("/home")
+        history.push("/")
     }
 
 
