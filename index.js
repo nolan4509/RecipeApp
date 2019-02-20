@@ -174,7 +174,7 @@ app.use(myParser.urlencoded({ // to support URL-encoded bodies
 }));
 app.use(myParser.json());
 //test data
-let dummyUser = new User(1, 'DUMMY_DATA', 'DUMMY_DATAd', [], []);
+let dummyUser = new User(1, 'DUMMY_DATA', 'DUMMY_DATA', [], []);
 let userArray = [];
 userArray[0] = dummyUser;
 let dummyRecipe = new Recipe(1, 'DUMMY_DATA', 'DUMMY_DATA', 'DUMMY_DATA', 'DUMMY_DATA', 'DUMMY_DATA', 'DUMMY_DATA', 'DUMMY_DATA', 30, false, false, false, 5);
@@ -236,9 +236,8 @@ app.get('/recipes/user/:userID', function(req, res) {
 
 //GET ALL RECIPES
 app.get('/recipes', function(req, res) {
-    console.log('Inside app.get(/recipes) --');
     retRecipes = [];
-    for (var rcp = 1; rcp < array.length; rcp++) {
+    for (var rcp = 1; rcp < recipeArray.length; rcp++) {
         retRecipes.push(recipeArray[rcp]);
     }
     res.send(JSON.stringify(retRecipes));
