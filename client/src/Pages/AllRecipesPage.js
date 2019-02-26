@@ -23,7 +23,6 @@ class AllRecipesPage extends Component {
     }
 
     getRecipes() {
-        console.log("please");
         fetch(`/recipes`, {
             method: 'GET',
             headers: {
@@ -48,7 +47,6 @@ class AllRecipesPage extends Component {
     componentDidMount() {
         auth.onAuthStateChanged((user) => {
             if (user) {
-                console.log('you are looking for this');
                 this.setState({
                     user
                 }); // When user signs in, checks the firebase database to see
@@ -57,9 +55,6 @@ class AllRecipesPage extends Component {
                     userID: this.state.user.uid
                 })
                 this.getRecipes();
-                console.log('line 60' + this.state.userID);
-            } else {
-                console.log('bepped');
             }
         });
     }

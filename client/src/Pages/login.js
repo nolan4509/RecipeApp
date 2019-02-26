@@ -36,7 +36,6 @@ class Login extends Component {
                 user: null
             });
         });
-
         this.props.history.push('/')
     }
 
@@ -63,7 +62,7 @@ class Login extends Component {
                 this.createUserEntryOnFirebase(newUser);
             }
         }).catch((error) => {
-            console.log(error);
+            console.log('In login.js -- Error: ' + error);
         });
     }
 
@@ -76,7 +75,7 @@ class Login extends Component {
             },
             'method': 'POST'
         }).catch((error) => {
-            console.log(error);
+            console.log('In login.js -- Error: ' + error);
         });
     }
 

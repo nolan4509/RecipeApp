@@ -78,7 +78,7 @@ class NewRecipe extends Component {
             glutenFree: this.state.glutenFree,
             imageURL: this.state.recipeImageURL
         }
-        console.log('Recipe Name: ' + this.state.name)
+        // console.log('Recipe Name: ' + this.state.name)
         fetch('/newRecipe', {
             headers: {
                 'Accept': 'application/json',
@@ -94,15 +94,12 @@ class NewRecipe extends Component {
         }).then((json) => {
             console.log('Success: ' + json);
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In NewRecipe.js -- Error: ' + error);
         });
         // e.preventDefault()
         history.push("/")
     }
 
-
-    //See about making the JSX below not require these functions...
-    //onChange={this.handleChangeName} --> onChange={this.setState({name: event.target.value})}
     handleChangeName(event) {
         this.setState({
             name: event.target.value
@@ -288,10 +285,5 @@ class NewRecipe extends Component {
             </div>);
     }
 }
-
-// NewRecipe.propTypes = {
-//     categories: React.PropTypes.array,
-//     newRecipe: React.PropTypes.func
-// }
 
 export default NewRecipe;

@@ -16,9 +16,7 @@ class RecipeItem extends Component {
     }
 
     checkIfFavorite(recipeID) {
-        console.log(this.props.currentUserID);
         fetch(`/users/favorites/check/${this.props.currentUserID}/${recipeID}`, {}).then(res => res.json()).then((result) => {
-            console.log('checkIfFavorite success! response: ' + result);
             if (result === true) {
                 this.setState({
                     isFavorite: true
@@ -26,7 +24,7 @@ class RecipeItem extends Component {
             }
             return result;
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In RecipeItem.js -- Error: ' + error);
             return false;
         });
     }
@@ -43,7 +41,7 @@ class RecipeItem extends Component {
                 isFavorite: true
             });
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In RecipeItem.js -- Error: ' + error);
         });
     }
 
@@ -59,7 +57,7 @@ class RecipeItem extends Component {
                 isFavorite: false
             });
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In RecipeItem.js -- Error: ' + error);
         });
     }
 
@@ -76,14 +74,10 @@ class RecipeItem extends Component {
     }
 
     handleCheckbox(e) {
-        console.log('checkbox state: ' + this.state.isFavorite);
         if (this.state.isFavorite) {
-            console.log('removing');
             this.removeFavorite();
         } else {
-            console.log('adding');
             this.addFavorite();
-
         }
     }
 
@@ -103,12 +97,6 @@ class RecipeItem extends Component {
         this.setState({
             isFavorite: this.checkIfFavorite(this.props.recipe.recipeID)
         });
-        console.log('in componentWillMount state: ' + this.state.isFavorite);
-    }
-
-    componentDidMount() {
-
-        console.log('in componentDidMount state: ' + this.state.isFavorite);
     }
 
     render() {

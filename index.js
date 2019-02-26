@@ -56,7 +56,6 @@ class Recipe {
         this.vegan = vegan; //Boolean
         this.glutenFree = glutenFree; //Boolean
         this.imageURL = imageURL; //string address of image
-        // this.rating = rating; //Object with ratings and comments
     }
 }
 
