@@ -22,25 +22,30 @@ if the content is smaller than the max space. */
 }
 
 .recipeImage {
-    height: 200px;
-    width: 200px;
+    border: 2px solid #ffffff;
+    border-radius: 1rem;
+    display: block;
+    height: 250px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .homepage-recipe-tile {
     background-color: #ffc57e;
-    z-index: 0;
     border: 2px solid #eaa856;
     border-radius: 0.75rem;
-    position: relative;
-    width: 100%;
-    min-height: 1px;
-    padding: 15px;
     flex-basis: 0;
     flex-grow: 1;
+    height: 450px;
     min-width: 22.75rem;
     max-width: 22.75rem;
     margin: 0.5rem;
+    padding: 15px;
+    position: relative;
     transition: transform .5s;
+    width: 100%;
+    z-index: 0;
     /* this is bootstraps m-2 */
     /* max-width: 100%; */
 }
@@ -96,6 +101,15 @@ section .layer1 {
     padding: 0;
     background: #292929;
 } */
+.coolCheckbox {
+    position: relative;
+    top: 91%;
+    left: -97%;
+}
+
+COOL LOOKING CHECKBOX CSS
+
+/*
 .coolCheckbox {
     position: relative;
     top: 125%;
@@ -155,7 +169,7 @@ input:checked[type="checkbox"]:after {
     left: 105px;
     box-shadow: 0 0 5px #13b3ff, 0 0 15px #13b3ff;
 }
-
+*/
 /* Rainbow Gradient Shadow */
 /*
 body {

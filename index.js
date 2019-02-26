@@ -338,13 +338,13 @@ app.post('/newRecipe', function(req, res) {
     let imageURL = String(req.body.imageURL);
     //let rating = 5;
 
-    if (req.body.vegetarian == "TRUE") {
+    if (req.body.vegetarian) {
         vegetarian = true;
     };
-    if (req.body.vegan == "TRUE") {
+    if (req.body.vegan) {
         vegan = true;
     };
-    if (req.body.glutenFree == "TRUE") {
+    if (req.body.glutenFree) {
         glutenFree = true;
     };
     let user = null;

@@ -64,6 +64,7 @@ class NewRecipe extends Component {
         this.setState({
             complete: false
         })
+        console.log('glutenFree was: ' + this.state.glutenFree);
         let reqBody = {
             name: this.state.name,
             authorID: auth.currentUser.uid,
@@ -144,19 +145,19 @@ class NewRecipe extends Component {
 
     handleChangeVegetarian(event) {
         this.setState({
-            vegetarian: event.target.value
+            vegetarian: !this.state.vegetarian
         })
     }
 
     handleChangeVegan(event) {
         this.setState({
-            vegan: event.target.value
+            vegan: !this.state.vegan
         })
     }
 
     handleChangeGlutenFree(event) {
         this.setState({
-            glutenFree: event.target.value
+            glutenFree: !this.state.glutenFree
         })
     }
 

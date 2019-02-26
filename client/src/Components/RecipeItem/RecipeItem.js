@@ -102,13 +102,15 @@ class RecipeItem extends Component {
     render() {
         return (<div className="recipeItemContainer">
             <div className="homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
+                <img src={ this.props.recipe.imageURL } alt="recipeImage" className="recipeImage"/>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
-                <img src={ this.props.recipe.imageURL } alt="recipeImage" className="mx-auto d-block recipeImage"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
-
-                <br/>
-                <br/>
+                {
+                    this.props.recipe.glutenFree
+                    ? <h6 className="recipeGlutenFree">Gluten Free</h6>
+                    : <br/>
+                }
             </div>
             <div className="coolCheckbox">
                 <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>
