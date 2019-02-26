@@ -4,6 +4,9 @@ if the content is smaller than the max space. */
 .recipeItemContainer {
     display: flex;
     align-items: stretch;
+    width: 100%;
+    min-width: 22.75rem;
+    max-width: 22.75rem;
 }
 
 .recipeName {
@@ -25,6 +28,7 @@ if the content is smaller than the max space. */
 
 .homepage-recipe-tile {
     background-color: #ffc57e;
+    z-index: 0;
     border: 2px solid #eaa856;
     border-radius: 0.75rem;
     position: relative;
@@ -93,9 +97,10 @@ section .layer1 {
     background: #292929;
 } */
 .coolCheckbox {
-    position: absolute;
-    top: 90%;
-    left: 80%;
+    position: relative;
+    top: 125%;
+    left: -75%;
+    z-index: 20;
     transform: translate(-50%, -50%);
 }
 

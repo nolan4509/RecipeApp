@@ -16,6 +16,7 @@ class RecipeItem extends Component {
     }
 
     checkIfFavorite(recipeID) {
+        console.log(this.props.currentUserID);
         fetch(`/users/favorites/check/${this.props.currentUserID}/${recipeID}`, {}).then(res => res.json()).then((result) => {
             console.log('checkIfFavorite success! response: ' + result);
             if (result === true) {
@@ -117,11 +118,12 @@ class RecipeItem extends Component {
                 <img src={ this.props.recipe.imageURL } alt="recipeImage" className="img-thumbnail mx-auto d-block recipeImage" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
-                <div className="coolCheckboxiug">
-                    <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>
-                </div>
+
                 <br/>
                 <br/>
+            </div>
+            <div className="coolCheckbox">
+                <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>
             </div>
             <section>
                 <Modal visible={this.state.visible} width="800" height="600" effect="fadeInUp" onClickAway={() => this.closeModal()}>
