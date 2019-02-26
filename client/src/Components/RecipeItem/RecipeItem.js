@@ -101,7 +101,7 @@ class RecipeItem extends Component {
 
     render() {
         return (<div className="recipeItemContainer">
-            <div className="homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
+            <div className="homepage-recipe-tile" onClick={() => this.openModal()}>
                 <img src={ this.props.recipe.imageURL } alt="recipeImage" className="recipeImage"/>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
@@ -111,8 +111,18 @@ class RecipeItem extends Component {
                     ? <h6 className="recipeGlutenFree">Gluten Free</h6>
                     : <br/>
                 }
+                {
+                    this.props.recipe.vegan
+                    ? <h6 className="recipeVegan">Vegan</h6>
+                    : <br/>
+                }
+                {
+                    this.props.recipe.vegetarian
+                    ? <h6 className="recipeVegetarian">Vegetarian</h6>
+                    : <br/>
+                }
             </div>
-            <div className="coolCheckbox">
+            <div className="favoriteCheckbox">
                 <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>
             </div>
             {/* Pop-Up Section */}

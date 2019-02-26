@@ -55,6 +55,24 @@ if the content is smaller than the max space. */
     transform: scale(1.05);
 }
 
+.favoriteCheckbox {
+    position: relative;
+    top: 91%;
+    left: -97%;
+}
+
+.recipeGlutenFree {
+    color: green;
+}
+
+.recipeVegan {
+    color: green;
+}
+
+.recipeVegetarian {
+    color: green;
+}
+
 /* Blur on Hover */
 /*
 
@@ -101,14 +119,7 @@ section .layer1 {
     padding: 0;
     background: #292929;
 } */
-.coolCheckbox {
-    position: relative;
-    top: 91%;
-    left: -97%;
-}
-
-COOL LOOKING CHECKBOX CSS
-
+/* COOL LOOKING CHECKBOX CSS */
 /*
 .coolCheckbox {
     position: relative;
@@ -177,11 +188,10 @@ body {
     padding: 0;
     background: #000;
 } */
-.rainbowShadow {
+/* .rainbowShadow {
     position: relative;
-    /* background: linear-gradient(0deg, #000, #262626); */
-}
-
+    /* background: linear-gradient(0deg, #000, #262626);
+} */
 /* .rainbowShadow:before,
 .rainbowShadow:after {
     content: '';
@@ -214,13 +224,14 @@ body {
     }
 } */
 /* Button Flipping */
+/*
 button.recipeItemRemoveButton {
     position: absolute;
-    /* Button Position in div or container */
+    /* Button Position in div or container
     top: 90%;
     left: 20%;
     transform: translate(-50%, -50%);
-    /* Button Size */
+    /* Button Size
     width: 125px;
     height: 60px;
     text-align: center;
@@ -246,7 +257,7 @@ span.forFlipButton {
     backface-visibility: hidden;
     border-radius: 30px;
     text-transform: uppercase;
-    /* Text Color in button */
+    /* Text Color in button
     color: #000;
     transition: 0.75s;
 }
@@ -285,4 +296,4 @@ span.center:before {
 
 button.recipeItemRemoveButton:hover span.center {
     transform: rotateX(-540deg) translateZ(0px);
-}
+} */
