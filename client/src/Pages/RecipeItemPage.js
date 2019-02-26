@@ -2,7 +2,6 @@ import React, {
     Component
 } from 'react';
 import firebase from '../firebase.js';
-// import Recipes from '../Components/Recipes/Recipes';
 import './styles.css';
 
 class RecipeItemPage extends Component {
@@ -31,14 +30,13 @@ class RecipeItemPage extends Component {
                 recipe: result
             })
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In RecipeItemPage.js -- Error: ' + error);
         });
     }
 
     deleteRecipe() {
         const recipeID = this.state.recipe.recipeID;
         if (this.state.recipe.authorID === firebase.auth().currentUser.uid) {
-            console.log('w00t');
             fetch(`/recipes/remove/${recipeID}`, {
                 method: 'DELETE',
                 headers: {
@@ -48,7 +46,7 @@ class RecipeItemPage extends Component {
             }).then((result) => {
                 this.props.history.push('/');
             }).catch((error) => {
-                console.log(error);
+                console.log('In RecipeItemPage.js -- Error: ' + error);
             });
         }
     }

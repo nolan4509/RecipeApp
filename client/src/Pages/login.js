@@ -32,12 +32,10 @@ class Login extends Component {
 
     logout() {
         auth.signOut().then(() => {
-            // sessionStorage.removeItem("uid");
             this.setState({
                 user: null
             });
         });
-
         this.props.history.push('/')
     }
 
@@ -61,14 +59,10 @@ class Login extends Component {
             'method': 'GET'
         }).then(res => res.json()).then((result) => {
             if (result === false) {
-                console.log('first time logging in');
                 this.createUserEntryOnFirebase(newUser);
-            } else {
-                console.log('user found');
             }
         }).catch((error) => {
-            console.log(error);
-
+            console.log('In login.js -- Error: ' + error);
         });
     }
 
@@ -81,40 +75,7 @@ class Login extends Component {
             },
             'method': 'POST'
         }).catch((error) => {
-            console.log(error);
-        });
-    }
-
-    //Uses backend call to check if user is already in the database
-    checkIfFirstLogin(newUser) {
-        fetch(`/user/${newUser.uid}`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            'method': 'GET'
-        }).then(res => res.json()).then((result) => {
-            if (result === false) {
-                console.log('first time logging in');
-                this.createUserEntryOnFirebase(newUser);
-            } else {
-                console.log('user found');
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
-
-    //called if user is not found in the database
-    createUserEntryOnFirebase(newUser) {
-        fetch(`/add/user/${newUser.displayName}/${newUser.uid}/${newUser.email}`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            'method': 'POST'
-        }).catch((error) => {
-            console.log(error);
+            console.log('In login.js -- Error: ' + error);
         });
     }
 
@@ -145,8 +106,6 @@ class Login extends Component {
     }
 
     componentDidMount() {
-        // console.log('session storage: ' + sessionStorage.getItem("uid"));
-        // console.log(firebase.auth().currentUser.uid);
         auth.onAuthStateChanged((user) => {
             if (user) {
                 this.setState({

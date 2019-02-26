@@ -28,7 +28,7 @@ class RecipesPage extends Component {
                 recipes: result
             })
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In RecipesPage.js -- Error: ' + error);
         });
     }
 
@@ -50,13 +50,8 @@ class RecipesPage extends Component {
             }
         }).then((res) => {
             console.log(res);
-            // Currently you must refresh the page after deleting something...
-            // let recipes = this.state.recipes;
-            // let index = recipes.findIndex(x => x.id === id);
-            // recipes.splice(index, 1);
-            // this.setState({
-            //     recipes: recipes
-            // })
+        }).catch((error) => {
+            console.log('In RecipesPage.js -- Error: ' + error);
         });
     }
 
