@@ -2,7 +2,6 @@ import React, {
     Component
 } from 'react';
 import Recipes from '../Components/Recipes/Recipes';
-import './styles.css';
 
 class RecipesPage extends Component {
 
@@ -29,7 +28,7 @@ class RecipesPage extends Component {
                 recipes: result
             })
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In RecipesPage.js -- Error: ' + error);
         });
     }
 
@@ -51,13 +50,8 @@ class RecipesPage extends Component {
             }
         }).then((res) => {
             console.log(res);
-            // Currently you must refresh the page after deleting something...
-            // let recipes = this.state.recipes;
-            // let index = recipes.findIndex(x => x.id === id);
-            // recipes.splice(index, 1);
-            // this.setState({
-            //     recipes: recipes
-            // })
+        }).catch((error) => {
+            console.log('In RecipesPage.js -- Error: ' + error);
         });
     }
 
@@ -66,8 +60,7 @@ class RecipesPage extends Component {
     }
 
     render() {
-        return (<div className = "bodyStyle">
-            <br/>
+        return (<div>
             <Recipes recipes={this.state.recipes} onDelete={this.handleDeleteRecipe.bind(this.state.recipes.recipeID)} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)} currentUserID={this.props.currentUserID}/>
         </div>);
     }

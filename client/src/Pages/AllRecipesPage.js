@@ -2,7 +2,12 @@ import React, {
     Component
 } from 'react';
 import Recipes from '../Components/Recipes/Recipes';
+import {
+    auth
+} from '../firebase.js';
 import './login.css';
+
+require('firebase/auth');
 
 class AllRecipesPage extends Component {
 
@@ -12,11 +17,12 @@ class AllRecipesPage extends Component {
         this.state = {
             recipesLoaded: 'False',
             recipes: [],
+            user: null,
+            userID: ''
         }
     }
 
     getRecipes() {
-        console.log("please");
         fetch(`/recipes`, {
             method: 'GET',
             headers: {
@@ -39,13 +45,27 @@ class AllRecipesPage extends Component {
     }
 
     componentDidMount() {
-        this.getRecipes();
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({
+                    user
+                }); // When user signs in, checks the firebase database to see
+                // if they were already previously authenticated, if so, restore
+                this.setState({
+                    userID: this.state.user.uid
+                })
+                this.getRecipes();
+            }
+        });
     }
 
     render() {
         return (<div className = "bodyStyle backgroundStyle">
             <br/>
-            <Recipes recipes={this.state.recipes} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)}/>
+            {this.state.userID
+            ? <Recipes recipes={this.state.recipes} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)} currentUserID={this.state.userID}/>
+            : <Recipes recipes={this.state.recipes} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)}/>
+        }
         </div>);
     }
 }

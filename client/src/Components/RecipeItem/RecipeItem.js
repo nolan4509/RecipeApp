@@ -17,7 +17,6 @@ class RecipeItem extends Component {
 
     checkIfFavorite(recipeID) {
         fetch(`/users/favorites/check/${this.props.currentUserID}/${recipeID}`, {}).then(res => res.json()).then((result) => {
-            console.log('checkIfFavorite success! response: ' + result);
             if (result === true) {
                 this.setState({
                     isFavorite: true
@@ -25,7 +24,7 @@ class RecipeItem extends Component {
             }
             return result;
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In RecipeItem.js -- Error: ' + error);
             return false;
         });
     }
@@ -42,7 +41,7 @@ class RecipeItem extends Component {
                 isFavorite: true
             });
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In RecipeItem.js -- Error: ' + error);
         });
     }
 
@@ -58,7 +57,7 @@ class RecipeItem extends Component {
                 isFavorite: false
             });
         }).catch((error) => {
-            console.log('Error: ' + error);
+            console.log('In RecipeItem.js -- Error: ' + error);
         });
     }
 
@@ -75,14 +74,10 @@ class RecipeItem extends Component {
     }
 
     handleCheckbox(e) {
-        console.log('checkbox state: ' + this.state.isFavorite);
         if (this.state.isFavorite) {
-            console.log('removing');
             this.removeFavorite();
         } else {
-            console.log('adding');
             this.addFavorite();
-
         }
     }
 
@@ -102,32 +97,21 @@ class RecipeItem extends Component {
         this.setState({
             isFavorite: this.checkIfFavorite(this.props.recipe.recipeID)
         });
-        console.log('in componentWillMount state: ' + this.state.isFavorite);
-    }
-
-    componentDidMount() {
-
-        console.log('in componentDidMount state: ' + this.state.isFavorite);
     }
 
     render() {
-            return (<div className="flowContainer">
-            {/* <div className="border border-warning rounded homepage-recipe-tile rainbowShadow"> */}
-            <div className="border border-warning rounded homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
+        return (<div className="recipeItemContainer">
+            <div className="homepage-recipe-tile rainbowShadow" onClick={() => this.openModal()}>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
                 <img src={ this.props.recipe.imageURL } alt="recipeImage" className="img-thumbnail mx-auto d-block recipeImage" width="200" height="200"/>
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
-                <button className="recipeItemRemoveButton" onClick={this.deleteRecipe.bind(this, this.props.recipe.recipeID)}>
-                    <span className="forFlipButton front">Delete</span>
-                    <span className="forFlipButton center"></span>
-                    <span className="forFlipButton back">Recipe</span>
-                </button>
-                <div className="coolCheckboxiug">
-                    <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>
-                </div>
+
                 <br/>
                 <br/>
+            </div>
+            <div className="coolCheckbox">
+                <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>
             </div>
             <section>
                 <Modal visible={this.state.visible} width="800" height="600" effect="fadeInUp" onClickAway={() => this.closeModal()}>
