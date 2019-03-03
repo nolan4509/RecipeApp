@@ -140,34 +140,16 @@ class RecipeItem extends Component {
                                 <div className="recipePopupFormBackground">
                                     <div className="recipePopupContainer">
                                         <p className="recipePopupTitleField">{this.props.recipe.name}</p>
-                                        <img src={this.props.recipe.imageURL} alt={this.props.recipe.name} width='200' height='200'/>
-                                        <div className="recipePopupCookTimeField">
-                                            <p>{this.props.recipe.cookTime}</p>
-                                        </div>
-                                        <div className="recipePopupDifficultyField">
-                                            <p>{this.props.recipe.difficulty}</p>
-                                        </div>
-                                        <div className="recipePopupCuisineField">
-                                            <p>{this.props.recipe.cuisine}</p>
-                                        </div>
-                                        <div className="recipePopupCategoryField">
-                                            <p>{this.props.recipe.category}</p>
-                                        </div>
-                                        <div className="recipePopupVegetarianField">
-                                            <p>{this.props.recipe.vegetarian}</p>
-                                        </div>
-                                        <div className="recipePopupVeganField">
-                                            <p>{this.props.recipe.vegan}</p>
-                                        </div>
-                                        <div className="recipePopupGlutenFreeField">
-                                            <p>{this.props.recipe.glutenFree}</p>
-                                        </div>
-                                        <div className="recipePopupInstructionsField">
-                                            <p>{this.props.recipe.instructions}</p>
-                                        </div>
-                                        <div className="recipePopupIngredientsField">
-                                            <p>{this.props.recipe.ingredients}</p>
-                                        </div>
+                                        <img className="recipePopupImage"src={this.props.recipe.imageURL} alt={this.props.recipe.name} width='200' height='200'/>
+                                        <p className="recipePopupCookTimeField">{this.props.recipe.cookTime}</p>
+                                        <p className="recipePopupDifficultyField">{this.props.recipe.difficulty}</p>
+                                        <p className="recipePopupEthnicityField">{this.props.recipe.cuisine}</p>
+                                        <p className="recipePopupCategoryField">{this.props.recipe.category}</p>
+                                        <p className="recipePopupVegetarianField">{this.props.recipe.vegetarian}</p>
+                                        <p className="recipePopupVeganField">{this.props.recipe.vegan}</p>
+                                        <p className="recipePopupGlutenFreeField">{this.props.recipe.glutenFree}</p>
+                                        <p className="recipePopupInstructionsField">{this.props.recipe.instructions}</p>
+                                        <p className="recipePopupIngredientsField">{this.props.recipe.ingredients}</p>
                                     </div>
                                 </div>
                                 <button onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}>

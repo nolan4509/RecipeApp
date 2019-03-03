@@ -122,9 +122,9 @@ if the content is smaller than the max space. */
     /* background-blend-mode: color; */
     /* background-attachment: fixed; */
     position: relative;
-    top: -5vw;
-    left: -10vw;
-    width: 80vw;
+    top: -7vw;
+    left: -15vw;
+    width: 85vw;
     height: 900px;
     padding-left: 50px;
     padding-top: 27px;
@@ -134,8 +134,10 @@ if the content is smaller than the max space. */
 
 .recipePopupContainer {
     display: grid;
-    width: 995px;
-    height: 698px;
+    width: 70.5vw;
+    height: 680px;
+    grid-template-columns: 32.25vw 7.2vw 31.2vw;
+    grid-template-rows: 100px 200px 150px 20px 20px 20px;
 }
 
 .recipePopupTitleField {
@@ -143,9 +145,61 @@ if the content is smaller than the max space. */
     align-items: center;
 }
 
-p.recipePopupTitleField {
+.recipePopupTitleField {
     font-size: 2em;
     margin: 0;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.recipePopupImage {
+    grid-column: 1;
+    grid-row: 2 / 3;
+}
+
+.recipePopupCookTimeField {
+    grid-column: 1;
+    grid-row: 5;
+}
+
+.recipePopupDifficultyField {
+    grid-column: 1;
+    grid-row: 4;
+}
+
+.recipePopupEthnicityField {
+    grid-column: 1;
+    grid-row: 7;
+}
+
+.recipePopupCategoryField {
+    grid-column: 1;
+    grid-row: 6;
+}
+
+.recipePopupVegetarianField {
+    grid-column: 1;
+    grid-row: 7;
+}
+
+.recipePopupVeganField {
+    grid-column: 1;
+    grid-row: 9;
+}
+
+.recipePopupGlutenFreeField {
+    grid-column: 1;
+    grid-row: 10;
+}
+
+.recipePopupInstructionsField {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.recipePopupIngredientsField {
+    grid-column: 3;
+    grid-row: 1;
 }
 
 /* Blur on Hover */
