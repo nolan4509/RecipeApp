@@ -100,6 +100,7 @@ class RecipeItem extends Component {
     }
 
     render() {
+        let specialConditions = (this.props.recipe.glutenFree || this.props.recipe.vegetarian || this.props.recipe.vegan);
         return (<div className="recipeItemContainer">
             <div className="homepage-recipe-tile" onClick={() => this.openModal()}>
                 <img src={ this.props.recipe.imageURL } alt="recipeImage" className="recipeImage"/>
@@ -107,20 +108,28 @@ class RecipeItem extends Component {
                 <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
                 {
-                    this.props.recipe.glutenFree
-                    ? <h6 className="recipeGlutenFree">Gluten Free</h6>
+                    specialConditions
+                    ? (
+                        <div className="specialChecks">
+                            {
+                                this.props.recipe.glutenFree
+                                ? <h6 className="recipeGlutenFree">Gluten Free</h6>
+                                : <br/>
+                            }
+                            {
+                                this.props.recipe.vegan
+                                ? <h6 className="recipeVegan">Vegan</h6>
+                                : <br/>
+                            }
+                            {
+                                this.props.recipe.vegetarian
+                                ? <h6 className="recipeVegetarian">Vegetarian</h6>
+                                : <br/>
+                            }
+                        </div>
+                    )
                     : <br/>
-                }
-                {
-                    this.props.recipe.vegan
-                    ? <h6 className="recipeVegan">Vegan</h6>
-                    : <br/>
-                }
-                {
-                    this.props.recipe.vegetarian
-                    ? <h6 className="recipeVegetarian">Vegetarian</h6>
-                    : <br/>
-                }
+            }
             </div>
             <div className="favoriteCheckbox">
                 <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>

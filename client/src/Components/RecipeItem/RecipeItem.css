@@ -61,16 +61,34 @@ if the content is smaller than the max space. */
     left: -97%;
 }
 
+.specialChecks {
+    display: flex;
+    border: 2px dashed green;
+    border-radius: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+}
+
 .recipeGlutenFree {
+    display: inline-block;
     color: green;
+    margin-left: 10;
+    margin-right: 10px;
 }
 
 .recipeVegan {
+    display: inline-block;
     color: green;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .recipeVegetarian {
+    display: inline-block;
     color: green;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .recipePopup {
