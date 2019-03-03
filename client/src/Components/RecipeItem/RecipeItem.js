@@ -127,11 +127,8 @@ class RecipeItem extends Component {
             </div>
             {/* Pop-Up Section */}
             <section>
-                <Modal visible={this.state.visible} width="800" height="600" effect="fadeInUp" onClickAway={() => this.closeModal()}>
-                    <div>
-                        <div className="flowContainer">
-                            <div className="notebookPage">
-                                <div className="popupRecipeFormContent">
+                <Modal visible={this.state.visible} width='800' height='500' effect="fadeInUp" onClickAway={() => this.closeModal()}>
+                                <div className="recipePopupFormContent">
                                     <div className="popupRecipeTitleField">
                                         <h1>{this.props.recipe.name}</h1>
                                     </div>
@@ -167,9 +164,6 @@ class RecipeItem extends Component {
                                 <button onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}>
                                     Full View of Recipe
                                 </button>
-                            </div>
-                        </div>
-                    </div>
                 </Modal>
             </section>
         </div>);

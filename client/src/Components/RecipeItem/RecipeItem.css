@@ -73,6 +73,39 @@ if the content is smaller than the max space. */
     color: green;
 }
 
+.recipePopup {
+    background-image: url('/images/OpenNotepadCropped.png');
+    /* background-size: cover; */
+    background-repeat: no-repeat;
+    background-size: 90% 75%;
+    background-position: center 0px;
+    /* background-blend-mode: color; */
+    /* background-attachment: fixed; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+    height: 800px;
+}
+
+.recipePopupFormContent {
+    background-image: url('/images/OpenNotepadCropped.png');
+    /* background-size: cover; */
+    background-repeat: no-repeat;
+    background-size: 90% 75%;
+    background-position: center 0px;
+    /* background-blend-mode: color; */
+    /* background-attachment: fixed; */
+    position: relative;
+    top: -10%;
+    left: -20%;
+    width: 1200px;
+    height: 900px;
+    padding-left: 100px;
+    padding-top: 20px;
+    padding-right: 150px;
+}
+
 /* Blur on Hover */
 /*
 
