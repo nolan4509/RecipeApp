@@ -138,36 +138,36 @@ class RecipeItem extends Component {
             <section>
                 <Modal visible={this.state.visible} width='800' height='500' effect="fadeInUp" onClickAway={() => this.closeModal()}>
                                 <div className="recipePopupFormBackground">
-                                    <div className="recipePopupTitleField">
-                                        <h1>{this.props.recipe.name}</h1>
-                                    </div>
-                                    <img src={this.props.recipe.imageURL} alt={this.props.recipe.name} width='200' height='200'/>
-                                    <div className="recipePopupCookTimeField">
-                                        <p>{this.props.recipe.cookTime}</p>
-                                    </div>
-                                    <div className="recipePopupDifficultyField">
-                                        <p>{this.props.recipe.difficulty}</p>
-                                    </div>
-                                    <div className="recipePopupCuisineField">
-                                        <p>{this.props.recipe.cuisine}</p>
-                                    </div>
-                                    <div className="recipePopupCategoryField">
-                                        <p>{this.props.recipe.category}</p>
-                                    </div>
-                                    <div className="recipePopupVegetarianField">
-                                        <p>{this.props.recipe.vegetarian}</p>
-                                    </div>
-                                    <div className="recipePopupVeganField">
-                                        <p>{this.props.recipe.vegan}</p>
-                                    </div>
-                                    <div className="recipePopupGlutenFreeField">
-                                        <p>{this.props.recipe.glutenFree}</p>
-                                    </div>
-                                    <div className="recipePopupInstructionsField">
-                                        <p>{this.props.recipe.instructions}</p>
-                                    </div>
-                                    <div className="recipePopupIngredientsField">
-                                        <p>{this.props.recipe.ingredients}</p>
+                                    <div className="recipePopupContainer">
+                                        <p className="recipePopupTitleField">{this.props.recipe.name}</p>
+                                        <img src={this.props.recipe.imageURL} alt={this.props.recipe.name} width='200' height='200'/>
+                                        <div className="recipePopupCookTimeField">
+                                            <p>{this.props.recipe.cookTime}</p>
+                                        </div>
+                                        <div className="recipePopupDifficultyField">
+                                            <p>{this.props.recipe.difficulty}</p>
+                                        </div>
+                                        <div className="recipePopupCuisineField">
+                                            <p>{this.props.recipe.cuisine}</p>
+                                        </div>
+                                        <div className="recipePopupCategoryField">
+                                            <p>{this.props.recipe.category}</p>
+                                        </div>
+                                        <div className="recipePopupVegetarianField">
+                                            <p>{this.props.recipe.vegetarian}</p>
+                                        </div>
+                                        <div className="recipePopupVeganField">
+                                            <p>{this.props.recipe.vegan}</p>
+                                        </div>
+                                        <div className="recipePopupGlutenFreeField">
+                                            <p>{this.props.recipe.glutenFree}</p>
+                                        </div>
+                                        <div className="recipePopupInstructionsField">
+                                            <p>{this.props.recipe.instructions}</p>
+                                        </div>
+                                        <div className="recipePopupIngredientsField">
+                                            <p>{this.props.recipe.ingredients}</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <button onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}>
