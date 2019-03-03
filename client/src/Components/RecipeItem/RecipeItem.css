@@ -66,31 +66,28 @@ if the content is smaller than the max space. */
     border: 2px dashed green;
     border-radius: 0.75rem;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     height: 30px;
 }
 
 .recipeGlutenFree {
     display: inline-block;
     color: green;
-    margin-left: 10;
-    margin-right: 10px;
+    margin: auto;
     order: 1;
 }
 
 .recipeVegan {
     display: inline-block;
     color: green;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: auto;
     order: 3;
 }
 
 .recipeVegetarian {
     display: inline-block;
     color: green;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: auto;
     order: 2;
 }
 
@@ -109,7 +106,7 @@ if the content is smaller than the max space. */
     height: 800px;
 }
 
-.recipePopupFormContent {
+.recipePopupFormBackground {
     background-image: url('/images/OpenNotepadCropped.png');
     /* background-size: cover; */
     background-repeat: no-repeat;
@@ -125,6 +122,20 @@ if the content is smaller than the max space. */
     padding-left: 100px;
     padding-top: 20px;
     padding-right: 150px;
+}
+
+.recipePopupFormContentLeft {
+    display: flex;
+    height: 500px;
+    width: 400px;
+    flex-wrap: wrap;
+}
+
+.recipePopupFormContentRight {}
+
+.recipePopupTitleField {
+    width: 300px;
+    justify-content: center;
 }
 
 /* Blur on Hover */
