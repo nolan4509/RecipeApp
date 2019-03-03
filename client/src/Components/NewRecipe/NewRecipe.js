@@ -8,6 +8,7 @@ import {
 } from '../../firebase.js';
 import FileUploader from 'react-firebase-file-uploader';
 import history from '../../history';
+let defaultImageURL = 'https://firebasestorage.googleapis.com/v0/b/recipe-app-4509.appspot.com/o/images%2FDefaultRecipeImage.png?alt=media&token=3d000675-8456-4939-a6d2-2f796d6bb328';
 
 require('firebase/auth');
 
@@ -64,7 +65,9 @@ class NewRecipe extends Component {
         this.setState({
             complete: false
         })
-        console.log('glutenFree was: ' + this.state.glutenFree);
+        if (JSON.stringify(this.state.recipeImageURL).length === 2) {
+            this.state.recipeImageURL = defaultImageURL
+        }
         let reqBody = {
             name: this.state.name,
             authorID: auth.currentUser.uid,
@@ -79,7 +82,7 @@ class NewRecipe extends Component {
             glutenFree: this.state.glutenFree,
             imageURL: this.state.recipeImageURL
         }
-        // console.log('Recipe Name: ' + this.state.name)
+
         fetch('/newRecipe', {
             headers: {
                 'Accept': 'application/json',
