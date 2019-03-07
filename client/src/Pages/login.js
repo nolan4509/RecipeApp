@@ -121,7 +121,7 @@ class Login extends Component {
             <div className="backgroundStyle">
                 {
                     this.state.user
-                        ? <div className="row">
+                        ? <div>
                                 <RecipesPage history={this.props.history} currentUserID={auth.currentUser.uid}/>
                                 <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.logout}>Log Out</button>
                             </div>

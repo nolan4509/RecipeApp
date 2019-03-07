@@ -60,8 +60,7 @@ class FavoriteRecipesPage extends Component {
     }
 
     render() {
-        return (<div className = "bodyStyle backgroundStyle">
-            <br/>
+        return (<div className="backgroundStyle">
             {this.state.userID
                 ? <Recipes recipes={this.state.recipes} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)} currentUserID={this.state.userID}/>
                 : <Recipes recipes={this.state.recipes} onView={this.handleViewRecipe.bind(this.state.recipes.recipeID)}/>

@@ -4,5 +4,6 @@
     flex-flow: row wrap;
     align-items: stretch;
     justify-content: space-evenly;
-    margin: 15px 12.5% 100px 12.5%;
+    margin: 0px 12.5% 100px 12.5%;
+    padding-top: 30px;
 }
