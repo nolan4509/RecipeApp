@@ -8,17 +8,28 @@
     /* background-blend-mode: color; */
     /* background-attachment: fixed; */
     position: relative;
-    top: 10px;
+    top: 5vh;
     left: 7%;
     /* transform: translate(-80%, 10%); */
+    display: grid;
     width: 1600px;
     height: 1200px;
+    grid-template-columns: 11vw 11vw auto;
+    grid-template-rows: 100px 100px 100px 100px 100px auto;
     padding-left: 10%;
     padding-top: 3.5%;
     /* padding-bottom: 20px; */
     /* box-sizing: border-box; */
     /* box-shadow: 0 15px 25px rgba(0, 0, 0, .5); */
     /* border-radius: 10px; */
+}
+
+.notebookPageTable {
+    display: grid;
+    width: 1600px;
+    height: 1200px;
+    grid-template-columns: 11vw 11vw auto;
+    grid-template-rows: 100px 100px 100px 100px 100px auto;
 }
 
 .newRecipeFormContent {
