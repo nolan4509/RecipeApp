@@ -11,20 +11,24 @@
     top: 10px;
     left: 7%;
     /* transform: translate(-80%, 10%); */
-    width: 1600px;
+    width: 100vw;
     height: 1200px;
     padding-left: 10%;
     padding-top: 3.5%;
-    /* padding-bottom: 20px; */
-    /* box-sizing: border-box; */
-    /* box-shadow: 0 15px 25px rgba(0, 0, 0, .5); */
-    /* border-radius: 10px; */
+    padding-right: 17%
+        /* padding-bottom: 20px; */
+        /* box-sizing: border-box; */
+        /* box-shadow: 0 15px 25px rgba(0, 0, 0, .5); */
+        /* border-radius: 10px; */
 }
 
 .newRecipeFormContent {
     position: absolute;
+    display: grid;
     font-size: 36px;
     font-family: 'Allura', cursive;
+    grid-template-columns: 11vw 11vw 3.4vw 3.4vw 3.4vw 7.25vw auto;
+    grid-template-rows: 100px 350px 25px 25px 180px;
 }
 
 .newRecipeTitleField {
