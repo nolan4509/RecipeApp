@@ -209,7 +209,6 @@ class NewRecipe extends Component {
         // } = this.state
 
         return (<div className="backgroundStyle">
-            <div className="newRecipeHeader">Add a New Recipe!</div>
             <form id="newRecipeForm" onSubmit={this.postRecipe}>
                 <div className="notebookPage">
                     {/* <Prompt when={!complete} message={location => (`Are you sure you want to go to ${location.pathname} before finishing your recipe post?`)}/> */}
@@ -219,18 +218,24 @@ class NewRecipe extends Component {
                             <input type="text" id="newRecipeTitleField" name="newRecipeTitleField" value={this.state.name} onChange={this.handleChangeName}/>
                         </div>
                         <div className="newRecipeImageUpload">
-                            <label>Image: </label>
                             {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-                            {this.state.recipeImageURL && <img src={this.state.recipeImageURL} alt="Recipe"/>}
-                            <FileUploader
-                                accept="image/*"
-                                name="recipeImage"
-                                randomizeFilename
-                                storageRef={storage.ref("images")}
-                                onUploadStart={this.handleUploadStart}
-                                onUploadError={this.handleUploadError}
-                                onUploadSuccess={this.handleUploadSuccess}
-                                onProgress={this.handleProgress}/>
+                            {this.state.recipeImageURL && <img id="uploadedImage" src={this.state.recipeImageURL} alt="Recipe"/>}
+                            <label style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius: 4, pointer: 'cursor'}}>
+                                Select Image
+                                <FileUploader
+                                    hidden
+                                    accept="image/*"
+                                    name="recipeImage"
+                                    randomizeFilename
+                                    storageRef={storage.ref("images")}
+                                    onUploadStart={this.handleUploadStart}
+                                    onUploadError={this.handleUploadError}
+                                    onUploadSuccess={this.handleUploadSuccess}
+                                    onProgress={this.handleProgress}
+                                    maxHeight="250"
+                                    maxWidth="250"
+                                />
+                            </label>
                         </div>
                         <div className="newRecipeDifficultyAndTimeLine">
                             <div className="newRecipeDifficultyField">
