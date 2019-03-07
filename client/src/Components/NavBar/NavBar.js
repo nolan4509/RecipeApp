@@ -33,7 +33,7 @@ class NavBar extends Component {
                         <a className="nav-link" href="/Recipes/quick">Quick Fix</a>
                     </li>
                     <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="/Recipes" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Dropdown
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -49,8 +49,8 @@ class NavBar extends Component {
                     </li>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" disabled/>
+                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
                 </form>
             </div>
         </nav>);
