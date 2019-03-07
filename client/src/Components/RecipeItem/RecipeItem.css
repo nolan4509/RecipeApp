@@ -215,7 +215,9 @@ if the content is smaller than the max space. */
 
 .recipePopupInstructionsField {
     grid-column: 7;
-    grid-row: 1 / auto;
+    grid-row: 1 / 6;
+    text-align: justify;
+    margin: auto;
 }
 
 /* Blur on Hover */
