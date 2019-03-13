@@ -284,13 +284,9 @@ app.get('/recipes/favorites/:userID', function(req, res) {
         res.send("User Not Found.");
         return;
     }
-    console.log(user.favoriteRecipes);
     user.favoriteRecipes.map(favoriteID => {
-        console.log(favoriteID);
         recipeArray.map(rcp => {
             if (favoriteID == rcp.recipeID) {
-                console.log('found!');
-                console.log(rcp);
                 retFavoriteRecipes.push(rcp);
             }
         });
@@ -368,15 +364,13 @@ app.post('/newRecipe', function(req, res) {
     database.child('Recipes/' + `${recipeIndex}`).set({
         recipe: recipeArray[recipeArray.length - 1]
     });
-    console.log(user);
+    // console.log(user);
     database.child('Users/' + `${user.id}`).update({
         userinfo: user
     });
 
     updateUsers();
     updateRecipes();
-    // console.log(userArray);
-    // console.log(recipeArray);
     res.send(recipeArray[recipeArray.length - 1]);
 
     // res.sendFile(__dirname + '/client/public/NewRecipe.html')
@@ -483,7 +477,7 @@ app.delete('/recipes/remove/:recipeID', function(req, res) {
     let authorID = removeRecipe(recipeID);
     if (authorID != null) {
         database.child('Recipes/' + `${recipeID}`).remove();
-        console.log('recipe removed from firebase!');
+        // console.log('Recipe removed from firebase.');
         removeRecipeFromUser(authorID, recipeID);
         res.send("Done");
     } else { //author ID is null...
@@ -522,5 +516,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(app.get('port'), function() {
-    console.log('Node app is running on port', app.get('port'));
+    console.log('The Best Recipe app is now running on port', app.get('port'));
 });

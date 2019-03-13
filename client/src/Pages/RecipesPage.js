@@ -41,15 +41,12 @@ class RecipesPage extends Component {
 
     handleDeleteRecipe(id) {
         // id.preventDefault();
-        console.log('trying to delete');
         fetch(`/recipes/remove/${id}`, {
             method: 'delete',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        }).then((res) => {
-            console.log(res);
         }).catch((error) => {
             console.log('In RecipesPage.js -- Error: ' + error);
         });

@@ -137,24 +137,24 @@ class RecipeItem extends Component {
             {/* Pop-Up Section */}
             <section>
                 <Modal visible={this.state.visible} width='800' height='500' effect="fadeInUp" onClickAway={() => this.closeModal()}>
-                                <div className="recipePopupFormBackground">
-                                    <div className="recipePopupContainer">
-                                        <p className="recipePopupTitleField">{this.props.recipe.name}</p>
-                                        <img className="recipePopupImage"src={this.props.recipe.imageURL} alt={this.props.recipe.name} width='200' height='200'/>
-                                        <p className="recipePopupCookTimeField">{this.props.recipe.cookTime}</p>
-                                        <p className="recipePopupDifficultyField">{this.props.recipe.difficulty}</p>
-                                        <p className="recipePopupEthnicityField">{this.props.recipe.cuisine}</p>
-                                        <p className="recipePopupCategoryField">{this.props.recipe.category}</p>
-                                        <p className="recipePopupVegetarianField">{this.props.recipe.vegetarian}</p>
-                                        <p className="recipePopupVeganField">{this.props.recipe.vegan}</p>
-                                        <p className="recipePopupGlutenFreeField">{this.props.recipe.glutenFree}</p>
-                                        <p className="recipePopupInstructionsField">{this.props.recipe.instructions}</p>
-                                        <p className="recipePopupIngredientsField">{this.props.recipe.ingredients}</p>
-                                    </div>
-                                </div>
-                                <button onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}>
-                                    Full View of Recipe
-                                </button>
+                    <div className="recipePopupFormBackground">
+                        <div className="recipePopupContainer">
+                            <p className="recipePopupTitleField">{this.props.recipe.name}</p>
+                            <img className="recipePopupImage"src={this.props.recipe.imageURL} alt={this.props.recipe.name} width='200' height='200'/>
+                            <p className="recipePopupCookTimeField">{this.props.recipe.cookTime}</p>
+                            <p className="recipePopupDifficultyField">{this.props.recipe.difficulty}</p>
+                            <p className="recipePopupEthnicityField">{this.props.recipe.cuisine}</p>
+                            <p className="recipePopupCategoryField">{this.props.recipe.category}</p>
+                            <p className="recipePopupVegetarianField">{this.props.recipe.vegetarian}</p>
+                            <p className="recipePopupVeganField">{this.props.recipe.vegan}</p>
+                            <p className="recipePopupGlutenFreeField">{this.props.recipe.glutenFree}</p>
+                            <p className="recipePopupInstructionsField">{this.props.recipe.instructions}</p>
+                            <p className="recipePopupIngredientsField">{this.props.recipe.ingredients}</p>
+                        </div>
+                    </div>
+                    <button onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}>
+                        Full View of Recipe
+                    </button>
                 </Modal>
             </section>
         </div>);

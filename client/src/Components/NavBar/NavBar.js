@@ -4,6 +4,8 @@ import React, {
 import './NavBar.css';
 //import {Link} from 'react-router-dom';
 
+
+//This class will need to be worked on post 1.0
 class NavBar extends Component {
 
     render() {

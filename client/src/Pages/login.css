@@ -8,17 +8,10 @@
     padding-bottom: 400px;
 }
 
-/* .container {
-    display: grid;
-    grid-template-columns: 5% 28% 3% 28% 3% 28% 5%;
-    margin: 0;
-    padding: 0;
-} */
 .box {
     position: relative;
     top: 100px;
     left: 30%;
-    /* transform: translate(-80%, 10%); */
     width: 400px;
     padding: 40px;
     background: rgba(0, 0, 0, 0.8);
