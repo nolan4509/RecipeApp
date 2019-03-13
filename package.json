@@ -15,11 +15,11 @@
         "body-parser": "^1.18.3",
         "ejs": "2.6.1",
         "express": "^4.16.4",
-        "express-param": "^1.1.0",
-        "firebase": "^5.7.2",
+        "express-param": "^1.2.2",
+        "firebase": "^5.8.6",
         "hoek": "^6.1.2",
         "node-fetch": "2.3.0",
-        "npm": "^6.5.0",
+        "npm": "^6.9.0",
         "password-generator": "^2.1.0"
     },
     "devDependencies": {
