@@ -1,5 +1,5 @@
 {
-    "name": "Recipe App",
+    "name": "recipeapp",
     "version": "1.0.0",
     "description": "An app for cataloging and sharing recipes.",
     "engines": {
