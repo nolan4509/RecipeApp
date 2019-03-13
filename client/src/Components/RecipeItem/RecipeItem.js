@@ -131,7 +131,7 @@ class RecipeItem extends Component {
                     : <br/>
             }
             </div>
-            <div className="favoriteCheckbox">
+            <div className="favoriteCheckboxContainer">
                 <input type="checkbox" name="FavoriteButton" checked={!!this.state.isFavorite} onChange={this.handleCheckbox}/>
             </div>
             {/* Pop-Up Section */}
