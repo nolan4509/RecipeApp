@@ -148,8 +148,9 @@ class RecipeItem extends Component {
                             <p className="recipePopupVegetarianField">{this.props.recipe.vegetarian}</p>
                             <p className="recipePopupVeganField">{this.props.recipe.vegan}</p>
                             <p className="recipePopupGlutenFreeField">{this.props.recipe.glutenFree}</p>
-                            <p className="recipePopupInstructionsField">{this.props.recipe.instructions}</p>
                             <p className="recipePopupIngredientsField">{this.props.recipe.ingredients}</p>
+                            <p className="recipePopupInstructionsLabel">Instructions</p>
+                            <p className="recipePopupInstructionsField">{this.props.recipe.instructions}</p>
                         </div>
                     </div>
                     <button onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}>
