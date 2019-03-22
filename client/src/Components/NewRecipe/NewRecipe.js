@@ -50,7 +50,7 @@ class NewRecipe extends Component {
 
     static defaultProps = {
         categories: [
-            'Breakfast', 'Lunch', 'Dinner'
+            'Breakfast', 'Lunch', 'Dinner', 'Snack'
         ],
         cuisines: [
             'American', 'Asian', 'Mexican', 'Other'

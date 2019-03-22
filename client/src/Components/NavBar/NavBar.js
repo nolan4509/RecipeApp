@@ -35,8 +35,8 @@ class NavBar extends Component {
                         <a className="nav-link" href="/Recipes/quick">Quick Fix</a>
                     </li>
                     <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
+                        <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Don't Click
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a className="dropdown-item" href="/Recipes/breakfast">Breakfast</a>
