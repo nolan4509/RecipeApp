@@ -2,6 +2,7 @@ import React, {
     Component
 } from 'react';
 import firebase from '../firebase.js';
+import Modal from 'react-awesome-modal';
 import './styles.css';
 
 class RecipeItemPage extends Component {
@@ -51,54 +52,53 @@ class RecipeItemPage extends Component {
         }
     }
 
+    openModal() {
+        this.setState({
+            visible: true
+        });
+    }
+
+    closeModal() {
+        this.setState({
+            visible: false
+        });
+    }
+
     componentDidMount() {
         this.getRecipe();
     }
 
     render() {
         return (
-            <div>
-            <h1 className="recipeName">{this.state.recipe.name}</h1>
-            <div className="notebookPage">
-                <div className="popupRecipeFormContent">
-                    <div className="popupRecipeTitleField">
-                        <h1>{this.state.recipe.name}</h1>
-                    </div>
-                    <img src={this.state.recipe.imageURL} alt={this.state.recipe.name} width="500" height="500"/>
-                    <div className="popupRecipeCookTimeField">
-                        <p>{this.state.recipe.cookTime}</p>
-                    </div>
-                    <div className="popupRecipeDifficultyField">
-                        <p>{this.state.recipe.difficulty}</p>
-                    </div>
-                    <div className="popupRecipeCuisineField">
-                        <p>{this.state.recipe.cuisine}</p>
-                    </div>
-                    <div className="popupRecipeCategoryField">
-                        <p>{this.state.recipe.category}</p>
-                    </div>
-                    <div className="popupRecipeVegetarianField">
-                        <p>{this.state.recipe.vegetarian}</p>
-                    </div>
-                    <div className="popupRecipeVeganField">
-                        <p>{this.state.recipe.vegan}</p>
-                    </div>
-                    <div className="popupRecipeGlutenFreeField">
-                        <p>{this.state.recipe.glutenFree}</p>
-                    </div>
-                    <div className="popupRecipeInstructionsField">
-                        <p>{this.state.recipe.instructions}</p>
-                    </div>
-                    <div className="popupRecipeIngredientsField">
-                        <p>{this.state.recipe.ingredients}</p>
-                    </div>
+            <div className="backgroundStyle">
+            <div className="recipeItemPageBackground">
+                <div className="recipeItemPageContainer">
+                    <p className="recipePopupTitleField">{this.state.recipe.name}</p>
+                    <img className="recipePopupImage"src={this.state.recipe.imageURL} alt={this.state.recipe.name} width='200' height='200'/>
+                    <p className="recipePopupCookTimeField">{this.state.recipe.cookTime}</p>
+                    <p className="recipePopupDifficultyField">{this.state.recipe.difficulty}</p>
+                    <p className="recipePopupEthnicityField">{this.state.recipe.cuisine}</p>
+                    <p className="recipePopupCategoryField">{this.state.recipe.category}</p>
+                    <p className="recipePopupVegetarianField">{this.state.recipe.vegetarian}</p>
+                    <p className="recipePopupVeganField">{this.state.recipe.vegan}</p>
+                    <p className="recipePopupGlutenFreeField">{this.state.recipe.glutenFree}</p>
+                    <p className="recipePopupIngredientsField">{this.state.recipe.ingredients}</p>
+                    <p className="recipePopupInstructionsLabel">Instructions</p>
+                    <p className="recipePopupInstructionsField">{this.state.recipe.instructions}</p>
                 </div>
             </div>
-            <button className="recipeItemRemoveButton" onClick={this.deleteRecipe}>
+            <button className="recipeItemRemoveButton" onClick={() => this.openModal()}>
                 <span className="forFlipButton front">Delete</span>
                 <span className="forFlipButton center"></span>
                 <span className="forFlipButton back">Recipe</span>
             </button>
+            <section>
+                <Modal visible={this.state.visible} width='800' height='500' effect="fadeInUp" onClickAway={() => this.closeModal()}>
+                    <h2>Are you sure you want to delete this Recipe?</h2>
+                    <button className="recipeItemConfirmRemoveButton" onClick={this.deleteRecipe}>Yes</button>
+                    <button className="recipeItemCancelButton" onClick={() => this.closeModal()}>No</button>
+                </Modal>
+            </section>
         </div>
         );
     }

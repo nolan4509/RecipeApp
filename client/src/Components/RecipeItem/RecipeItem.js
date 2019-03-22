@@ -140,7 +140,7 @@ class RecipeItem extends Component {
                     <div className="recipePopupFormBackground">
                         <div className="recipePopupContainer">
                             <p className="recipePopupTitleField">{this.props.recipe.name}</p>
-                            <img className="recipePopupImage"src={this.props.recipe.imageURL} alt={this.props.recipe.name} width='200' height='200'/>
+                            <img className="recipePopupImage"src={this.props.recipe.imageURL} alt={this.props.recipe.name} width='200' height='200' onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}/>
                             <p className="recipePopupCookTimeField">{this.props.recipe.cookTime}</p>
                             <p className="recipePopupDifficultyField">{this.props.recipe.difficulty}</p>
                             <p className="recipePopupEthnicityField">{this.props.recipe.cuisine}</p>
@@ -153,9 +153,6 @@ class RecipeItem extends Component {
                             <p className="recipePopupInstructionsField">{this.props.recipe.instructions}</p>
                         </div>
                     </div>
-                    <button onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}>
-                        Full View of Recipe
-                    </button>
                 </Modal>
             </section>
         </div>);

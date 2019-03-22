@@ -1,1 +1,107 @@
 /* Pages Styles */
+.recipeItemPageBackground {
+    background-image: url('/images/OpenNotepadCropped.png');
+    /* background-size: cover; */
+    background-repeat: no-repeat;
+    background-size: 100% 85%;
+    background-position: center 0px;
+    /* background-blend-mode: color; */
+    /* background-attachment: fixed; */
+    position: relative;
+    top: 2vw;
+    left: 12vw;
+    width: 85vw;
+    height: 900px;
+    padding-left: 50px;
+    padding-top: 27px;
+    padding-right: 155px;
+    padding-bottom: 175px;
+}
+
+.recipeItemPageContainer {
+    display: grid;
+    width: 70.5vw;
+    height: 680px;
+    grid-template-columns: 11vw 11vw 3.4vw 3.4vw 3.4vw 7.25vw auto;
+    grid-template-rows: 100px 350px 25px 25px 180px;
+}
+
+.recipeItemRemoveButton {
+    position: absolute;
+    top: 108%;
+    left: 79%;
+}
+
+/* Button Flipping */
+button.recipeItemRemoveButton {
+    position: absolute;
+    /* Button Position in div or container */
+    top: 108%;
+    left: 82%;
+    transform: translate(-50%, -50%);
+    /* Button Size */
+    width: 125px;
+    height: 60px;
+    text-align: center;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transform-origin: center center;
+    background: rgba(255, 255, 255, 0);
+    border-color: rgba(255, 255, 255, 0);
+}
+
+span.forFlipButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-align: center;
+    line-height: 60px;
+    font-size: 24px;
+    background: rgba(255, 255, 255, 0);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    border-radius: 30px;
+    text-transform: uppercase;
+    /* Text Color in button */
+    color: #000;
+    transition: 0.75s;
+}
+
+span.front {
+    transform: rotateX(0deg) translateZ(20px);
+}
+
+button.recipeItemRemoveButton:hover span.front {
+    transform: rotateX(-540deg) translateZ(20px);
+}
+
+span.back {
+    transform: rotateX(540deg) translateZ(20px);
+}
+
+button.recipeItemRemoveButton:hover span.back {
+    transform: rotateX(0deg) translateZ(20px);
+}
+
+span.center {
+    background: linear-gradient(to right, #c31a5b, #7129bd);
+}
+
+span.center:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #ffdd1f, #c31a5b);
+    border-radius: 30px;
+    transform: translateZ(-1px);
+}
+
+button.recipeItemRemoveButton:hover span.center {
+    transform: rotateX(-540deg) translateZ(0px);
+}
