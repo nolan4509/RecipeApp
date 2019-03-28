@@ -22,7 +22,7 @@
     display: grid;
     width: 70.5vw;
     height: 680px;
-    grid-template-columns: 11vw 11vw 3.4vw 3.4vw 3.4vw 7.25vw auto;
+    grid-template-columns: 11vw 5.5vw 5.5vw 3.4vw 3.4vw 3.4vw 7.25vw auto;
     grid-template-rows: 100px 350px 25px 25px 180px;
 }
 

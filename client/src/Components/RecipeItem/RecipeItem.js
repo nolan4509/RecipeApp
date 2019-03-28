@@ -11,8 +11,10 @@ class RecipeItem extends Component {
         this.handleCheckbox = this.handleCheckbox.bind(this);
         this.state = {
             isFavorite: false,
-            visible: false
+            visible: false,
+            timeArray: this.getTimeArray()
         }
+        console.log(this.state.timeArray);
     }
 
     checkIfFavorite(recipeID) {
@@ -93,10 +95,41 @@ class RecipeItem extends Component {
         this.props.history.push('/Recipe');
     }
 
+    getTimeArray() {
+        let timeArray = this.props.recipe.cookTime.split(",");
+        return timeArray;
+    }
+
+    getShortHandTimeString() {
+        let timeArray = this.state.timeArray;
+        let carryover = 0;
+        console.log(timeArray[0] + " | " + timeArray[1] + " | " + timeArray[2] + " | " + timeArray[3]);
+        let totalMinutes = parseInt(timeArray[1]) + parseInt(timeArray[3]);
+        if (totalMinutes > 59) {
+            carryover = 1;
+            totalMinutes = totalMinutes % 60;
+        }
+        let totalHours = parseInt(timeArray[0]) + parseInt(timeArray[2]) + carryover;
+        return (String(totalHours) + ":" + String(totalMinutes));
+    }
+
+    getPrepTimeString() {
+        let timeArray = this.state.timeArray;
+        let prepTimeString = "Prep - " + timeArray[0] + ":" + timeArray[1];
+        return prepTimeString;
+    }
+
+    getCookTimeString() {
+        let timeArray = this.state.timeArray;
+        let cookTimeString = "Cook - " + timeArray[2] + ":" + timeArray[3];
+        return cookTimeString;
+    }
+
     componentWillMount() {
         this.setState({
             isFavorite: this.checkIfFavorite(this.props.recipe.recipeID)
         });
+
     }
 
     render() {
@@ -105,7 +138,7 @@ class RecipeItem extends Component {
             <div className="homepage-recipe-tile" onClick={() => this.openModal()}>
                 <img src={ this.props.recipe.imageURL } alt="recipeImage" className="recipeImage"/>
                 <h1 className="recipeName">{this.props.recipe.name}</h1>
-                <h4 className="recipeCookTime">{this.props.recipe.cookTime}</h4>
+                <h4 className="recipeCookTime">{this.getShortHandTimeString()}</h4>
                 <h6 className="recipeDifficulty">{this.props.recipe.difficulty}</h6>
                 {
                     specialConditions
@@ -141,7 +174,8 @@ class RecipeItem extends Component {
                         <div className="recipePopupContainer">
                             <p className="recipePopupTitleField">{this.props.recipe.name}</p>
                             <img className="recipePopupImage"src={this.props.recipe.imageURL} alt={this.props.recipe.name} width='200' height='200' onClick={this.viewRecipe.bind(this,this.props.recipe.recipeID)}/>
-                            <p className="recipePopupCookTimeField">{this.props.recipe.cookTime}</p>
+                            <p className="recipePopupPrepTimeField">{this.getPrepTimeString()}</p>
+                            <p className="recipePopupCookTimeField">{this.getCookTimeString()}</p>
                             <p className="recipePopupDifficultyField">{this.props.recipe.difficulty}</p>
                             <p className="recipePopupEthnicityField">{this.props.recipe.cuisine}</p>
                             <p className="recipePopupCategoryField">{this.props.recipe.category}</p>

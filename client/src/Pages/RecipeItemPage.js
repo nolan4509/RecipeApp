@@ -11,7 +11,8 @@ class RecipeItemPage extends Component {
         this.getRecipe = this.getRecipe.bind(this);
         this.deleteRecipe = this.deleteRecipe.bind(this);
         this.state = {
-            recipe: []
+            recipe: [],
+            timeArray: ""
         }
     }
 
@@ -27,6 +28,7 @@ class RecipeItemPage extends Component {
             }
         }).then(res => res.json()).then((result) => {
             console.log('Success: ' + result);
+            this.getTimeArray(result);
             this.setState({
                 recipe: result
             })
@@ -64,6 +66,38 @@ class RecipeItemPage extends Component {
         });
     }
 
+    getTimeArray(recipe) {
+        let newArray = recipe.cookTime.split(",");
+        this.setState({
+            timeArray: newArray
+        });
+    }
+
+    getTotalTimeString() {
+        let timeArray = this.state.timeArray;
+        let carryover = 0;
+        console.log(timeArray[0] + " | " + timeArray[1] + " | " + timeArray[2] + " | " + timeArray[3]);
+        let totalMinutes = parseInt(timeArray[1]) + parseInt(timeArray[3]);
+        if (totalMinutes > 59) {
+            carryover = 1;
+            totalMinutes = totalMinutes % 60;
+        }
+        let totalHours = parseInt(timeArray[0]) + parseInt(timeArray[2]) + carryover;
+        return (String(totalHours) + ":" + String(totalMinutes));
+    }
+
+    getPrepTimeString() {
+        let timeArray = this.state.timeArray;
+        let prepTimeString = "Prep - " + timeArray[0] + ":" + timeArray[1];
+        return prepTimeString;
+    }
+
+    getCookTimeString() {
+        let timeArray = this.state.timeArray;
+        let cookTimeString = "Cook - " + timeArray[2] + ":" + timeArray[3];
+        return cookTimeString;
+    }
+
     componentDidMount() {
         this.getRecipe();
     }
@@ -75,7 +109,8 @@ class RecipeItemPage extends Component {
                 <div className="recipeItemPageContainer">
                     <p className="recipePopupTitleField">{this.state.recipe.name}</p>
                     <img className="recipePopupImage"src={this.state.recipe.imageURL} alt={this.state.recipe.name} width='200' height='200'/>
-                    <p className="recipePopupCookTimeField">{this.state.recipe.cookTime}</p>
+                    <p className="recipePopupPrepTimeField">{this.getPrepTimeString()}</p>
+                    <p className="recipePopupCookTimeField">{this.getCookTimeString()}</p>
                     <p className="recipePopupDifficultyField">{this.state.recipe.difficulty}</p>
                     <p className="recipePopupEthnicityField">{this.state.recipe.cuisine}</p>
                     <p className="recipePopupCategoryField">{this.state.recipe.category}</p>
