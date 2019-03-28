@@ -10,6 +10,10 @@ import FileUploader from 'react-firebase-file-uploader';
 import history from '../../history';
 let defaultImageURL = 'https://firebasestorage.googleapis.com/v0/b/recipe-app-4509.appspot.com/o/images%2FDefaultRecipeImage.png?alt=media&token=3d000675-8456-4939-a6d2-2f796d6bb328';
 
+// auth and storage are imported from firebase for authorID checking and image storage
+// FileUploader is for uploading images
+// history is for navigation and url flow
+
 require('firebase/auth');
 
 class NewRecipe extends Component {
@@ -28,6 +32,7 @@ class NewRecipe extends Component {
         this.handleChangeVegetarian = this.handleChangeVegetarian.bind(this)
         this.handleChangeVegan = this.handleChangeVegan.bind(this)
         this.handleChangeGlutenFree = this.handleChangeGlutenFree.bind(this)
+        // STATE
         this.state = {
             newRecipe: {},
             name: '',
@@ -64,7 +69,9 @@ class NewRecipe extends Component {
         difficulties: ['Easy', 'Medium', 'Difficult']
     }
 
-
+    /*
+     ** Calls POST '/newRecipe' and then navigates to '/'
+     */
     postRecipe = (e) => {
         e.preventDefault()
         //this.target.reset()
@@ -113,66 +120,79 @@ class NewRecipe extends Component {
 
     }
 
+    // Update state.name
     handleChangeName(event) {
         this.setState({
             name: event.target.value
         })
     }
 
+    // Update state.category
     handleChangeCategory(event) {
         this.setState({
             category: event.target.value
         })
     }
 
+    // Update state.cuisine
     handleChangeCuisine(event) {
         this.setState({
             cuisine: event.target.value
         })
     }
 
+    // Update state.difficulty
     handleChangeDifficulty(event) {
         this.setState({
             difficulty: event.target.value
         })
     }
 
+    // Update .state.ingredients
     handleChangeIngredients(event) {
         this.setState({
             ingredients: event.target.value
         })
     }
 
+    // Update state.instructions
     handleChangeInstructions(event) {
         this.setState({
             instructions: event.target.value
         })
     }
 
+    // Update state.prepTimeHr
     handleChangePrepTimeHr(event) {
         this.setState({
             prepTimeHr: event.target.value
         })
     }
 
+    // Update state.prepTimeMin
     handleChangePrepTimeMin(event) {
         this.setState({
             prepTimeMin: event.target.value
         })
     }
 
+    // Update state.cookTimeHr
     handleChangeCookTimeHr(event) {
         this.setState({
             cookTimeHr: event.target.value
         })
     }
 
+    // Update state.cookTimeMin
     handleChangeCookTimeMin(event) {
         this.setState({
             cookTimeMin: event.target.value
         })
     }
 
+    /*
+     ** Format a string for postRecipe by prepHr, prepMin, cookHr, cookMin & UPDATE STATE and RETURN formatted string
+     */
     timeFormat() {
         let prepHr = this.state.prepTimeHr;
         let prepMin = this.state.prepTimeMin;
@@ -209,37 +229,43 @@ class NewRecipe extends Component {
             cookTimeHr: cookMin,
             cookTimeMin: cookMin
         });
-        let zipString = String(prepHr) + "," + String(prepMin) + "," + String(cookHr) + "," + String(cookMin);
+        let zipString = String(prepHr) + ", " + String(prepMin) + ", " + String(cookHr) + ", " + String(cookMin);
         return zipString;
     }
 
+    // Update state.vegetarian
     handleChangeVegetarian(event) {
         this.setState({
             vegetarian: !this.state.vegetarian
         })
     }
 
+    // Update state.vegan
     handleChangeVegan(event) {
         this.setState({
             vegan: !this.state.vegan
         })
     }
 
+    // Update state.glutenFree
     handleChangeGlutenFree(event) {
         this.setState({
             glutenFree: !this.state.glutenFree
         })
     }
 
+    // Update state.isUploading to true & state.progress to 0
     handleUploadStart = () => this.setState({
         isUploading: true,
         progress: 0
     });
 
+    // Update state.progress
     handleProgress = (progress) => this.setState({
         progress
     });
 
+    // Update state.isUploading to false and log error
     handleUploadError = (error) => {
         this.setState({
             isUploading: false
@@ -247,6 +273,7 @@ class NewRecipe extends Component {
         console.error(error);
     }
 
+    // Update state.recipeImage & state.recipeImageURL & state.progress to 100 & state.isUploading to false
     handleUploadSuccess = (filename) => {
         this.setState({
             recipeImage: filename,
@@ -263,6 +290,7 @@ class NewRecipe extends Component {
             let timeString = this.state.prepTime + "," +
         }
     */
+
     render() {
         let categoryOptions = this.props.categories.map(category => {
             return <option key={category} value={category}>{category}</option>
@@ -274,14 +302,10 @@ class NewRecipe extends Component {
             return <option key={difficulty} value={difficulty}>{difficulty}</option>
         });
 
-        // const {
-        //     complete
-        // } = this.state
-
+        // All Content for the New Recipe Page
         return (<div className="backgroundStyle">
             <form id="newRecipeForm" onSubmit={this.postRecipe}>
                 <div className="notebookPage">
-                    {/* <Prompt when={!complete} message={location => (`Are you sure you want to go to ${location.pathname} before finishing your recipe post?`)}/> */}
                     <div className="newRecipeFormContent">
                         <div className="newRecipeTitleField">
                             <input type="text" id="newRecipeTitleField" name="newRecipeTitleField" placeholder="Recipe Title" value={this.state.name} onChange={this.handleChangeName}/>
