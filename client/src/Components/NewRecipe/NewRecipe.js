@@ -21,7 +21,10 @@ class NewRecipe extends Component {
         this.handleChangeDifficulty = this.handleChangeDifficulty.bind(this)
         this.handleChangeIngredients = this.handleChangeIngredients.bind(this)
         this.handleChangeInstructions = this.handleChangeInstructions.bind(this)
-        this.handleChangeCookTime = this.handleChangeCookTime.bind(this)
+        this.handleChangePrepTimeHr = this.handleChangePrepTimeHr.bind(this)
+        this.handleChangePrepTimeMin = this.handleChangePrepTimeMin.bind(this)
+        this.handleChangeCookTimeHr = this.handleChangeCookTimeHr.bind(this)
+        this.handleChangeCookTimeMin = this.handleChangeCookTimeMin.bind(this)
         this.handleChangeVegetarian = this.handleChangeVegetarian.bind(this)
         this.handleChangeVegan = this.handleChangeVegan.bind(this)
         this.handleChangeGlutenFree = this.handleChangeGlutenFree.bind(this)
@@ -34,7 +37,10 @@ class NewRecipe extends Component {
             difficulty: 'Easy',
             ingredients: '',
             instructions: '',
-            cookTime: '',
+            prepTimeHr: '',
+            prepTimeMin: '',
+            cookTimeHr: '',
+            timeString: '',
             vegetarian: false,
             vegan: false,
             glutenFree: false,
@@ -64,7 +70,9 @@ class NewRecipe extends Component {
         //this.target.reset()
         this.setState({
             complete: false
+
         })
+        let zipString = this.timeFormat();
         if (JSON.stringify(this.state.recipeImageURL).length === 2) {
             this.state.recipeImageURL = defaultImageURL
         }
@@ -76,7 +84,7 @@ class NewRecipe extends Component {
             difficulty: this.state.difficulty,
             ingredients: this.state.ingredients,
             instructions: this.state.instructions,
-            cookTime: this.state.cookTime,
+            cookTime: zipString,
             vegetarian: this.state.vegetarian,
             vegan: this.state.vegan,
             glutenFree: this.state.glutenFree,
@@ -102,6 +110,7 @@ class NewRecipe extends Component {
         });
         // e.preventDefault()
         history.push("/")
+
     }
 
     handleChangeName(event) {
@@ -140,10 +149,68 @@ class NewRecipe extends Component {
         })
     }
 
-    handleChangeCookTime(event) {
+    handleChangePrepTimeHr(event) {
         this.setState({
-            cookTime: event.target.value
+            prepTimeHr: event.target.value
         })
+    }
+
+    handleChangePrepTimeMin(event) {
+        this.setState({
+            prepTimeMin: event.target.value
+        })
+    }
+
+    handleChangeCookTimeHr(event) {
+        this.setState({
+            cookTimeHr: event.target.value
+        })
+    }
+
+    handleChangeCookTimeMin(event) {
+        this.setState({
+            cookTimeMin: event.target.value
+        })
+    }
+
+    timeFormat() {
+        let prepHr = this.state.prepTimeHr;
+        let prepMin = this.state.prepTimeMin;
+        let cookHr = this.state.cookTimeHr;
+        let cookMin = this.state.cookTimeMin;
+        if (prepHr > 59) {
+            prepHr = 59;
+        }
+        if (prepHr < 0) {
+            prepHr = 0;
+        }
+        if (prepMin > 59) {
+            prepMin = 59;
+        }
+        if (prepMin < 0) {
+            prepMin = 0;
+        }
+        if (cookHr > 59) {
+            cookHr = 59;
+        }
+        if (cookHr < 0) {
+            cookHr = 0;
+        }
+        if (cookMin > 59) {
+            cookMin = 59;
+        }
+        if (cookMin < 0) {
+            cookMin = 0;
+        }
+
+        this.setState({
+            prepTimeHr: prepHr,
+            prepTimeMin: prepMin,
+            cookTimeHr: cookMin,
+            cookTimeMin: cookMin
+        });
+        let zipString = String(prepHr) + "," + String(prepMin) + "," + String(cookHr) + "," + String(cookMin);
+        return zipString;
     }
 
     handleChangeVegetarian(event) {
@@ -191,8 +258,11 @@ class NewRecipe extends Component {
                 recipeImageURL: url
             }));
     };
-
-
+    /*
+        createTimeString() {
+            let timeString = this.state.prepTime + "," +
+        }
+    */
     render() {
         let categoryOptions = this.props.categories.map(category => {
             return <option key={category} value={category}>{category}</option>
@@ -236,11 +306,23 @@ class NewRecipe extends Component {
                                 />
                             </label>
                         </div>
+                        <div className="prepTimeLabel">
+                            <h1>Prep Time:</h1>
+                        </div>
                         <div className="cookTimeLabel">
                             <h1>Cook Time:</h1>
                         </div>
-                        <div className="newRecipeCookTimeField">
-                            <input type="text" ref="cookTime" id="newRecipeCookTimeField" name="newRecipeCookTimeField" value={this.state.cookTime} onChange={this.handleChangeCookTime}/>
+                        <div className="newRecipePrepTimeFieldHr">
+                            <input type="number" ref="prepTimeHr" id="newRecipePrepTimeFieldHr" name="newRecipehourPrepTimeField" placeholder = "Hours" value={this.state.prepTimeHr} onChange={this.handleChangePrepTimeHr}/>
+                        </div>
+                        <div className="newRecipePrepTimeFieldMin">
+                            <input type="number" ref="prepTimeMin" id="newRecipePrepTimeFieldMin" name="newRecipePrepTimeFieldMin" placeholder = "Min" value={this.state.prepTimeMin} onChange={this.handleChangePrepTimeMin}/>
+                        </div>
+                        <div className="newRecipeCookTimeFieldHr">
+                            <input type="number" ref="cookTimeHr" id="newRecipeCookTimeFieldHr" name="newRecipeCookTimeFieldHr" placeholder = "Hours" value={this.state.cookTimeHr} onChange={this.handleChangeCookTimeHr}/>
+                        </div>
+                        <div className="newRecipeCookTimeFieldMin">
+                            <input type="number" ref="cookTimeMin" id="newRecipeCookTimeFieldMin" name="newRecipeCookTimeFieldMin" placeholder = "Min" value={this.state.cookTimeMin} onChange={this.handleChangeCookTimeMin}/>
                         </div>
                         <div className="newRecipeDifficultyField">
                             <label htmlFor="newRecipeDifficultyField">Difficulty</label><br/>
