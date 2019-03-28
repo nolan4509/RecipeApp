@@ -1,20 +1,22 @@
 import React, {
     Component
 } from 'react';
-import './NewRecipe.css';
+import './styles.css';
 import {
     auth,
     storage
-} from '../../firebase.js';
+} from '../firebase.js';
 import FileUploader from 'react-firebase-file-uploader';
-import history from '../../history';
+import history from '../history';
 let defaultImageURL = 'https://firebasestorage.googleapis.com/v0/b/recipe-app-4509.appspot.com/o/images%2FDefaultRecipeImage.png?alt=media&token=3d000675-8456-4939-a6d2-2f796d6bb328';
 
 require('firebase/auth');
 
-class NewRecipe extends Component {
+class RecipeEditItemPage extends Component {
     constructor(props) {
         super(props);
+        this.getRecipe = this.getRecipe.bind(this)
+        this.updateRecipe = this.updateRecipe.bind(this)
         this.handleChangeName = this.handleChangeName.bind(this)
         this.handleChangeCategory = this.handleChangeCategory.bind(this)
         this.handleChangeCuisine = this.handleChangeCuisine.bind(this)
@@ -26,6 +28,7 @@ class NewRecipe extends Component {
         this.handleChangeVegan = this.handleChangeVegan.bind(this)
         this.handleChangeGlutenFree = this.handleChangeGlutenFree.bind(this)
         this.state = {
+            recipe: [],
             name: '',
             authorID: '',
             category: 'Breakfast',
@@ -38,7 +41,6 @@ class NewRecipe extends Component {
             vegan: false,
             glutenFree: false,
             submissionStatus: '',
-            user: null,
             isUploading: false,
             progress: 0,
             recipeImage: '',
@@ -56,47 +58,60 @@ class NewRecipe extends Component {
         difficulties: ['Easy', 'Medium', 'Difficult']
     }
 
+    getRecipe() {
+        console.log('LMAO');
+        fetch(`/recipes/${this.props.recipe.recipeID}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json()).then((result) => {
+            console.log('Success: ' + result);
+            this.setState({
+                recipe: result
+            })
+        }).catch((error) => {
+            console.log('In RecipeEditItemPage.js -- Error: ' + error);
+        });
+    }
 
-    postRecipe = (e) => {
+    updateRecipe = (e) => {
+        console.log('LMAO');
         e.preventDefault()
-        //this.target.reset()
         if (JSON.stringify(this.state.recipeImageURL).length === 2) {
             this.state.recipeImageURL = defaultImageURL
         }
         let reqBody = {
-            name: this.state.name,
+            name: this.props.recipe.name,
             authorID: auth.currentUser.uid,
-            category: this.state.category,
-            cuisine: this.state.cuisine,
-            difficulty: this.state.difficulty,
-            ingredients: this.state.ingredients,
-            instructions: this.state.instructions,
-            cookTime: this.state.cookTime,
-            vegetarian: this.state.vegetarian,
-            vegan: this.state.vegan,
-            glutenFree: this.state.glutenFree,
-            imageURL: this.state.recipeImageURL
+            category: this.props.recipe.category,
+            cuisine: this.props.recipe.cuisine,
+            difficulty: this.props.recipe.difficulty,
+            ingredients: this.props.recipe.ingredients,
+            instructions: this.props.recipe.instructions,
+            cookTime: this.props.recipe.cookTime,
+            vegetarian: this.props.recipe.vegetarian,
+            vegan: this.props.recipe.vegan,
+            glutenFree: this.props.recipe.glutenFree,
+            imageURL: this.props.recipeImageURL
         }
 
-        fetch('/newRecipe', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(reqBody)
-        }).then((res) => {
-            this.setState({
-                submissionStatus: 'New Recipe Created!'
-            })
-            return res.json();
-        }).then((json) => {
-            console.log('Success: ' + json);
-        }).catch((error) => {
-            console.log('In NewRecipe.js -- Error: ' + error);
-        });
-        // e.preventDefault()
-        history.push("/")
+        if (this.props.recipe.authorID === auth().currentUser.uid) {
+            fetch(`/recipes/update/${this.props.recipe.recipeID}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify(reqBody)
+            }).then((result) => {
+                history.push('/');
+
+            }).catch((error) => {
+                console.log('In RecipeEditItemPage.js -- Error: ' + error);
+            });
+        }
     }
 
     handleChangeName(event) {
@@ -187,6 +202,11 @@ class NewRecipe extends Component {
             }));
     };
 
+    componentDidMount() {
+        console.log('lmao');
+        this.getRecipe();
+    }
+
 
     render() {
         let categoryOptions = this.props.categories.map(category => {
@@ -199,16 +219,16 @@ class NewRecipe extends Component {
             return <option key={difficulty} value={difficulty}>{difficulty}</option>
         });
 
-        return (<div className="backgroundStyle">
-            <form id="newRecipeForm" onSubmit={this.postRecipe}>
+        return (<div>
+            <form id="editRecipeForm" onSubmit={this.updateRecipe}>
                 <div className="notebookPage">
-                    <div className="newRecipeFormContent">
-                        <div className="newRecipeTitleField">
-                            <input type="text" id="newRecipeTitleField" name="newRecipeTitleField" placeholder="Recipe Title" value={this.state.name} onChange={this.handleChangeName}/>
+                    <div className="editRecipeFormContent">
+                        <div className="editRecipeTitleField">
+                            <input type="text" id="editRecipeTitleField" name="editRecipeTitleField" value={this.props.recipe.name} onChange={this.handleChangeName}/>
                         </div>
-                        <div className="newRecipeImageUpload">
+                        <div className="editRecipeImageUpload">
                             {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-                            {this.state.recipeImageURL && <img id="uploadedImage" src={this.state.recipeImageURL} alt="Recipe"/>}
+                            {this.state.recipeImageURL && <img id="editRecipeUploadedImage" src={this.state.recipeImageURL} alt="Recipe"/>}
                             <label style={{backgroundColor: 'steelblue', color: 'white', padding: 5, borderRadius: 4, pointer: 'cursor',}}>
                                 Select Image
                                 <FileUploader
@@ -226,52 +246,52 @@ class NewRecipe extends Component {
                                 />
                             </label>
                         </div>
-                        <div className="cookTimeLabel">
+                        <div className="editRecipecookTimeLabel">
                             <h1>Cook Time:</h1>
                         </div>
-                        <div className="newRecipeCookTimeField">
-                            <input type="text" ref="cookTime" id="newRecipeCookTimeField" name="newRecipeCookTimeField" value={this.state.cookTime} onChange={this.handleChangeCookTime}/>
+                        <div className="editRecipeCookTimeField">
+                            <input type="text" ref="cookTime" id="newRecipeCookTimeField" name="editRecipeCookTimeField" value={this.props.cookTime} onChange={this.handleChangeCookTime}/>
                         </div>
-                        <div className="newRecipeDifficultyField">
-                            <label htmlFor="newRecipeDifficultyField">Difficulty</label><br/>
-                            <select ref="difficulty" id="newRecipeDifficultyField" name="newRecipeDifficultyField" value={this.state.difficulty} onChange={this.handleChangeDifficulty}>
+                        <div className="editRecipeDifficultyField">
+                            <label htmlFor="editRecipeDifficultyField">Difficulty</label><br/>
+                            <select ref="difficulty" id="editRecipeDifficultyField" name="editRecipeDifficultyField" value={this.state.difficulty} onChange={this.handleChangeDifficulty}>
                                 {difficultyOptions}
                             </select>
                         </div>
-                        <div className="newRecipeCategoryField">
-                            <label htmlFor="newRecipeCategoryField">Category</label><br/>
-                            <select ref="category" id="newRecipeCategoryField" name="newRecipeCategoryField" value={this.state.category} onChange={this.handleChangeCategory}>
+                        <div className="editRecipeCategoryField">
+                            <label htmlFor="editRecipeCategoryField">Category</label><br/>
+                            <select ref="category" id="editRecipeCategoryField" name="editRecipeCategoryField" value={this.state.category} onChange={this.handleChangeCategory}>
                                 {categoryOptions}
                             </select>
                         </div>
-                        <div className="newRecipeCuisineField">
-                            <label htmlFor="newRecipeCuisineField">Cuisine</label><br/>
-                            <select ref="cuisine" id="newRecipeCuisineField" name="newRecipeCuisineField" value={this.state.cuisine} onChange={this.handleChangeCuisine}>
+                        <div className="editRecipeCuisineField">
+                            <label htmlFor="editRecipeCuisineField">Cuisine</label><br/>
+                            <select ref="cuisine" id="editRecipeCuisineField" name="editRecipeCuisineField" value={this.state.cuisine} onChange={this.handleChangeCuisine}>
                                 {cuisineOptions}
                             </select>
                         </div>
-                        <div className="newRecipeIngredientsField">
-                            <label htmlFor="newRecipeIngredientsField">Ingredients</label><br/>
-                            <textarea ref="ingredientArray" id="newRecipeIngredientsField" name="newRecipeIngredientsField" rows="4" cols="30" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
+                        <div className="editRecipeIngredientsField">
+                            <label htmlFor="editRecipeIngredientsField">Ingredients</label><br/>
+                            <textarea ref="ingredientArray" id="editRecipeIngredientsField" name="editRecipeIngredientsField" rows="4" cols="30" value={this.state.ingredients} onChange={this.handleChangeIngredients}/>
                         </div>
-                        <div className="newRecipeInstructionsField">
-                            <label htmlFor="newRecipeInstructionsField">Instructions</label><br/>
-                            <textarea ref="instructions" id="newRecipeInstructionsField" name="newRecipeInstructionsField" rows="4" cols="30" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
+                        <div className="editRecipeInstructionsField">
+                            <label htmlFor="editRecipeInstructionsField">Instructions</label><br/>
+                            <textarea ref="instructions" id="editRecipeInstructionsField" name="editRecipeInstructionsField" rows="4" cols="30" value={this.state.instructions} onChange={this.handleChangeInstructions}/>
                         </div>
-                        <div className="newRecipeVegetarianField">
-                            <label htmlFor="newRecipeVegetarianField">Vegetarian</label><br/>
-                            <input type="checkbox" ref="vegetarian" id="newRecipeVegetarianField" name="newRecipeVegetarianField" value={this.state.vegetarian} onChange={this.handleChangeVegetarian}/>
+                        <div className="editRecipeVegetarianField">
+                            <label htmlFor="editRecipeVegetarianField">Vegetarian</label><br/>
+                            <input type="checkbox" ref="vegetarian" id="editRecipeVegetarianField" name="editRecipeVegetarianField" value={this.state.vegetarian} onChange={this.handleChangeVegetarian}/>
                         </div>
                         <div className="newRecipeVeganField">
                             <label htmlFor="newRecipeVeganField">Vegan</label><br/>
-                            <input type="checkbox" ref="vegan" id="newRecipeVeganField" name="newRecipeVeganField" value={this.state.vegan} onChange={this.handleChangeVegan}/>
+                            <input type="checkbox" ref="vegan" id="editRecipeVeganField" name="editRecipeVeganField" value={this.state.vegan} onChange={this.handleChangeVegan}/>
                         </div>
-                        <div className="newRecipeGlutenFreeField">
-                            <label htmlFor="newRecipeGlutenFreeField">Gluten Free</label><br/>
-                            <input type="checkbox" ref="glutenFree" id="newRecipeGlutenFreeField" name="newRecipeGlutenFreeField" value={this.state.glutenFree} onChange={this.handleChangeGlutenFree}/>
+                        <div className="editRecipeGlutenFreeField">
+                            <label htmlFor="editRecipeGlutenFreeField">Gluten Free</label><br/>
+                            <input type="checkbox" ref="glutenFree" id="editRecipeGlutenFreeField" name="editRecipeGlutenFreeField" value={this.state.glutenFree} onChange={this.handleChangeGlutenFree}/>
                         </div>
                         <br/>
-                        <button id="newRecipeButton" className="newRecipeButton" form="newRecipeForm" type="submit">Submit</button>
+                        <button id="editRecipeButton" className="editRecipeButton" form="editRecipeForm" type="submit">Submit</button>
                         <h3>{this.state.submissionStatus}</h3>
                     </div>
                 </div>
@@ -280,4 +300,4 @@ class NewRecipe extends Component {
     }
 }
 
-export default NewRecipe;
+export default RecipeEditItemPage;
