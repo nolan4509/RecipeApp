@@ -111,7 +111,23 @@ class RecipeItem extends Component {
             totalMinutes = totalMinutes % 60;
         }
         let totalHours = parseInt(timeArray[0]) + parseInt(timeArray[2]) + carryover;
-        return (String(totalHours) + ":" + String(totalMinutes));
+        if (totalHours == 0) {
+            if (totalMinutes > 1) {
+                return (String(totalMinutes) + " minutes");
+            } else return (String(totalMinutes) + " minute");
+        } else if (totalMinutes == 0) {
+            if (totalHours > 1) {
+                return (String(totalHours) + " hours");
+            } else return (String(totalHours) + " hour");
+        } else {
+            if (totalHours > 1 && totalMinutes > 1) {
+                return (String(totalHours) + " hrs & " + String(totalMinutes) + " mins");
+            } else if (totalHours > 1) {
+                return (String(totalHours) + " hrs & " + String(totalMinutes) + " min");
+            } else if (totalMinutes > 1) {
+                return (String(totalHours) + " hr & " + String(totalMinutes) + " mins");
+            } else return (String(totalHours) + " hr & " + String(totalMinutes) + " min");
+        }
     }
 
     //Display Prep Time as a simple time value "Prep - HH:MM"

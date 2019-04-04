@@ -42,9 +42,10 @@ class NewRecipe extends Component {
             difficulty: 'Easy',
             ingredients: '',
             instructions: '',
-            prepTimeHr: '',
-            prepTimeMin: '',
-            cookTimeHr: '',
+            prepTimeHr: 0,
+            prepTimeMin: 0,
+            cookTimeHr: 0,
+            cookTimeMin: 0,
             timeString: '',
             vegetarian: false,
             vegan: false,
@@ -230,6 +231,7 @@ class NewRecipe extends Component {
             cookTimeMin: cookMin
         });
         let zipString = String(prepHr) + ", " + String(prepMin) + ", " + String(cookHr) + ", " + String(cookMin);
+
         return zipString;
     }
 
@@ -337,16 +339,16 @@ class NewRecipe extends Component {
                             <h1>Cook Time:</h1>
                         </div>
                         <div className="newRecipePrepTimeFieldHr">
-                            <input type="number" ref="prepTimeHr" id="newRecipePrepTimeFieldHr" name="newRecipehourPrepTimeField" placeholder = "Hours" value={this.state.prepTimeHr} defaultValue="0" onChange={this.handleChangePrepTimeHr}/>
+                            <input type="number" ref="prepTimeHr" id="newRecipePrepTimeFieldHr" name="newRecipehourPrepTimeField" placeholder = "Hours" value={this.state.prepTimeHr} onChange={this.handleChangePrepTimeHr}/>
                         </div>
                         <div className="newRecipePrepTimeFieldMin">
-                            <input type="number" ref="prepTimeMin" id="newRecipePrepTimeFieldMin" name="newRecipePrepTimeFieldMin" placeholder = "Min" value={this.state.prepTimeMin} defaultValue="0" onChange={this.handleChangePrepTimeMin}/>
+                            <input type="number" ref="prepTimeMin" id="newRecipePrepTimeFieldMin" name="newRecipePrepTimeFieldMin" placeholder = "Min" value={this.state.prepTimeMin} onChange={this.handleChangePrepTimeMin}/>
                         </div>
                         <div className="newRecipeCookTimeFieldHr">
-                            <input type="number" ref="cookTimeHr" id="newRecipeCookTimeFieldHr" name="newRecipeCookTimeFieldHr" placeholder = "Hours" value={this.state.cookTimeHr} defaultValue="0" onChange={this.handleChangeCookTimeHr}/>
+                            <input type="number" ref="cookTimeHr" id="newRecipeCookTimeFieldHr" name="newRecipeCookTimeFieldHr" placeholder = "Hours" value={this.state.cookTimeHr} onChange={this.handleChangeCookTimeHr}/>
                         </div>
                         <div className="newRecipeCookTimeFieldMin">
-                            <input type="number" ref="cookTimeMin" id="newRecipeCookTimeFieldMin" name="newRecipeCookTimeFieldMin" placeholder = "Min" value={this.state.cookTimeMin} defaultValue="0" onChange={this.handleChangeCookTimeMin}/>
+                            <input type="number" ref="cookTimeMin" id="newRecipeCookTimeFieldMin" name="newRecipeCookTimeFieldMin" placeholder = "Min" value={this.state.cookTimeMin} onChange={this.handleChangeCookTimeMin}/>
                         </div>
                         <div className="newRecipeDifficultyField">
                             <label htmlFor="newRecipeDifficultyField">Difficulty</label><br/>
