@@ -3,13 +3,16 @@ import {
     Switch,
     Route
 } from 'react-router-dom';
-import Login from './Pages/login';
+import NavBar from './Components/NavBar/NavBar';
 import NewRecipePage from './Pages/NewRecipePage';
 import AllRecipesPage from './Pages/AllRecipesPage';
+import Login from './Pages/login';
+import RecipeItemPage from './Pages/RecipeItemPage';
 import FavoriteRecipesPage from './Pages/FavoriteRecipesPage';
 import QuickFixPage from './Pages/QuickFixPage'
-import RecipeItemPage from './Pages/RecipeItemPage';
-import NavBar from './Components/NavBar/NavBar';
+import RecipeCategoryPage from './Pages/RecipeCategoryPage';
+import RecipeDifficultyPage from './Pages/RecipeDifficultyPage';
+
 
 /*
 ** This is really the whole App component itself. Index.js will render the const App in a <App/> Tag.
@@ -42,6 +45,8 @@ const App = () => (<main>
         <Route path='/Recipes/all' component={AllRecipesPage}/>
         <Route path='/Recipes/favorites' component={FavoriteRecipesPage}/>
         <Route path='/Recipes/quickFix' component={QuickFixPage}/>
+        <Route path='/Recipes/category' component={RecipeCategoryPage}/>
+        <Route path='/Recipes/difficulty' component={RecipeDifficultyPage}/>
     </Switch>
 </main>)
 
