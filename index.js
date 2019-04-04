@@ -14,26 +14,25 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 /*
     Contents:
         ~45:  class Recipe
-        ~60:  class User
+        ~65:  class User
         ~90:  function findRecipeById()
-        ~100: function updateUsers()
-        ~120: function updateRecipes()
-        ~140: function removeRecipe(id)
-        ~150: function removeRecipeFromUser(userID, recipeID)
+        ~105: function updateUsers()
+        ~125: function updateRecipes()
+        ~150: function removeRecipe(id)
+        ~165: function removeRecipeFromUser(userID, recipeID)
 
-        ~190: GET /recipes/:recipeID'
-        ~210: GET /recipes/user/:userID'
-        ~240: GET /recipes'
-        ~250: GET /user/:userID'
-        ~260: GET /users/favorites/check/:userID/:recipeID
-        ~275: GET /recipes/favorites/:userID
-        ~310: POST /add/user/:userName/:userID/:email'
-        ~330: POST /newRecipe'
-        ~390: PUT /recipes/update/:recipeID'
-        ~460: PUT /users/favorites/:userID/:recipeID
-        ~480: DELETE /recipes/remove/:recipeID'
-        ~500: DELETE /users/favorites/remove/:userID/:recipeID
-
+        ~205: GET /recipes/:recipeID'
+        ~225: GET /recipes/user/:userID'
+        ~260: GET /recipes'
+        ~270: GET /user/:userID'
+        ~280: GET /users/favorites/check/:userID/:recipeID
+        ~300: GET /recipes/favorites/:userID
+        ~335: POST /add/user/:userName/:userID/:email'
+        ~355: POST /newRecipe'
+        ~420: PUT /recipes/update/:recipeID'
+        ~485: PUT /users/favorites/:userID/:recipeID
+        ~515: DELETE /recipes/remove/:recipeID'
+        ~530: DELETE /users/favorites/remove/:userID/:recipeID
 */
 
 
@@ -59,6 +58,7 @@ class Recipe {
     }
 }
 
+//Primary User Object
 class User {
     constructor(id, name, email, recipePosts, favoriteRecipes) {
         this.id = id; //String
@@ -85,6 +85,9 @@ let database = firebase.app().database().ref();
 let userDatabase = database.child('Users');
 let recipeDatabase = database.child('Recipes');
 
+/*
+ ** Search through recipeArray by recipeID and return it
+ */
 function findRecipeById(id) {
     recipeArray.map(rcp => {
         if (id === rcp.recipeID) {
@@ -94,7 +97,9 @@ function findRecipeById(id) {
     return null;
 }
 
-//Load users from firebase to userArray
+/*
+ ** Load users from firebase to userArray
+ */
 function updateUsers() {
     userDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
@@ -114,7 +119,9 @@ function updateUsers() {
     });
 }
 
-//load recipes from firebase into recipeArray
+/*
+ ** Load recipes from firebase into recipeArray
+ */
 function updateRecipes() {
     recipeDatabase.once('value', function(snap) {
         snap.forEach(function(childSnap) {
@@ -134,7 +141,9 @@ function updateRecipes() {
     });
 }
 
-// removes the recipe from recipeArray and returns the authorID
+/*
+ ** Removes the recipe from recipeArray by recipeID and returns the authorID
+ */
 function removeRecipe(id) {
     let authorID = null;
     for (var index = 0; index < recipeArray.length; index++) {
@@ -147,7 +156,9 @@ function removeRecipe(id) {
     return authorID;
 }
 
-//Removes recipe from user's array of recipes on database and in recipeArray
+/*
+ ** Removes recipe from userArray by userID on and database by user.recipePosts[recipeID]
+ */
 function removeRecipeFromUser(userID, recipeID) {
     for (var usr = 0; usr < userArray.length; usr++) {
         if (userArray[usr].id == userID) {
@@ -180,14 +191,16 @@ let dummyRecipe = new Recipe(1, 'DUMMY_DATA', 'DUMMY_DATA', 'DUMMY_DATA', 'DUMMY
 let recipeArray = [];
 recipeArray[0] = dummyRecipe;
 
-updateUsers(); //loads users from firebase into userArray
-updateRecipes(); //loads recipePosts from firebase into recipeArray
+updateUsers(); // Loads users from firebase into userArray
+updateRecipes(); // Loads recipePosts from firebase into recipeArray
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------ GET REQUESTS ------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-//  GET INDIVIDUAL RECIPE BY USING RECIPE ID
+/*
+ ** GET INDIVIDUAL RECIPE BY USING recipeID
+ */
 app.get('/recipes/:recipeID', function(req, res) {
     let recipeSearchID = Number(req.params.recipeID);
     retRecipe = null;
@@ -200,12 +213,15 @@ app.get('/recipes/:recipeID', function(req, res) {
             return;
         }
     });
+    // If no recipe found, alert front end
     if (retRecipe === null) {
         res.send('No recipes found with requested id');
     }
 });
 
-//  GET ALL RECIPES FOR SPECIFIED USER BY USING USER ID
+/*
+ ** GET ALL RECIPES FOR SPECIFIED USER BY USING userID
+ */
 app.get('/recipes/user/:userID', function(req, res) {
     let searchID = String(req.params.userID);
     let user = null;
@@ -217,10 +233,12 @@ app.get('/recipes/user/:userID', function(req, res) {
             user = usr;
         }
     });
+    // If no user found, alert front end
     if (user === null) {
         res.send("User Not Found.");
         return;
     }
+    // Search through recipeArray and check if authorID of each recipe matches userID and return them
     recipeArray.map(recipe => {
         if (recipe.authorID == searchID) {
             retRecipes.push(recipe);
@@ -233,7 +251,9 @@ app.get('/recipes/user/:userID', function(req, res) {
     res.send(JSON.stringify(retRecipes));
 });
 
-//GET ALL RECIPES
+/*
+ ** GET ALL RECIPES IN recipeArray
+ */
 app.get('/recipes', function(req, res) {
     retRecipes = [];
     for (var rcp = 1; rcp < recipeArray.length; rcp++) {
@@ -242,7 +262,9 @@ app.get('/recipes', function(req, res) {
     res.send(JSON.stringify(retRecipes));
 });
 
-// GET USER BY USERID
+/*
+ ** GET USER BY userID
+ */
 app.get('/user/:userID', function(req, res) {
     userArray.map(usr => {
         if (usr.id == req.params.userID) {
@@ -253,7 +275,9 @@ app.get('/user/:userID', function(req, res) {
     res.send(false);
 });
 
-//CHECK IF A GIVEN ID IS IN A USER'S FAVORITES
+/*
+ ** CHECK IF A GIVEN userID IS IN A USER'S FAVORITES
+ */
 app.get('/users/favorites/check/:userID/:recipeID', function(req, res) {
     userArray.map(usr => {
         if (usr.id == req.params.userID) {
@@ -270,7 +294,9 @@ app.get('/users/favorites/check/:userID/:recipeID', function(req, res) {
     res.send(false);
 });
 
-//VIEW ALL FAVORITES FOR A USER
+/*
+ ** VIEW ALL FAVORITES FOR A USER BY userID
+ */
 app.get('/recipes/favorites/:userID', function(req, res) {
     let searchID = String(req.params.userID);
     let user = null;
@@ -284,6 +310,7 @@ app.get('/recipes/favorites/:userID', function(req, res) {
         res.send("User Not Found.");
         return;
     }
+    // Search through a user's favoriteRecipes array comparing each favoriteID against each recipeID
     user.favoriteRecipes.map(favoriteID => {
         recipeArray.map(rcp => {
             if (favoriteID == rcp.recipeID) {
@@ -303,7 +330,9 @@ app.get('/recipes/favorites/:userID', function(req, res) {
 /*----------------------------- POST REQUESTS ------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-//  CREATE NEW USER ACCOUNT WITH NAME ID EMAIL BOOKPOSTS
+/*
+ ** CREATE NEW USER ACCOUNT WITH userName userID email recipePosts
+ */
 app.post('/add/user/:userName/:userID/:email', function(req, res) {
     let id = String(req.params.userID);
     let name = String(req.params.userName);
@@ -317,7 +346,9 @@ app.post('/add/user/:userName/:userID/:email', function(req, res) {
     res.send(userArray[userArray.length - 1]);
 });
 
-//  CREATE AND POST A NEW RECIPE
+/*
+ ** CREATE AND POST A NEW RECIPE, THEN UPDATE userArray AND recipeArray
+ */
 app.post('/newRecipe', function(req, res) {
     let recipeTitle = String(req.body.name);
     let recipeID = String(req.body.recipeID);
@@ -381,7 +412,9 @@ app.post('/newRecipe', function(req, res) {
 /*------------------------------ PUT REQUESTS ------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-// UPDATE INDIVIDUAL RECIPE BY USING RECIPE ID
+/*
+ ** UPDATE INDIVIDUAL RECIPE BY USING recipeID AND UPDATE recipeArray
+ */
 app.put('/recipes/update/:recipeID', function(req, res) {
     let selectedRecipe = null;
     recipeID = req.params.recipeID;
@@ -446,7 +479,9 @@ app.put('/recipes/update/:recipeID', function(req, res) {
     res.send(selectedRecipe);
 });
 
-//ADD RECIPE TO USERS FAVORITES
+/*
+ ** ADD RECIPE TO USERS FAVORITES
+ */
 app.put('/users/favorites/:userID/:recipeID', function(req, res) {
     userArray.map(usr => {
         if (usr.id == req.params.userID) {
@@ -471,7 +506,9 @@ app.put('/users/favorites/:userID/:recipeID', function(req, res) {
 /*---------------------------- DELETE REQUESTS -----------------------------*/
 /*--------------------------------------------------------------------------*/
 
-//  DELETE RECIPE BY USING RECIPE ID
+/*
+ ** DELETE RECIPE BY USING RECIPE ID
+ */
 app.delete('/recipes/remove/:recipeID', function(req, res) {
     let recipeID = Number(req.params.recipeID)
     let authorID = removeRecipe(recipeID);
@@ -486,7 +523,9 @@ app.delete('/recipes/remove/:recipeID', function(req, res) {
     return;
 });
 
-//REMOVE RECIPE FROM USERS FAVORITES
+/*
+ ** REMOVE RECIPE FROM USERS FAVORITES
+ */
 app.delete('/users/favorites/remove/:userID/:recipeID', function(req, res) {
     userArray.map(usr => {
         if (usr.id == req.params.userID) {
