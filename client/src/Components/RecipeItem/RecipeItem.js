@@ -100,6 +100,7 @@ class RecipeItem extends Component {
         return timeArray;
     }
 
+    //Combine Prep and cook time and display it as a simple time value HH:MM
     getShortHandTimeString() {
         let timeArray = this.state.timeArray;
         let carryover = 0;
@@ -113,12 +114,14 @@ class RecipeItem extends Component {
         return (String(totalHours) + ":" + String(totalMinutes));
     }
 
+    //Display Prep Time as a simple time value "Prep - HH:MM"
     getPrepTimeString() {
         let timeArray = this.state.timeArray;
         let prepTimeString = "Prep - " + timeArray[0] + ":" + timeArray[1];
         return prepTimeString;
     }
 
+    //Display Cook Time as a simple time value "Cook - HH:MM"
     getCookTimeString() {
         let timeArray = this.state.timeArray;
         let cookTimeString = "Cook - " + timeArray[2] + ":" + timeArray[3];
