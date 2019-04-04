@@ -8,6 +8,11 @@ import {
 } from '../firebase.js';
 import firebase from '../firebase.js';
 import RecipesPage from './RecipesPage';
+
+// importing firebase for image and recipe database access
+// auth is the authentication service from firebase
+// provider is a separate google authentication service used to create a new user using a google account
+
 require('firebase/auth');
 
 class Login extends Component {
@@ -18,6 +23,7 @@ class Login extends Component {
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
+        // STATE
         this.state = {
             realUserID: '',
             userID: '',
@@ -30,6 +36,9 @@ class Login extends Component {
         }
     }
 
+    /*
+     ** Calls signOut() on auth in order to sign the user out, then navigates to '/'
+     */
     logout() {
         auth.signOut().then(() => {
             this.setState({
@@ -39,6 +48,10 @@ class Login extends Component {
         this.props.history.push('/')
     }
 
+    /*
+     ** calls signInWithPopup() from auth to use google's authentication service.  If it is successful it returns a user object
+     ** newUser is passed to checkIfFirstLogin()
+     */
     login() {
         auth.signInWithPopup(provider).then((result) => {
             var newUser = auth.currentUser;
@@ -49,7 +62,9 @@ class Login extends Component {
         });
     }
 
-    //Uses backend call to check if user is already in the database
+    /*
+     ** Calls GET '/user/:userID'.  If it returns false, the user is not in the database and createUserEntryOnFirebase() is called
+     */
     checkIfFirstLogin(newUser) {
         fetch(`/user/${newUser.uid}`, {
             headers: {
@@ -66,7 +81,9 @@ class Login extends Component {
         });
     }
 
-    //called if user is not found in the database
+    /*
+     ** Calls POST '/add/user/:userName/:userID/:email' To have the backend create a new user entry on firebase
+     */
     createUserEntryOnFirebase(newUser) {
         fetch(`/add/user/${newUser.displayName}/${newUser.uid}/${newUser.email}`, {
             headers: {
@@ -79,6 +96,7 @@ class Login extends Component {
         });
     }
 
+    // Update state.userEmail and state.userID
     handleChangeEmail(event) {
         this.setState({
             userEmail: event.target.value,
@@ -86,18 +104,23 @@ class Login extends Component {
         })
     }
 
+    // Update state.userPassword
     handleChangePassword(event) {
         this.setState({
             userPassword: event.target.value
         })
     }
 
+    // Update state.userName
     handleChangeName(event) {
         this.setState({
             userName: event.target.value
         })
     }
 
+    /*
+     ** Calls auth.setPersistence() to persist the login in between sessions
+     */
     rememberUser() {
         auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
             .catch(function(error) {
@@ -105,6 +128,9 @@ class Login extends Component {
             });
     }
 
+    /*
+     ** uses auth to check if a user is signed in, then executes getRecipes()
+     */
     componentDidMount() {
         auth.onAuthStateChanged((user) => {
             if (user) {

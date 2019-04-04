@@ -3,18 +3,24 @@ import React, {
 } from 'react';
 import Recipes from '../Components/Recipes/Recipes';
 
+// importing firebase for image and recipe database access
+
 class RecipesPage extends Component {
 
     constructor(props) {
         super(props)
         this.handleViewRecipe = this.handleViewRecipe.bind(this);
         this.handleDeleteRecipe = this.handleDeleteRecipe.bind(this);
+        // STATE
         this.state = {
             userID: '',
             recipes: [],
         }
     }
 
+    /*
+     ** Calls GET '/recipes/user/:userID' and sets the array returned as state.recipes
+     */
     getRecipes() {
         fetch(`/recipes/user/${this.props.currentUserID}`, {
             method: 'GET',
@@ -32,6 +38,7 @@ class RecipesPage extends Component {
         });
     }
 
+    // Sets state.userID and executes getRecipes()
     componentDidMount() {
         this.setState({
             userID: this.props.currentUserID
@@ -39,6 +46,9 @@ class RecipesPage extends Component {
         this.getRecipes();
     }
 
+    /*
+     ** Calls DELETE '/recipes/remove/:recipeID'
+     */
     handleDeleteRecipe(id) {
         // id.preventDefault();
         fetch(`/recipes/remove/${id}`, {
@@ -52,6 +62,9 @@ class RecipesPage extends Component {
         });
     }
 
+    /*
+     ** Navigates user to a full page view of the Recipe with the specified id
+     */
     handleViewRecipe(id) {
         this.props.history.push(`/Recipe/${id}`);
     }
