@@ -5,17 +5,24 @@ import firebase from '../firebase.js';
 import Modal from 'react-awesome-modal';
 import './styles.css';
 
+// importing firebase for image and recipe database access
+// Modal is to display the recipe popup
+
 class RecipeItemPage extends Component {
     constructor(props) {
         super(props);
         this.getRecipe = this.getRecipe.bind(this);
         this.deleteRecipe = this.deleteRecipe.bind(this);
+        // STATE
         this.state = {
             recipe: [],
             timeArray: ""
         }
     }
 
+    /*
+     ** Calls GET '/recipes/:recipeID' and returns the recipe with the requested recipeID
+     */
     getRecipe() {
         const {
             recipeID
@@ -37,6 +44,9 @@ class RecipeItemPage extends Component {
         });
     }
 
+    /*
+     ** Calls DELETE '/recipes/remove/:recipeID'
+     */
     deleteRecipe() {
         const recipeID = this.state.recipe.recipeID;
         if (this.state.recipe.authorID === firebase.auth().currentUser.uid) {
@@ -54,12 +64,14 @@ class RecipeItemPage extends Component {
         }
     }
 
+    // Updates state.visible to true
     openModal() {
         this.setState({
             visible: true
         });
     }
 
+    // Updates state.visible to false
     closeModal() {
         this.setState({
             visible: false
@@ -98,6 +110,7 @@ class RecipeItemPage extends Component {
         return cookTimeString;
     }
 
+    // calls componentDidMount()
     componentDidMount() {
         this.getRecipe();
     }
