@@ -4,19 +4,24 @@ import React, {
 import Modal from 'react-awesome-modal';
 import './RecipeItem.css';
 
+// Modal is to display the popup when clicking on a recipe item tile
+
 class RecipeItem extends Component {
 
     constructor(props) {
         super(props)
         this.handleCheckbox = this.handleCheckbox.bind(this);
+        // STATE
         this.state = {
             isFavorite: false,
             visible: false,
             timeArray: this.getTimeArray()
         }
-        console.log(this.state.timeArray);
     }
 
+    /*
+     ** Calls GET '/users/favorites/check/:userID/:recipeID' and updates state.isFavorite to true if GET returned true
+     */
     checkIfFavorite(recipeID) {
         fetch(`/users/favorites/check/${this.props.currentUserID}/${recipeID}`, {}).then(res => res.json()).then((result) => {
             if (result === true) {
@@ -31,6 +36,9 @@ class RecipeItem extends Component {
         });
     }
 
+    /*
+     ** Calls PUT '/users/favorites/:userID/:recipeID' and updates state.isFavorite to true
+     */
     addFavorite() {
         fetch(`/users/favorites/${this.props.currentUserID}/${this.props.recipe.recipeID}`, {
             method: 'put',
@@ -47,6 +55,9 @@ class RecipeItem extends Component {
         });
     }
 
+    /*
+     ** Calls DELETE '/users/favorites/remove/:userID/:recipeID' and updates state.isFavorite to false
+     */
     removeFavorite() {
         fetch(`/users/favorites/remove/${this.props.currentUserID}/${this.props.recipe.recipeID}`, {
             method: 'delete',
@@ -63,18 +74,7 @@ class RecipeItem extends Component {
         });
     }
 
-    openModal() {
-        this.setState({
-            visible: true
-        });
-    }
-
-    closeModal() {
-        this.setState({
-            visible: false
-        });
-    }
-
+    // Call removeFavorite() or addFavorite() based off state.isFavorite
     handleCheckbox(e) {
         if (this.state.isFavorite) {
             this.removeFavorite();
@@ -83,24 +83,46 @@ class RecipeItem extends Component {
         }
     }
 
+    // Update state.visible to true
+    openModal() {
+        this.setState({
+            visible: true
+        });
+    }
+
+    // Update state.visible to false
+    closeModal() {
+        this.setState({
+            visible: false
+        });
+    }
+
+    // Passes the ability to delete a recipe
     deleteRecipe(id) {
         this.props.onDelete(id);
     }
 
+    // Passes the ability to view a recipe
     viewRecipe(id) {
         this.props.onView(id);
     }
 
+    // Navigate to '/Recipe'
     viewFullRecipePage() {
         this.props.history.push('/Recipe');
     }
 
+    /*
+     ** Remove the ',' from props.recipe.cookTime and return it
+     */
     getTimeArray() {
         let timeArray = this.props.recipe.cookTime.split(",");
         return timeArray;
     }
 
-    //Combine Prep and cook time and display it as a simple time value HH:MM
+    /*
+     ** Combine Prep & cook time and display it as a simple time value HH:MM
+     */
     getShortHandTimeString() {
         let timeArray = this.state.timeArray;
         let carryover = 0;
@@ -130,20 +152,27 @@ class RecipeItem extends Component {
         }
     }
 
-    //Display Prep Time as a simple time value "Prep - HH:MM"
+    /*
+     ** Display Prep Time as a simple time value "Prep - HH:MM"
+     */
     getPrepTimeString() {
         let timeArray = this.state.timeArray;
         let prepTimeString = "Prep - " + timeArray[0] + ":" + timeArray[1];
         return prepTimeString;
     }
 
-    //Display Cook Time as a simple time value "Cook - HH:MM"
+    /*
+     ** Display Cook Time as a simple time value "Cook - HH:MM"
+     */
     getCookTimeString() {
         let timeArray = this.state.timeArray;
         let cookTimeString = "Cook - " + timeArray[2] + ":" + timeArray[3];
         return cookTimeString;
     }
 
+    /*
+     ** Update state.isFavorite by calling  function checkIfFavorite
+     */
     componentWillMount() {
         this.setState({
             isFavorite: this.checkIfFavorite(this.props.recipe.recipeID)

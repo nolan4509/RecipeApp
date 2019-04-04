@@ -5,10 +5,13 @@ import './Recipes.css';
 import RecipeItem from '../RecipeItem/RecipeItem';
 
 class Recipes extends Component {
+
+    // Passes the ability to delete a recipe
     deleteRecipe(id) {
         this.props.onDelete(id);
     }
 
+    // Passes the ability to view a recipe
     viewRecipe(id) {
         this.props.onView(id);
     }
