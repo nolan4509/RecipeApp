@@ -21,17 +21,17 @@ app.use(express.static(path.join(__dirname, '/client/build')));
         ~150: function removeRecipe(id)
         ~165: function removeRecipeFromUser(userID, recipeID)
 
-        ~205: GET /recipes/:recipeID'
-        ~225: GET /recipes/user/:userID'
-        ~260: GET /recipes'
-        ~270: GET /user/:userID'
+        ~205: GET /recipes/:recipeID
+        ~225: GET /recipes/user/:userID
+        ~260: GET /recipes
+        ~270: GET /user/:userID
         ~280: GET /users/favorites/check/:userID/:recipeID
         ~300: GET /recipes/favorites/:userID
-        ~335: POST /add/user/:userName/:userID/:email'
-        ~355: POST /newRecipe'
-        ~420: PUT /recipes/update/:recipeID'
+        ~335: POST /add/user/:userName/:userID/:email
+        ~355: POST /newRecipe
+        ~420: PUT /recipes/update/:recipeID
         ~485: PUT /users/favorites/:userID/:recipeID
-        ~515: DELETE /recipes/remove/:recipeID'
+        ~515: DELETE /recipes/remove/:recipeID
         ~530: DELETE /users/favorites/remove/:userID/:recipeID
 */
 
