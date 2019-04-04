@@ -121,6 +121,50 @@ class NewRecipe extends Component {
 
     }
 
+    /*
+     ** Format a string for postRecipe by prepHr, prepMin, cookHr, cookMin & UPDATE STATE and RETURN formatted string
+     */
+    timeFormat() {
+        let prepHr = this.state.prepTimeHr;
+        let prepMin = this.state.prepTimeMin;
+        let cookHr = this.state.cookTimeHr;
+        let cookMin = this.state.cookTimeMin;
+        if (prepHr > 59) {
+            prepHr = 59;
+        }
+        if (prepHr < 0) {
+            prepHr = 0;
+        }
+        if (prepMin > 59) {
+            prepMin = 59;
+        }
+        if (prepMin < 0) {
+            prepMin = 0;
+        }
+        if (cookHr > 59) {
+            cookHr = 59;
+        }
+        if (cookHr < 0) {
+            cookHr = 0;
+        }
+        if (cookMin > 59) {
+            cookMin = 59;
+        }
+        if (cookMin < 0) {
+            cookMin = 0;
+        }
+
+        this.setState({
+            prepTimeHr: prepHr,
+            prepTimeMin: prepMin,
+            cookTimeHr: cookMin,
+            cookTimeMin: cookMin
+        });
+        let zipString = String(prepHr) + ", " + String(prepMin) + ", " + String(cookHr) + ", " + String(cookMin);
+
+        return zipString;
+    }
+
     // Update state.name
     handleChangeName(event) {
         this.setState({
@@ -191,50 +235,6 @@ class NewRecipe extends Component {
         })
     }
 
-    /*
-     ** Format a string for postRecipe by prepHr, prepMin, cookHr, cookMin & UPDATE STATE and RETURN formatted string
-     */
-    timeFormat() {
-        let prepHr = this.state.prepTimeHr;
-        let prepMin = this.state.prepTimeMin;
-        let cookHr = this.state.cookTimeHr;
-        let cookMin = this.state.cookTimeMin;
-        if (prepHr > 59) {
-            prepHr = 59;
-        }
-        if (prepHr < 0) {
-            prepHr = 0;
-        }
-        if (prepMin > 59) {
-            prepMin = 59;
-        }
-        if (prepMin < 0) {
-            prepMin = 0;
-        }
-        if (cookHr > 59) {
-            cookHr = 59;
-        }
-        if (cookHr < 0) {
-            cookHr = 0;
-        }
-        if (cookMin > 59) {
-            cookMin = 59;
-        }
-        if (cookMin < 0) {
-            cookMin = 0;
-        }
-
-        this.setState({
-            prepTimeHr: prepHr,
-            prepTimeMin: prepMin,
-            cookTimeHr: cookMin,
-            cookTimeMin: cookMin
-        });
-        let zipString = String(prepHr) + ", " + String(prepMin) + ", " + String(cookHr) + ", " + String(cookMin);
-
-        return zipString;
-    }
-
     // Update state.vegetarian
     handleChangeVegetarian(event) {
         this.setState({
@@ -287,11 +287,6 @@ class NewRecipe extends Component {
                 recipeImageURL: url
             }));
     };
-    /*
-        createTimeString() {
-            let timeString = this.state.prepTime + "," +
-        }
-    */
 
     render() {
         let categoryOptions = this.props.categories.map(category => {
