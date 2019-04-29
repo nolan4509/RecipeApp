@@ -10,8 +10,6 @@ import Login from './Pages/login';
 import RecipeItemPage from './Pages/RecipeItemPage';
 import FavoriteRecipesPage from './Pages/FavoriteRecipesPage';
 import QuickFixPage from './Pages/QuickFixPage'
-import RecipeCategoryPage from './Pages/RecipeCategoryPage';
-import RecipeDifficultyPage from './Pages/RecipeDifficultyPage';
 
 
 /*
@@ -45,8 +43,6 @@ const App = () => (<main>
         <Route path='/Recipes/all' component={AllRecipesPage}/>
         <Route path='/Recipes/favorites' component={FavoriteRecipesPage}/>
         <Route path='/Recipes/quickFix' component={QuickFixPage}/>
-        <Route path='/Recipes/category' component={RecipeCategoryPage}/>
-        <Route path='/Recipes/difficulty' component={RecipeDifficultyPage}/>
     </Switch>
 </main>)
 
