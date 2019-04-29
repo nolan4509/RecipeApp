@@ -24,6 +24,39 @@ class AdvancedFiltersPage extends Component {
         }
     }
 
+    getRecipes() {
+        let filters = this.setupFilters();
+        let reqBody = {
+            category: filters[0],
+            cuisine: filters[1],
+            difficulty: filters[2],
+            cookTime: filters[3],
+            vegetarian: filters[4],
+            vegan: filters[5],
+            glutenFree: filters[6],
+        }
+
+        fetch('/recipes/filters', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET',
+            body: JSON.stringify(reqBody)
+        }).then(res => res.json()).then((result) => {
+            console.log('success!');
+            this.setState({
+                recipesLoaded: 'true',
+                recipes: result
+            })
+        })
+    }
+
+    setupFilters() {
+        let filters = [];
+        return filters;
+    }
+
     /*
      ** Navigates user to a full page view of the Recipe with the specified id
      */
@@ -42,4 +75,4 @@ class AdvancedFiltersPage extends Component {
     }
 }
 
-export default QuickFixPage;
+export default AdvancedFiltersPage;

@@ -548,6 +548,29 @@ app.delete('/users/favorites/remove/:userID/:recipeID', function(req, res) {
 /*------------------------------ TO BE SORTED ------------------------------*/
 /*--------------------------------------------------------------------------*/
 
+
+app.get('/recipes/filters', function(req, res) {
+    let filteredArray = []
+    recipeArray.map(rcp => {
+        if (rcp.category == String(req.body.category)) {
+            if (rcp.cuisine == String(req.body.cuisine)) {
+                if (rcp.difficulty == String(req.body.difficulty)) {
+                    if (rcp.cookTime <= Number(req.body.cookTime)) {
+                        if (rcp.vegetarian == String(req.body.vegetarian)) {
+                            if (rcp.vegan == String(req.body.vegan)) {
+                                if (rcp.glutenFree == String(req.body.glutenFree)) {
+                                    filteredArray.push(rcp);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+    res.send(filteredArray);
+});
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('/', (req, res) => {
