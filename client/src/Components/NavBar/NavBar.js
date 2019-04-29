@@ -2,12 +2,36 @@ import React, {
     Component
 } from 'react';
 import './NavBar.css';
+import Modal from 'react-awesome-modal';
+// import AdvancedFilters from '../AdvancedFilters/AdvancedFilters'
+
 //import {Link} from 'react-router-dom';
 
 
 //This class will need to be worked on post 1.0
 class NavBar extends Component {
 
+    constructor(props) {
+        super(props)
+        // STATE
+        this.state = {
+            visible: ''
+        }
+    }
+
+    // Updates state.visible to true
+    openModal() {
+        this.setState({
+            visible: true
+        });
+    }
+
+    // Updates state.visible to false
+    closeModal() {
+        this.setState({
+            visible: false
+        });
+    }
     render() {
         return (<nav className="navbar navbar-expand-lg navbar-light bg-light">
             <a className="navbar-brand" href="/">F the Microwave</a>
@@ -50,11 +74,67 @@ class NavBar extends Component {
                         </div>
                     </li>
                 </ul>
-                <form className="form-inline my-2 my-lg-0">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" disabled/>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
-                </form>
-            </div>
+                    <form className="form-inline my-2 my-lg-0">
+                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" disabled/>
+                        {/* Popup sorta deal -- modal that shows the advanced filters component upon clicking dropdown */}
+                        <button className="btn btn-primary" onClick={() => this.openModal()}>
+                            Advanced Filters
+                        </button>
+                        <section>
+                            <Modal visible={this.state.visible} width='800' height='500' effect="fadeInUp" onClickAway={() => this.closeModal()}>
+                                <form class="px-4 py-3">
+                                    <div class="form-dropdown">
+                                        <select name="category" multiple>
+                                          <option value="breakfast">Breakfast</option>
+                                          <option value="lunch">Lunch</option>
+                                          <option value="dinner">Dinner</option>
+                                          <option value="snack">Snack</option>
+                                          <option value="dessert">Dessert</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-dropdown">
+                                        <select name="cuisinne" multiple>
+                                          <option value="american">American</option>
+                                          <option value="asian">Asian</option>
+                                          <option value="mexican">Mexican</option>
+                                          <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-dropdown">
+                                        <select name="difficulty" multiple>
+                                          <option value="easy">Easy</option>
+                                          <option value="medium">Medium</option>
+                                          <option value="hard">Hard</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" placeholder="Cook Time" value={this.state.cooktime}/>
+                                    </div>
+                                    <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="dropdownCheck"/>
+                                      <label class="form-check-label" for="dropdownCheck">
+                                          Vegetarian
+                                      </label>
+                                    </div>
+                                    <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="dropdownCheck"/>
+                                      <label class="form-check-label" for="dropdownCheck">
+                                          Vegan
+                                      </label>
+                                    </div>
+                                    <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="dropdownCheck"/>
+                                      <label class="form-check-label" for="dropdownCheck">
+                                          Gluten Free
+                                      </label>
+                                    </div>
+                                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                </form>
+                            </Modal>
+                        </section>
+                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
         </nav>);
     }
 }
